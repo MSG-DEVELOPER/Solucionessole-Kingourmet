@@ -9,6 +9,6 @@ export const LobbyContainer = styled.div`
 export const Content = styled.main`
   flex: 1;
   padding: ${(props) => props.theme.spacing.xl};
-  margin-left: 280px; /* mismo ancho que el sidebar */
+  margin-left: 240px; /* mismo ancho que el sidebar */
   overflow-y: auto;
 `;

@@ -67,4 +67,12 @@ export const theme = {
     medium: "all 0.4s ease-in-out",
     slow: "all 0.6s ease-in-out",
   },
+
+  breakpoints: {
+    mobileSmall: "320px",
+    mobile: "480px",
+    tablet: "768px",
+    tabletLandscape: "1024px",
+    desktop: "1200px",
+  },
 };

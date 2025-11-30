@@ -1,16 +1,37 @@
 import { NavLink } from "react-router-dom";
-import { SidebarContainer, SidebarList, SidebarItem } from "./SidebarMenu.styles";
+import { Settings, User } from "lucide-react";
+import {
+  SidebarContainer,
+  SidebarHeader,
+  SidebarTitle,
+  SidebarList,
+  SidebarItem,
+  IconWrapper,
+} from "./SidebarMenu.styles";
 
 function SidebarMenu() {
   return (
     <SidebarContainer>
+      <SidebarHeader>
+        <SidebarTitle>Menú</SidebarTitle>
+      </SidebarHeader>
       <SidebarList>
         <SidebarItem>
-          <NavLink to="settings">Settings</NavLink>
+          <NavLink to="settings">
+            <IconWrapper>
+              <Settings />
+            </IconWrapper>
+            Settings
+          </NavLink>
         </SidebarItem>
 
         <SidebarItem>
-          <NavLink to="account">Account</NavLink>
+          <NavLink to="account">
+            <IconWrapper>
+              <User />
+            </IconWrapper>
+            Account
+          </NavLink>
         </SidebarItem>
       </SidebarList>
     </SidebarContainer>
