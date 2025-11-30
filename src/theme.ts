@@ -32,11 +32,11 @@ export const theme = {
 
     // Accentos
     accent: "#2563eb", // para botones y hover
-    secondary: "#f59e0b", // opcional
+    secondary: "#6cd85da1", // opcional
   },
 
   fonts: {
-    main: "'Inter', sans-serif",
+    main: "url('./assets/fonts/Futura Md BT Medium.ttf'), sans-serif",
     code: "'Fira Code', monospace",
   },
 

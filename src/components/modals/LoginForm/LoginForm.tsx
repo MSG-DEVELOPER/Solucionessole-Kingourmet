@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import {
@@ -23,11 +24,14 @@ interface LoginFormProps {
 }
 
 export default function LoginForm({ onClose }: LoginFormProps) {
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm<LoginFormData>();
 
   const onSubmit = (data: LoginFormData) => {
-    console.log("Login data:", data);
-    // Por ahora solo mostramos en consola
+    alert("Login data:" + data);
+
+    // Por ahora solo mostramos alert y te lleva al lobby sin hacer comprobacinoes
+    navigate("/lobby");
   };
 
   // Bloquear scroll cuando el modal está abierto
