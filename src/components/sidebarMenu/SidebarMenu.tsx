@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Settings, User } from "lucide-react";
+import { Settings, User, UtensilsCrossed} from "lucide-react";
 import {
   SidebarContainer,
   SidebarHeader,
@@ -13,9 +13,18 @@ function SidebarMenu() {
   return (
     <SidebarContainer>
       <SidebarHeader>
-        <SidebarTitle>Menú</SidebarTitle>
+        <SidebarTitle>La Cuina de Marga</SidebarTitle>
       </SidebarHeader>
       <SidebarList>
+        <SidebarItem>
+          <NavLink to="restaurant">
+            <IconWrapper>
+              <UtensilsCrossed/>
+            </IconWrapper>
+            Restaurant
+          </NavLink>
+        </SidebarItem>
+
         <SidebarItem>
           <NavLink to="settings">
             <IconWrapper>

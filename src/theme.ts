@@ -1,19 +1,18 @@
-// theme.ts
 export const theme = {
   colors: {
     // Fondos
-    background: "#f8fafc",   // blanco suave
-    surface: "#ffffff",      // tarjetas, modales
+    background: "#f8fafc",
+    surface: "#ffffff",
     overlay: "rgba(0, 0, 0, 0.5)",
 
     // Tonos de gris
-    gray100: "#f1f5f9", // texto claro / fondo secundario
+    gray100: "#f1f5f9",
     gray200: "#e2e8f0",
     gray300: "#cbd5e1",
     gray400: "#94a3b8",
-    gray500: "#64748b", // texto secundario
+    gray500: "#64748b",
     gray600: "#475569",
-    gray700: "#334155", // fondo secciones oscuras
+    gray700: "#334155",
 
     // Tonos de azul
     blue100: "#dbeafe",
@@ -21,7 +20,7 @@ export const theme = {
     blue300: "#93c5fd",
     blue400: "#60a5fa",
     blue500: "#3b82f6",
-    blue600: "#2563eb", // primary
+    blue600: "#2563eb",
     blue700: "#1d4ed8",
     blue800: "#1e40af",
     blue900: "#1e3a8a",
@@ -31,8 +30,34 @@ export const theme = {
     black200: "#111827",
 
     // Accentos
-    accent: "#2563eb", // para botones y hover
-    secondary: "#6cd85da1", // opcional
+    accent: "#2563eb",
+    secondary: "#6cd85da1",
+
+    // Colores para toolbar
+    green100: "#dcfce7",
+    green500: "#22c55e",
+    green600: "#16a34a",
+    green700: "#15803d",
+    red100: "#fee2e2",
+    red500: "#ef4444",
+    red600: "#dc2626",
+    red700: "#b91c1c",
+    orange100: "#ffedd5",
+    orange500: "#f97316",
+    orange600: "#ea580c",
+    orange700: "#c2410c",
+    purple100: "#f3e8ff",
+    purple500: "#a855f7",
+    purple600: "#9333ea",
+    purple700: "#7e22ce",
+    teal100: "#ccfbf1",
+    teal500: "#14b8a6",
+    teal600: "#0d9488",
+    teal700: "#0f766e",
+  },
+
+  borders: {
+    default: "#ddd", // nuevo color para bordes
   },
 
   fonts: {
