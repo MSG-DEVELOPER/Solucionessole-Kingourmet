@@ -4,7 +4,7 @@ export const ToolbarContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  padding: 1rem;
+ padding: 1rem;
   background: #f5f5f5;
   border-bottom: 1px solid #ddd;
   align-items: center;

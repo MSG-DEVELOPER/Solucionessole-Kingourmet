@@ -4,8 +4,8 @@ import { theme } from '../../../theme';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${theme.spacing.md};
-  padding: ${theme.spacing.lg};
+  gap: ${theme.spacing.xs};
+  padding: ${theme.spacing.sm};
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -14,10 +14,20 @@ export const Container = styled.div`
   min-height: 0;
 `;
 
+export const Title = styled.h3`
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: ${theme.colors.gray700};
+  margin: 0 0 ${theme.spacing.md} 0;
+  padding: ${theme.spacing.sm} 0;
+  letter-spacing: -0.02em;
+  text-align: center;
+`;
+
 export const ReservationCard = styled.div`
   background: ${theme.colors.surface};
   border-radius: ${theme.borderRadius.lg};
-  padding: ${theme.spacing.lg};
+  padding: ${theme.spacing.sm};
   box-shadow: ${theme.shadows.light};
   border: 1px solid ${theme.colors.gray200};
   transition: ${theme.transitions.fast};
@@ -40,21 +50,29 @@ export const ReservationName = styled.h3`
   font-size: 1.15rem;
   font-weight: 600;
   color: ${theme.colors.gray700};
-  margin: 0 0 ${theme.spacing.md} 0;
+  margin: 0;
   letter-spacing: -0.01em;
+`;
+
+export const NamePhoneRow = styled.div`
+  display: flex;
+  align-items: center;
+ // justify-content: space-around;
+  margin-bottom: ${theme.spacing.sm};
+  gap: ${theme.spacing.sm};
 `;
 
 export const ReservationPhone = styled.div`
   display: flex;
   align-items: center;
-  gap: ${theme.spacing.sm};
+  gap: ${theme.spacing.xs};
   color: ${theme.colors.gray600};
-  font-size: 0.9rem;
-  margin-bottom: ${theme.spacing.md};
-  padding: ${theme.spacing.sm} ${theme.spacing.md};
+  font-size: 0.85rem;
+  margin: 0;
+  padding: ${theme.spacing.xs} ${theme.spacing.sm};
   background: ${theme.colors.gray100};
   border-radius: ${theme.borderRadius.md};
-  width: fit-content;
+  flex-shrink: 0;
   border: 1px solid ${theme.colors.gray200};
 
   svg {
@@ -76,7 +94,7 @@ export const TableChip = styled.span`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: ${theme.spacing.xs} ${theme.spacing.md};
+  
   background: ${theme.colors.gray700};
   color: white;
   border-radius: ${theme.borderRadius.md};
@@ -90,4 +108,11 @@ export const TableChip = styled.span`
     background: ${theme.colors.gray600};
     box-shadow: ${theme.shadows.medium};
   }
+`;
+
+export const ReservationTime = styled.span`
+  font-style: italic;
+  color: ${theme.colors.gray600};
+  font-size: 0.9rem;
+  margin-left: ${theme.spacing.xs};
 `;

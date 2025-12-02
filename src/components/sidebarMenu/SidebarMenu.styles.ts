@@ -11,7 +11,7 @@ export const SidebarContainer = styled.aside`
   );
   border-right: 1px solid ${(props) => props.theme.colors.gray200};
   box-shadow: ${(props) => props.theme.shadows.medium};
-  padding: ${(props) => props.theme.spacing.xl} ${(props) => props.theme.spacing.md};
+ padding: ${(props) => props.theme.spacing.md} ${(props) => props.theme.spacing.md};
   display: flex;
   flex-direction: column;
   position: fixed;

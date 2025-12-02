@@ -5,17 +5,18 @@ export const RestaurantPageContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: row;
+ // border: 1px solid red;
 `;
 
 export const LeftSection = styled.div`
-  width: 75%;
+  width: 70%;
   height: 100%;
   display: flex;
   flex-direction: column;
 `;
 
 export const RightSection = styled.div`
-  width: 25%;
+  width: 30%;
   height: 100%;
   display: flex;
   flex-direction: column;
