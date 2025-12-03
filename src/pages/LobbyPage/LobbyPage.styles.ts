@@ -9,8 +9,8 @@ export const LobbyContainer = styled.div`
 
 export const Content = styled.main`
   flex: 1;
-//border: 5px dotted blue;
   margin-left: 255px;
-  margin-top: -8px; /* mismo ancho que el sidebar */
-  overflow-y: hidden;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;

@@ -1,11 +1,11 @@
 // DataModal.styles.ts
 import styled, { keyframes } from "styled-components";
 
-// Animación fade in mejorada con escala y blur
+// Animación fade in mejorada con escala
 const fadeIn = keyframes`
   from { 
     opacity: 0; 
-    transform: translateY(-30px) scale(0.95); 
+    transform: translateY(-20px) scale(0.96); 
   }
   to { 
     opacity: 1; 
@@ -20,7 +20,7 @@ export const ModalOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background: ${({ theme }) => theme.colors.overlay};
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
@@ -32,10 +32,10 @@ export const ModalOverlay = styled.div`
 
 // Contenedor del modal con sombra moderna y bordes más redondeados
 export const ModalContainer = styled.div`
-  background: linear-gradient(145deg, ${(props) => props.theme.colors.surface} 0%, #1a1a1a 100%);
-  color: ${(props) => props.theme.colors.gray100};
-  font-family: ${(props) => props.theme.fonts.main};
-  border-radius: 20px;
+  background: ${({ theme }) => theme.colors.surface};
+  color: ${({ theme }) => theme.colors.black200};
+  font-family: ${({ theme }) => theme.fonts.main};
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
   width: 90%;
   max-width: 900px;
   max-height: 85vh;
@@ -44,11 +44,8 @@ export const ModalContainer = styled.div`
   padding: 0;
   animation: ${fadeIn} 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   overflow: hidden;
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.8),
-    0 0 0 1px rgba(255, 255, 255, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: ${({ theme }) => theme.shadows.heavy};
+  border: 1px solid ${({ theme }) => theme.colors.gray200};
 `;
 
 // Header moderno con separador sutil
@@ -56,39 +53,36 @@ export const ModalHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
+  padding: ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.xl};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
+  background: ${({ theme }) => theme.colors.gray100};
   
   h2 {
     margin: 0;
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: -0.02em;
-    background: linear-gradient(135deg, ${(props) => props.theme.colors.gray100} 0%, ${(props) => props.theme.colors.gray300} 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: ${({ theme }) => theme.colors.black200};
+    font-family: ${({ theme }) => theme.fonts.main};
   }
 `;
 
 export const CloseButton = styled.button`
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  color: ${(props) => props.theme.colors.gray300};
+  background: ${({ theme }) => theme.colors.gray100};
+  border: 1px solid ${({ theme }) => theme.colors.gray300};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  color: ${({ theme }) => theme.colors.gray600};
   cursor: pointer;
-  padding: 0.5rem;
+  padding: ${({ theme }) => theme.spacing.sm};
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: ${({ theme }) => theme.transitions.fast};
   
   &:hover {
-    background: rgba(239, 68, 68, 0.1);
-    border-color: rgba(239, 68, 68, 0.3);
-    color: ${(props) => props.theme.colors.red100};
+    background: ${({ theme }) => theme.colors.red100};
+    border-color: ${({ theme }) => theme.colors.red500};
+    color: ${({ theme }) => theme.colors.red600};
     transform: scale(1.05);
   }
   
@@ -101,7 +95,9 @@ export const CloseButton = styled.button`
 export const ModalBody = styled.div`
   flex: 1;
   overflow-y: auto;
-  padding: 2rem;
+  overflow-x: hidden;
+  padding: ${({ theme }) => theme.spacing.xl};
+  min-height: 0;
   
   /* Scrollbar personalizado moderno */
   &::-webkit-scrollbar {
@@ -109,29 +105,28 @@ export const ModalBody = styled.div`
   }
   
   &::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
+    background: ${({ theme }) => theme.colors.gray100};
+    border-radius: ${({ theme }) => theme.borderRadius.md};
   }
   
   &::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
+    background: ${({ theme }) => theme.colors.gray300};
+    border-radius: ${({ theme }) => theme.borderRadius.md};
     
     &:hover {
-      background: rgba(255, 255, 255, 0.25);
+      background: ${({ theme }) => theme.colors.gray400};
     }
   }
 `;
 
 // Footer elegante y sutil
 export const ModalFooter = styled.div`
-  padding: 1.5rem 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.xl};
+  border-top: 1px solid ${({ theme }) => theme.colors.gray200};
   text-align: right;
-  color: ${(props) => props.theme.colors.gray400};
+  color: ${({ theme }) => theme.colors.gray500};
   font-size: 0.875rem;
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
+  background: ${({ theme }) => theme.colors.gray100};
   font-weight: 500;
 `;
 
@@ -140,8 +135,9 @@ export const TableWrapper = styled.div`
   width: 100%;
   overflow-x: auto;
   overflow-y: auto;
-  max-height: 50vh;
-  border-radius: 12px;
+  max-height: calc(85vh - 200px);
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  border: 1px solid ${({ theme }) => theme.colors.gray200};
   
   /* Scrollbar personalizado para la tabla */
   &::-webkit-scrollbar {
@@ -150,58 +146,58 @@ export const TableWrapper = styled.div`
   }
   
   &::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
+    background: ${({ theme }) => theme.colors.gray100};
+    border-radius: ${({ theme }) => theme.borderRadius.md};
   }
   
   &::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
+    background: ${({ theme }) => theme.colors.gray300};
+    border-radius: ${({ theme }) => theme.borderRadius.md};
     
     &:hover {
-      background: rgba(255, 255, 255, 0.25);
+      background: ${({ theme }) => theme.colors.gray400};
     }
   }
 `;
 
-// Tabla moderna con estilo glassmorphism
+// Tabla moderna con estilo limpio
 export const Table = styled.table`
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 12px;
+  background: ${({ theme }) => theme.colors.surface};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
   overflow: hidden;
 `;
 
 export const TableHeader = styled.th`
   text-align: left;
-  padding: 1rem 1.25rem;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.gray300};
   cursor: pointer;
   user-select: none;
   font-weight: 600;
   font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: ${(props) => props.theme.colors.gray300};
-  background: rgba(0, 0, 0, 0.3);
-  transition: all 0.2s ease;
+  color: ${({ theme }) => theme.colors.gray600};
+  background: ${({ theme }) => theme.colors.gray100};
+  transition: ${({ theme }) => theme.transitions.fast};
   position: sticky;
   top: 0;
   z-index: 5;
   
   &:first-child {
-    border-top-left-radius: 12px;
+    border-top-left-radius: ${({ theme }) => theme.borderRadius.lg};
   }
   
   &:last-child {
-    border-top-right-radius: 12px;
+    border-top-right-radius: ${({ theme }) => theme.borderRadius.lg};
   }
   
   &:hover {
-    color: ${(props) => props.theme.colors.blue500};
-    background: rgba(79, 70, 229, 0.1);
+    color: ${({ theme }) => theme.colors.blue600};
+    background: ${({ theme }) => theme.colors.blue100};
     
     &::after {
       content: '';
@@ -210,39 +206,38 @@ export const TableHeader = styled.th`
       left: 0;
       right: 0;
       height: 2px;
-      background: linear-gradient(90deg, transparent, ${(props) => props.theme.colors.blue500}, transparent);
+      background: ${({ theme }) => theme.colors.blue500};
     }
   }
 `;
 
 export const TableRow = styled.tr`
-  transition: all 0.2s ease;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: ${({ theme }) => theme.transitions.fast};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
   
   &:nth-child(even) {
-    background-color: rgba(255, 255, 255, 0.02);
+    background-color: ${({ theme }) => theme.colors.gray100};
   }
   
   &:hover {
-    background-color: rgba(79, 70, 229, 0.08);
-    transform: scale(1.01);
-    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.15);
+    background-color: ${({ theme }) => theme.colors.blue100};
+    box-shadow: ${({ theme }) => theme.shadows.light};
   }
   
   &:last-child td:first-child {
-    border-bottom-left-radius: 12px;
+    border-bottom-left-radius: ${({ theme }) => theme.borderRadius.lg};
   }
   
   &:last-child td:last-child {
-    border-bottom-right-radius: 12px;
+    border-bottom-right-radius: ${({ theme }) => theme.borderRadius.lg};
   }
 `;
 
 export const TableCell = styled.td`
-  padding: 1rem 1.25rem;
-  color: ${(props) => props.theme.colors.gray200};
+  padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
+  color: ${({ theme }) => theme.colors.black200};
   font-size: 0.9375rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
 `;
 
 // Mini menú de acciones moderno - posicionado a la derecha
@@ -251,19 +246,16 @@ export const ActionsMenu = styled.div`
   left: calc(100% + 8px);
   top: 50%;
   transform: translateY(-50%);
-  background: linear-gradient(145deg, ${(props) => props.theme.colors.surface} 0%, #1a1a1a 100%);
-  box-shadow: 
-    0 10px 40px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 0.5rem;
+  background: ${({ theme }) => theme.colors.surface};
+  box-shadow: ${({ theme }) => theme.shadows.heavy};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  padding: ${({ theme }) => theme.spacing.sm};
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: ${({ theme }) => theme.spacing.xs};
   z-index: 10;
   min-width: 160px;
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid ${({ theme }) => theme.colors.gray200};
   animation: ${fadeIn} 0.2s ease forwards;
   
   /* Flecha apuntando al botón */
@@ -274,57 +266,53 @@ export const ActionsMenu = styled.div`
     top: 50%;
     transform: translateY(-50%);
     border: 6px solid transparent;
-    border-right-color: ${(props) => props.theme.colors.surface};
-    filter: drop-shadow(-2px 0 2px rgba(0, 0, 0, 0.3));
+    border-right-color: ${({ theme }) => theme.colors.surface};
+    filter: drop-shadow(-2px 0 2px rgba(0, 0, 0, 0.1));
   }
 
   button {
     background: transparent;
     border: none;
-    color: ${(props) => props.theme.colors.gray200};
+    color: ${({ theme }) => theme.colors.black200};
     cursor: pointer;
     text-align: left;
-    padding: 0.625rem 1rem;
-    border-radius: 8px;
+    padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
+    border-radius: ${({ theme }) => theme.borderRadius.md};
     font-size: 0.875rem;
-    transition: all 0.2s ease;
+    transition: ${({ theme }) => theme.transitions.fast};
     font-weight: 500;
     
     &:hover {
-      background: linear-gradient(135deg, rgba(79, 70, 229, 0.15) 0%, rgba(79, 70, 229, 0.05) 100%);
-      color: ${(props) => props.theme.colors.blue500};
-      transform: translateX(4px);
+      background: ${({ theme }) => theme.colors.blue100};
+      color: ${({ theme }) => theme.colors.blue600};
     }
     
     &:active {
-      transform: translateX(2px) scale(0.98);
+      transform: scale(0.98);
     }
   }
 `;
 
-// Barra de búsqueda moderna con estilo glassmorphism
+// Barra de búsqueda moderna
 export const SearchBar = styled.input`
   flex: 1;
-  padding: 0.875rem 1.25rem 0.875rem 3rem;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  color: ${(props) => props.theme.colors.gray100};
+  padding: 0.875rem ${({ theme }) => theme.spacing.lg} 0.875rem 3rem;
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  border: 1.5px solid ${({ theme }) => theme.colors.gray300};
+  background: ${({ theme }) => theme.colors.surface};
+  color: ${({ theme }) => theme.colors.black200};
   font-size: 0.9375rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: ${({ theme }) => theme.transitions.fast};
+  font-family: ${({ theme }) => theme.fonts.main};
   
   &::placeholder {
-    color: ${(props) => props.theme.colors.gray500};
+    color: ${({ theme }) => theme.colors.gray400};
   }
   
   &:focus {
     outline: none;
-    border-color: ${(props) => props.theme.colors.blue500};
-    background: rgba(0, 0, 0, 0.4);
-    box-shadow: 
-      0 0 0 4px rgba(79, 70, 229, 0.1),
-      0 4px 12px rgba(79, 70, 229, 0.2);
+    border-color: ${({ theme }) => theme.colors.blue500};
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.colors.blue100};
     transform: translateY(-1px);
   }
 `;
@@ -336,19 +324,18 @@ export const FilterIcon = styled.div`
   align-items: center;
   justify-content: center;
   padding: 0.875rem;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  color: ${(props) => props.theme.colors.gray300};
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  border: 1.5px solid ${({ theme }) => theme.colors.gray300};
+  background: ${({ theme }) => theme.colors.surface};
+  color: ${({ theme }) => theme.colors.gray600};
+  transition: ${({ theme }) => theme.transitions.fast};
   
   &:hover {
-    background: rgba(79, 70, 229, 0.15);
-    border-color: ${(props) => props.theme.colors.blue500};
-    color: ${(props) => props.theme.colors.blue500};
+    background: ${({ theme }) => theme.colors.blue100};
+    border-color: ${({ theme }) => theme.colors.blue500};
+    color: ${({ theme }) => theme.colors.blue600};
     transform: scale(1.05) rotate(5deg);
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    box-shadow: ${({ theme }) => theme.shadows.light};
   }
   
   &:active {
@@ -360,8 +347,8 @@ export const FilterIcon = styled.div`
 export const SearchContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 1.5rem;
-  gap: 0.75rem;
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
+  gap: ${({ theme }) => theme.spacing.md};
 `;
 
 // Wrapper para la barra de búsqueda con icono
@@ -371,16 +358,16 @@ export const SearchBarWrapper = styled.div`
   
   svg {
     position: absolute;
-    left: 1rem;
+    left: ${({ theme }) => theme.spacing.md};
     top: 50%;
     transform: translateY(-50%);
-    color: ${(props) => props.theme.colors.gray500};
+    color: ${({ theme }) => theme.colors.gray500};
     pointer-events: none;
-    transition: color 0.2s ease;
+    transition: ${({ theme }) => theme.transitions.fast};
   }
   
   input:focus + svg {
-    color: ${(props) => props.theme.colors.blue500};
+    color: ${({ theme }) => theme.colors.blue500};
   }
 `;
 
@@ -390,19 +377,19 @@ export const ActionsIconWrapper = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem;
-  border-radius: 8px;
+  padding: ${({ theme }) => theme.spacing.sm};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
   cursor: pointer;
-  transition: all 0.2s ease;
-  color: ${(props) => props.theme.colors.gray400};
+  transition: ${({ theme }) => theme.transitions.fast};
+  color: ${({ theme }) => theme.colors.gray500};
   
   svg {
     pointer-events: none;
   }
   
   &:hover {
-    background: rgba(79, 70, 229, 0.1);
-    color: ${(props) => props.theme.colors.blue500};
+    background: ${({ theme }) => theme.colors.blue100};
+    color: ${({ theme }) => theme.colors.blue600};
     transform: scale(1.1);
   }
 `;
