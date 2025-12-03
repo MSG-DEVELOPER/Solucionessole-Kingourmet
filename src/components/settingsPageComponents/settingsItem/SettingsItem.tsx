@@ -6,15 +6,13 @@ interface Props {
   icon: LucideIcon;
   title: string;
   desc: string;
+  onClick: () => void;
 }
 
-function SettingsItem({ icon: Icon, title, desc }: Props) {
-  function handleClick() {
-    alert("Abrir: " + title);
-  }
-
+function SettingsItem({ icon: Icon, title, desc, onClick }: Props) {
+  
   return (
-    <SettingsItemCard onClick={handleClick}>
+    <SettingsItemCard onClick={onClick}>
       <IconWrapper>
         <Icon size={32} strokeWidth={1.5} />
       </IconWrapper>
