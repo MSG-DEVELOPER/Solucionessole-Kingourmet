@@ -5,7 +5,6 @@ function SettingsPage() {
   return (
     <SettingsPageContainer>
         <SettingsGrid /> 
-      <h1>Settings</h1>
     </SettingsPageContainer>
   );
 }

@@ -52,7 +52,7 @@ import {
     {
       icon: Smartphone,
       title: "Integraciones",
-      desc: "Google, CoverManager, APIs externas",
+      desc: "Google, IG, APIs externas",
     },
     {
       icon: ShieldCheck,
