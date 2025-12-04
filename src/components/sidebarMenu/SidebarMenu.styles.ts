@@ -60,6 +60,7 @@ export const SidebarTitle = styled.h2`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  font-family: titulo;
 `;
 
 export const SidebarList = styled.ul`
@@ -102,6 +103,7 @@ export const SidebarItem = styled.li`
     position: relative;
     overflow: hidden;
     letter-spacing: 0.3px;
+    font-family: cuerpo;
 
     /* Efecto de fondo sutil */
     &::before {

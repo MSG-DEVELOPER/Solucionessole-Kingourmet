@@ -118,7 +118,8 @@ export const Title = styled.h1`
   color: ${({ theme }) => theme.colors.blue100};
   margin-bottom: 0.5rem;
   margin-top: -1rem;
-  font-family: ${({ theme }) => theme.fonts.main};
+  font-family: titulo;
+
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: clamp(1.75rem, 6vw, 2.5rem);
@@ -136,6 +137,7 @@ export const Subtitle = styled.span`
   color: ${({ theme }) => theme.colors.secondary};
   margin-top: 1.25rem;
   font-weight: 600;
+  font-family: titulo;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: clamp(1rem, 4vw, 1.5rem);
@@ -149,6 +151,7 @@ export const Description = styled.p`
   margin: 1rem 0 1.5rem;
   color: ${({ theme }) => theme.colors.blue100};
   line-height: 1.6;
+  font-family: cuerpo;
 `;
 
 // ----------------- BUTTONS -----------------
@@ -184,6 +187,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   font-weight: 700;
   border: 2px solid transparent;
   box-shadow: ${({ theme }) => theme.shadows.light};
+  font-family: cuerpo;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 100%;
@@ -297,6 +301,7 @@ export const SectionEyebrow = styled.span`
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   margin-bottom: ${({ theme }) => theme.spacing.md};
   box-shadow: ${({ theme }) => theme.shadows.light};
+  font-family: titulo;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 0.75rem;
@@ -319,6 +324,7 @@ export const SectionTitle = styled.h2`
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: -0.02em;
+  font-family: titulo;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: clamp(1.5rem, 6vw, 2.2rem);
@@ -333,6 +339,7 @@ export const SectionDescription = styled.p`
   max-width: 700px;
   margin: 0 auto;
   padding: 0 ${({ theme }) => theme.spacing.md};
+  font-family: cuerpo;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: clamp(0.9rem, 3vw, 1rem);
@@ -490,6 +497,7 @@ export const FeatureCard = styled.div`
     font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: -0.01em;
+    font-family: titulo;
 
     @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
       font-size: 1.25rem;
@@ -502,6 +510,7 @@ export const FeatureCard = styled.div`
     line-height: 1.7;
     font-size: 1.05rem;
     margin: 0;
+    font-family: cuerpo;
 
     @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
       font-size: 0.95rem;
@@ -611,6 +620,7 @@ export const CTAInner = styled.div`
     z-index: 1;
     letter-spacing: -0.02em;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    font-family: titulo;
 
     @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
       font-size: clamp(1.5rem, 5vw, 2rem);
@@ -629,6 +639,7 @@ export const CTAInner = styled.div`
     margin-left: auto;
     margin-right: auto;
     padding: 0 ${({ theme }) => theme.spacing.md};
+    font-family: cuerpo;
 
     @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
       font-size: clamp(0.9rem, 3vw, 1rem);
@@ -654,6 +665,7 @@ export const CTAButton = styled.button`
   letter-spacing: 0.5px;
   text-transform: uppercase;
   overflow: hidden;
+  font-family: cuerpo;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 100%;

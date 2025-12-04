@@ -31,10 +31,12 @@ export const ItemTitle = styled.h3`
   font-size: 1rem;
   color: ${({ theme }) => theme.colors.black200};
   margin: 0;
+  font-family: titulo;
 `;
 
 export const ItemDesc = styled.p`
   font-size: 0.85rem;
   color: ${({ theme }) => theme.colors.gray500};
   margin: 0;
+  font-family: cuerpo;
 `;

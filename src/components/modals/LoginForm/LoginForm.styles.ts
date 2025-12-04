@@ -130,7 +130,7 @@ export const ModalTitle = styled.h2`
   font-weight: 700;
   color: ${({ theme }) => theme.colors.black100};
   margin: 0;
-  font-family: ${({ theme }) => theme.fonts.main};
+  font-family: titulo;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 1.5rem;
@@ -163,6 +163,7 @@ export const Label = styled.label`
   font-weight: 600;
   color: ${({ theme }) => theme.colors.gray700};
   margin-bottom: ${({ theme }) => theme.spacing.xs};
+  font-family: cuerpo;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 0.85rem;
@@ -177,7 +178,7 @@ export const Input = styled.input`
   color: ${({ theme }) => theme.colors.black100};
   background: ${({ theme }) => theme.colors.surface};
   transition: ${({ theme }) => theme.transitions.fast};
-  font-family: ${({ theme }) => theme.fonts.main};
+  font-family: cuerpo;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 0.7rem ${({ theme }) => theme.spacing.sm};
@@ -213,6 +214,7 @@ export const SubmitButton = styled.button`
   transition: ${({ theme }) => theme.transitions.fast};
   box-shadow: ${({ theme }) => theme.shadows.light};
   width: 100%;
+  font-family: cuerpo;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 0.8rem ${({ theme }) => theme.spacing.md};

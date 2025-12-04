@@ -19,6 +19,7 @@ export const ToolbarButton = styled.button`
   cursor: pointer;
   font-size: 0.9rem;
   transition: background 0.2s;
+  font-family: cuerpo;
 
   &:hover {
     background: #357abd;
@@ -38,4 +39,5 @@ export const ColorPickerContainer = styled.div`
 export const ColorPickerLabel = styled.label`
   font-size: 0.9rem;
   color: #333;
+  font-family: cuerpo;
 `;

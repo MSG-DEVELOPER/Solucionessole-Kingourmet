@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
 }
+/* por defecto content-box*/
 
 html, body {
   margin: 0;

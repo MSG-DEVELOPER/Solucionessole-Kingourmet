@@ -34,7 +34,7 @@ export const ModalOverlay = styled.div`
 export const ModalContainer = styled.div`
   background: ${({ theme }) => theme.colors.surface};
   color: ${({ theme }) => theme.colors.black200};
-  font-family: ${({ theme }) => theme.fonts.main};
+  font-family: cuerpo;
   border-radius: ${({ theme }) => theme.borderRadius.xl};
   width: 90%;
   max-width: 900px;
@@ -63,7 +63,7 @@ export const ModalHeader = styled.div`
     font-weight: 700;
     letter-spacing: -0.02em;
     color: ${({ theme }) => theme.colors.black200};
-    font-family: ${({ theme }) => theme.fonts.main};
+    font-family: titulo;
   }
 `;
 
@@ -128,6 +128,7 @@ export const ModalFooter = styled.div`
   font-size: 0.875rem;
   background: ${({ theme }) => theme.colors.gray100};
   font-weight: 500;
+  font-family: cuerpo;
 `;
 
 // Contenedor de tabla con scroll
@@ -186,6 +187,7 @@ export const TableHeader = styled.th`
   position: sticky;
   top: 0;
   z-index: 5;
+  font-family: titulo;
   
   &:first-child {
     border-top-left-radius: ${({ theme }) => theme.borderRadius.lg};
@@ -238,6 +240,7 @@ export const TableCell = styled.td`
   color: ${({ theme }) => theme.colors.black200};
   font-size: 0.9375rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
+  font-family: cuerpo;
 `;
 
 // Mini menú de acciones moderno - posicionado a la derecha
@@ -281,6 +284,7 @@ export const ActionsMenu = styled.div`
     font-size: 0.875rem;
     transition: ${({ theme }) => theme.transitions.fast};
     font-weight: 500;
+    font-family: cuerpo;
     
     &:hover {
       background: ${({ theme }) => theme.colors.blue100};
@@ -303,7 +307,7 @@ export const SearchBar = styled.input`
   color: ${({ theme }) => theme.colors.black200};
   font-size: 0.9375rem;
   transition: ${({ theme }) => theme.transitions.fast};
-  font-family: ${({ theme }) => theme.fonts.main};
+  font-family: cuerpo;
   
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray400};

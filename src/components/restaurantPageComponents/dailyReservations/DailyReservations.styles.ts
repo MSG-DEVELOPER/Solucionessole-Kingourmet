@@ -22,6 +22,7 @@ export const Title = styled.h3`
   padding: ${theme.spacing.sm} 0;
   letter-spacing: -0.02em;
   text-align: center;
+  font-family: titulo;
 `;
 
 export const ReservationCard = styled.div`
@@ -52,6 +53,7 @@ export const ReservationName = styled.h3`
   color: ${theme.colors.gray700};
   margin: 0;
   letter-spacing: -0.01em;
+  font-family: titulo;
 `;
 
 export const NamePhoneRow = styled.div`
@@ -74,6 +76,7 @@ export const ReservationPhone = styled.div`
   border-radius: ${theme.borderRadius.md};
   flex-shrink: 0;
   border: 1px solid ${theme.colors.gray200};
+  font-family: cuerpo;
 
   svg {
     color: ${theme.colors.gray500};
@@ -88,6 +91,7 @@ export const ReservationTable = styled.div`
   font-size: 0.9rem;
   color: ${theme.colors.gray600};
   font-weight: 500;
+  font-family: cuerpo;
 `;
 
 export const TableChip = styled.span`
@@ -103,6 +107,7 @@ export const TableChip = styled.span`
   box-shadow: ${theme.shadows.light};
   min-width: 40px;
   transition: ${theme.transitions.fast};
+  font-family: cuerpo;
 
   ${ReservationCard}:hover & {
     background: ${theme.colors.gray600};
@@ -115,4 +120,5 @@ export const ReservationTime = styled.span`
   color: ${theme.colors.gray600};
   font-size: 0.9rem;
   margin-left: ${theme.spacing.xs};
+  font-family: cuerpo;
 `;

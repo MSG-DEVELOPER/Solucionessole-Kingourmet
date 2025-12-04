@@ -1,0 +1,10 @@
+@font-face {
+    font-family: titulo;
+    src: url('/src/assets/fonts/FutuHv__.ttf');
+}
+
+@font-face {
+    font-family: cuerpo;
+    src: url('/src/assets/fonts/FutuBk__.ttf');
+}
+

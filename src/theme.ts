@@ -33,7 +33,7 @@ export const theme = {
     accent: "#2563eb",
     secondary: "#6cd85da1",
 
-    // Colores para toolbar
+   
     green100: "#dcfce7",
     green500: "#22c55e",
     green600: "#16a34a",
@@ -60,10 +60,6 @@ export const theme = {
     default: "#ddd", // nuevo color para bordes
   },
 
-  fonts: {
-    main: "url('./assets/fonts/Futura Md BT Medium.ttf'), sans-serif",
-    code: "'Fira Code', monospace",
-  },
 
   spacing: {
     xs: "0.25rem",
