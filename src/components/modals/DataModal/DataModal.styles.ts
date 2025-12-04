@@ -46,6 +46,24 @@ export const ModalContainer = styled.div`
   overflow: hidden;
   box-shadow: ${({ theme }) => theme.shadows.heavy};
   border: 1px solid ${({ theme }) => theme.colors.gray200};
+
+  @media (max-width: 1024px) {
+    width: 95%;
+    max-width: 800px;
+  }
+
+  @media (max-width: 768px) {
+    width: 95%;
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: ${({ theme }) => theme.borderRadius.lg};
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    max-height: 95vh;
+    border-radius: ${({ theme }) => theme.borderRadius.md};
+  }
 `;
 
 // Header moderno con separador sutil
@@ -56,6 +74,14 @@ export const ModalHeader = styled.div`
   padding: ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.xl};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
   background: ${({ theme }) => theme.colors.gray100};
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
+  }
+
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
+  }
   
   h2 {
     margin: 0;
@@ -64,6 +90,14 @@ export const ModalHeader = styled.div`
     letter-spacing: -0.02em;
     color: ${({ theme }) => theme.colors.black200};
     font-family: titulo;
+
+    @media (max-width: 768px) {
+      font-size: 1.3rem;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1.1rem;
+    }
   }
 `;
 
@@ -98,6 +132,14 @@ export const ModalBody = styled.div`
   overflow-x: hidden;
   padding: ${({ theme }) => theme.spacing.xl};
   min-height: 0;
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => theme.spacing.lg};
+  }
+
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => theme.spacing.md};
+  }
   
   /* Scrollbar personalizado moderno */
   &::-webkit-scrollbar {

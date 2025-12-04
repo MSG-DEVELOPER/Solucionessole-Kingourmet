@@ -23,6 +23,20 @@ export const Title = styled.h3`
   letter-spacing: -0.02em;
   text-align: center;
   font-family: titulo;
+
+  @media (max-width: 1024px) {
+    font-size: 1.1rem;
+    margin: 0 0 ${theme.spacing.sm} 0;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin: 0 0 ${theme.spacing.xs} 0;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
 `;
 
 export const ReservationCard = styled.div`
@@ -54,6 +68,14 @@ export const ReservationName = styled.h3`
   margin: 0;
   letter-spacing: -0.01em;
   font-family: titulo;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
 `;
 
 export const NamePhoneRow = styled.div`
@@ -77,6 +99,16 @@ export const ReservationPhone = styled.div`
   flex-shrink: 0;
   border: 1px solid ${theme.colors.gray200};
   font-family: cuerpo;
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+    padding: ${theme.spacing.xs};
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
+    padding: ${theme.spacing.xs};
+  }
 
   svg {
     color: ${theme.colors.gray500};

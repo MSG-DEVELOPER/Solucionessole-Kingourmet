@@ -6,5 +6,19 @@ export const SettingsPageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
- // border: 2px solid red;
+
+  @media (max-width: 1024px) {
+    width: 95%;
+    padding: ${({ theme }) => theme.spacing.lg};
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: ${({ theme }) => theme.spacing.md};
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    padding: ${({ theme }) => theme.spacing.sm};
+  }
 `;

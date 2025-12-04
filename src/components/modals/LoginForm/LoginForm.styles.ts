@@ -30,13 +30,13 @@ export const ModalOverlay = styled.div`
   padding: ${({ theme }) => theme.spacing.md};
   animation: ${fadeIn} 0.3s ease-out;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media (max-width: 768px) {
     padding: ${({ theme }) => theme.spacing.md};
     align-items: center;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobileSmall}) {
-    padding: ${({ theme }) => theme.spacing.md};
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => theme.spacing.sm};
     align-items: center;
   }
 `;
@@ -54,7 +54,12 @@ export const ModalContainer = styled.div`
   animation: ${slideUp} 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 1001;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media (max-width: 1024px) {
+    max-width: calc(100% - ${({ theme }) => theme.spacing.lg} * 2);
+    padding: ${({ theme }) => theme.spacing.lg};
+  }
+
+  @media (max-width: 768px) {
     max-width: calc(100% - ${({ theme }) => theme.spacing.md} * 2);
     border-radius: ${({ theme }) => theme.borderRadius.lg};
     padding: ${({ theme }) => theme.spacing.lg};
@@ -63,7 +68,7 @@ export const ModalContainer = styled.div`
     overflow-y: auto;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobileSmall}) {
+  @media (max-width: 480px) {
     max-width: calc(100% - ${({ theme }) => theme.spacing.md} * 2);
     border-radius: ${({ theme }) => theme.borderRadius.lg};
     padding: ${({ theme }) => theme.spacing.md};
@@ -92,11 +97,18 @@ export const CloseButton = styled.button`
   font-size: 1.2rem;
   line-height: 1;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media (max-width: 768px) {
     width: 36px;
     height: 36px;
     top: ${({ theme }) => theme.spacing.sm};
     right: ${({ theme }) => theme.spacing.sm};
+  }
+
+  @media (max-width: 480px) {
+    width: 32px;
+    height: 32px;
+    top: ${({ theme }) => theme.spacing.xs};
+    right: ${({ theme }) => theme.spacing.xs};
   }
 
   &:hover {
@@ -115,13 +127,14 @@ export const ModalHeader = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing.lg};
   padding-right: ${({ theme }) => theme.spacing.xl};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media (max-width: 768px) {
     padding-right: ${({ theme }) => theme.spacing.xxl};
     margin-bottom: ${({ theme }) => theme.spacing.md};
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobileSmall}) {
+  @media (max-width: 480px) {
     padding-right: ${({ theme }) => theme.spacing.xl};
+    margin-bottom: ${({ theme }) => theme.spacing.sm};
   }
 `;
 
@@ -132,11 +145,11 @@ export const ModalTitle = styled.h2`
   margin: 0;
   font-family: titulo;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media (max-width: 768px) {
     font-size: 1.5rem;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobileSmall}) {
+  @media (max-width: 480px) {
     font-size: 1.35rem;
   }
 `;
@@ -147,8 +160,12 @@ export const Form = styled.form`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.md};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media (max-width: 768px) {
     gap: ${({ theme }) => theme.spacing.sm};
+  }
+
+  @media (max-width: 480px) {
+    gap: ${({ theme }) => theme.spacing.xs};
   }
 `;
 
@@ -165,8 +182,12 @@ export const Label = styled.label`
   margin-bottom: ${({ theme }) => theme.spacing.xs};
   font-family: cuerpo;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media (max-width: 768px) {
     font-size: 0.85rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
   }
 `;
 
@@ -180,12 +201,12 @@ export const Input = styled.input`
   transition: ${({ theme }) => theme.transitions.fast};
   font-family: cuerpo;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media (max-width: 768px) {
     padding: 0.7rem ${({ theme }) => theme.spacing.sm};
     font-size: 0.95rem;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobileSmall}) {
+  @media (max-width: 480px) {
     padding: 0.65rem ${({ theme }) => theme.spacing.sm};
     font-size: 0.9rem;
   }
@@ -216,13 +237,13 @@ export const SubmitButton = styled.button`
   width: 100%;
   font-family: cuerpo;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media (max-width: 768px) {
     padding: 0.8rem ${({ theme }) => theme.spacing.md};
     font-size: 0.95rem;
     margin-top: ${({ theme }) => theme.spacing.xs};
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobileSmall}) {
+  @media (max-width: 480px) {
     padding: 0.75rem ${({ theme }) => theme.spacing.md};
     font-size: 0.9rem;
   }

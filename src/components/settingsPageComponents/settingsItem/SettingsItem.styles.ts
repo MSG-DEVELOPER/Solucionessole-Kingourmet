@@ -16,6 +16,19 @@ export const SettingsItemCard = styled.button`
 
   transition: ${({ theme }) => theme.transitions.fast};
 
+  @media (max-width: 1024px) {
+    padding: ${({ theme }) => theme.spacing.md};
+  }
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => theme.spacing.sm};
+    gap: ${({ theme }) => theme.spacing.xs};
+  }
+
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => theme.spacing.xs};
+  }
+
   &:hover {
     background: ${({ theme }) => theme.colors.gray100};
     transform: translateY(-2px);
@@ -32,6 +45,14 @@ export const ItemTitle = styled.h3`
   color: ${({ theme }) => theme.colors.black200};
   margin: 0;
   font-family: titulo;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
 `;
 
 export const ItemDesc = styled.p`
@@ -39,4 +60,12 @@ export const ItemDesc = styled.p`
   color: ${({ theme }) => theme.colors.gray500};
   margin: 0;
   font-family: cuerpo;
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
+  }
 `;

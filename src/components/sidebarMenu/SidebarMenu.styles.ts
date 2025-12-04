@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const SidebarContainer = styled.aside`
   width: 240px;
-  min-height: 100vh;
   height: 100%;
   background: linear-gradient(
     180deg,
@@ -11,15 +10,25 @@ export const SidebarContainer = styled.aside`
   );
   border-right: 1px solid ${(props) => props.theme.colors.gray200};
   box-shadow: ${(props) => props.theme.shadows.medium};
- padding: ${(props) => props.theme.spacing.md} ${(props) => props.theme.spacing.md};
+  padding: ${(props) => props.theme.spacing.sm} ${(props) => props.theme.spacing.sm};
   display: flex;
   flex-direction: column;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 100;
+  flex-shrink: 0;
   overflow-y: auto;
   overflow-x: hidden;
+
+  @media (max-width: 1024px) {
+    width: 200px;
+    padding: ${(props) => props.theme.spacing.xs} ${(props) => props.theme.spacing.xs};
+  }
+
+  @media (max-width: 768px) {
+    width: 180px;
+  }
+
+  @media (max-width: 480px) {
+    display: none;
+  }
 
   /* Scrollbar personalizado */
   &::-webkit-scrollbar {
@@ -41,8 +50,8 @@ export const SidebarContainer = styled.aside`
 `;
 
 export const SidebarHeader = styled.div`
-  margin-bottom: ${(props) => props.theme.spacing.xl};
-  padding-bottom: ${(props) => props.theme.spacing.lg};
+  margin-bottom: ${(props) => props.theme.spacing.md};
+  padding-bottom: ${(props) => props.theme.spacing.sm};
   border-bottom: 2px solid ${(props) => props.theme.colors.gray200};
 `;
 
@@ -61,6 +70,14 @@ export const SidebarTitle = styled.h2`
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-family: titulo;
+
+  @media (max-width: 1024px) {
+    font-size: 1.3rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
 `;
 
 export const SidebarList = styled.ul`
@@ -104,6 +121,16 @@ export const SidebarItem = styled.li`
     overflow: hidden;
     letter-spacing: 0.3px;
     font-family: cuerpo;
+
+    @media (max-width: 1024px) {
+      font-size: 0.9rem;
+      padding: ${(props) => props.theme.spacing.sm} ${(props) => props.theme.spacing.md};
+    }
+
+    @media (max-width: 768px) {
+      font-size: 0.85rem;
+      padding: ${(props) => props.theme.spacing.sm};
+    }
 
     /* Efecto de fondo sutil */
     &::before {
