@@ -7,13 +7,16 @@ import {
   SidebarList,
   SidebarItem,
   IconWrapper,
+  
 } from "./SidebarMenu.styles";
 
 function SidebarMenu() {
   return (
+   
     <SidebarContainer>
       <SidebarHeader>
-        <SidebarTitle>La Cuina de Marga</SidebarTitle>
+        <SidebarTitle>La Cuina de Marga  </SidebarTitle>
+       
       </SidebarHeader>
       <SidebarList>
         <SidebarItem>
@@ -44,6 +47,7 @@ function SidebarMenu() {
         </SidebarItem>
       </SidebarList>
     </SidebarContainer>
+   
   );
 }
 

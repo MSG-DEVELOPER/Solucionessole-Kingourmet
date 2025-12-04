@@ -28,6 +28,7 @@ export const SidebarContainer = styled.aside`
 
   @media (max-width: 480px) {
     display: none;
+   
   }
 
   /* Scrollbar personalizado */
@@ -205,3 +206,4 @@ export const SidebarItem = styled.li`
     }
   }
 `;
+
