@@ -20,7 +20,7 @@ export const RestaurantPageContainer = styled.div`
 `;
 
 export const LeftSection = styled.div`
-  width: 70%;
+  width: 68%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -42,7 +42,7 @@ export const LeftSection = styled.div`
 `;
 
 export const RightSection = styled.div`
-  width: 30%;
+  width: 32%;
   height: 100%;
   display: flex;
   flex-direction: column;

@@ -207,3 +207,21 @@ export const SidebarItem = styled.li`
   }
 `;
 
+export const SidebarFooter = styled.div`
+  margin-top: auto;
+  padding-top: ${(props) => props.theme.spacing.md};
+  padding: ${(props) => props.theme.spacing.md};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ${(props) => props.theme.spacing.sm};
+  border-top: 1px solid ${(props) => props.theme.colors.gray200};
+`;
+
+export const FooterLogo = styled.img`
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+`;
+

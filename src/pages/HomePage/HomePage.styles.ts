@@ -32,6 +32,45 @@ const gradientShift = keyframes`
   50% { background-position: 100% 50%; }
 `;
 
+// ----------------- BRAND BAR -----------------
+export const FixedBrandBar = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1rem 0.8rem;
+  background: rgba(6, 10, 20, 0.72);
+  backdrop-filter: blur(8px);
+  z-index: 20;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+`;
+
+export const BrandName = styled.div`
+  font-family: "CinzelDecorative-Bold", serif;
+  font-size: clamp(1.05rem, 2.4vw, 1.65rem);
+  letter-spacing: 0.16em;
+  color: ${({ theme }) => theme.colors.surface};
+  line-height: 1.1;
+`;
+
+export const BrandLogo = styled.img`
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 56px;
+    height: 56px;
+  }
+`;
+
 // ----------------- HERO -----------------
 export const HeroSection = styled.section`
   position: relative;
@@ -42,6 +81,7 @@ export const HeroSection = styled.section`
   display: flex;
   align-items: center;
   padding: ${({ theme }) => theme.spacing.xl};
+  padding-top: calc(${({ theme }) => theme.spacing.xl} + 7rem);
   isolation: isolate;
 
   &::after {
@@ -54,16 +94,19 @@ export const HeroSection = styled.section`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     padding: ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.md};
+    padding-top: calc(${({ theme }) => theme.spacing.lg} + 6rem);
     min-height: 90vh;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: ${({ theme }) => theme.spacing.md};
+    padding-top: calc(${({ theme }) => theme.spacing.md} + 5.5rem);
     min-height: 85vh;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobileSmall}) {
     padding: ${({ theme }) => theme.spacing.sm};
+    padding-top: calc(${({ theme }) => theme.spacing.sm} + 5rem);
   }
 `;
 

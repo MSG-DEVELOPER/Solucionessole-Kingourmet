@@ -1,5 +1,6 @@
 import { useState } from "react";
 import LoginForm from "../../components/modals/LoginForm/LoginForm";
+import logoKG from "../../assets/icons/logoKG.svg";
 
 import {
   HeroSection,
@@ -20,12 +21,14 @@ import {
   CTASection,
   CTAInner,
   CTAButton,
+  FixedBrandBar,
+  BrandName,
+  BrandLogo,
 } from "./HomePage.styles.ts";
 
 import { CalendarDays, Users, Table } from "lucide-react";
 
 export default function HomePage() {
-  
   const [showLogin, setShowLogin] = useState(false);
 
   function handleOpenRegister() {
@@ -38,10 +41,13 @@ export default function HomePage() {
 
   return (
     <>
+      <FixedBrandBar>
+        <BrandName>KINGOURMET</BrandName>
+        <BrandLogo src={logoKG} alt="Logotipo Kingourmet" />
+      </FixedBrandBar>
+
       {/* HERO */}
       <HeroSection>
-    
-
         <HeroContent>
           <HeroCopy>
             <Title>Gestiona tu restaurante sin fricciones</Title>
@@ -49,16 +55,14 @@ export default function HomePage() {
 
             <ButtonsRow>
               <StyledButton variant="primary" onClick={handleOpenRegister}>
-                Crear Cuenta
+                Solicita Acceso
               </StyledButton>
 
               <StyledButton variant="outline" onClick={handleOpenLogin}>
                 Iniciar Sesión
               </StyledButton>
             </ButtonsRow>
-            
           </HeroCopy>
-          
         </HeroContent>
       </HeroSection>
 
@@ -115,8 +119,6 @@ export default function HomePage() {
           <CTAButton onClick={handleOpenRegister}>Comenzar Ahora</CTAButton>
         </CTAInner>
       </CTASection>
-
-    
     </>
   );
 }
