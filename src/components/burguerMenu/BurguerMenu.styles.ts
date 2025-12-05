@@ -5,7 +5,7 @@ export const Container = styled.header`
   display: none;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000; /* Por encima del modal para que siempre quede visible */
   background: linear-gradient(
     180deg,
     ${(props) => props.theme.colors.surface} 0%,
