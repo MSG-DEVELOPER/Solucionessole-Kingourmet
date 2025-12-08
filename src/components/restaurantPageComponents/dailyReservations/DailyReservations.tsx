@@ -1,7 +1,12 @@
-import { Phone } from "lucide-react";
+import { Phone, Plus, Search } from "lucide-react";
 import {
   Container,
+  TitleRow,
   Title,
+  ButtonsGroup,
+  SearchBarWrapper,
+  SearchBar,
+  AddButton,
   ReservationCard,
   NamePhoneRow,
   ReservationName,
@@ -33,7 +38,21 @@ export default function DailyReservations() {
 
   return (
     <Container>
-      <Title>RESERVAS</Title>
+      <TitleRow>
+        <Title>RESERVAS</Title>
+        <ButtonsGroup>
+          <SearchBarWrapper>
+            <SearchBar
+              placeholder="Buscar..."
+              onChange={() => {}}
+            />
+            <Search size={18} />
+          </SearchBarWrapper>
+          <AddButton onClick={() => alert("añadir reserva")} aria-label="Añadir reserva">
+            <Plus size={20} />
+          </AddButton>
+        </ButtonsGroup>
+      </TitleRow>
       {data.map((res, index) => (
         <ReservationCard key={index}>
           <NamePhoneRow>
