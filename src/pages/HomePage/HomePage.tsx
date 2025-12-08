@@ -1,5 +1,6 @@
 import { useState } from "react";
 import LoginForm from "../../components/modals/LoginForm/LoginForm";
+import SignupForm from "../../components/modals/SignupForm/SignupForm";
 import logoKG from "../../assets/icons/logoKG.svg";
 
 import {
@@ -30,9 +31,10 @@ import { CalendarDays, Users, Table } from "lucide-react";
 
 export default function HomePage() {
   const [showLogin, setShowLogin] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
 
   function handleOpenRegister() {
-    alert("Crear cuenta");
+    setShowSignup(true);
   }
 
   function handleOpenLogin() {
@@ -68,7 +70,7 @@ export default function HomePage() {
 
       {/* MODAL */}
       {showLogin && <LoginForm onClose={() => setShowLogin(false)} />}
-
+      {showSignup && <SignupForm onClose={() => setShowSignup(false)} />}
       {/* FEATURES */}
       <CardsSection>
         <SectionHeading>

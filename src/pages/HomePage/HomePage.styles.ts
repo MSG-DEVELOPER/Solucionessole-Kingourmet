@@ -156,7 +156,7 @@ export const HeroCopy = styled.div`
 
 
 export const Title = styled.h1`
-  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-size: clamp(1.8rem, 4.5vw, 3.2rem);
   font-weight: 800;
   color: ${({ theme }) => theme.colors.blue100};
   margin-bottom: 0.5rem;
@@ -165,25 +165,25 @@ export const Title = styled.h1`
 
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: clamp(1.75rem, 6vw, 2.5rem);
+    font-size: clamp(1.6rem, 5.5vw, 2.2rem);
     margin-top: 0;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobileSmall}) {
-    font-size: clamp(1.5rem, 7vw, 2rem);
+    font-size: clamp(1.4rem, 6.5vw, 1.85rem);
   }
 `;
 
 export const Subtitle = styled.span`
   display: block;
-  font-size: clamp(1.2rem, 3vw, 2.2rem);
+  font-size: clamp(1.05rem, 2.8vw, 1.75rem);
   color: ${({ theme }) => theme.colors.secondary};
   margin-top: 1.25rem;
   font-weight: 600;
   font-family: titulo;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: clamp(1rem, 4vw, 1.5rem);
+    font-size: clamp(0.95rem, 3.6vw, 1.35rem);
     margin-top: ${({ theme }) => theme.spacing.md};
   }
 `;
@@ -453,6 +453,7 @@ export const IconWrapper = styled.div`
       ${({ theme }) => theme.colors.blue600}
     );
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     opacity: 0;

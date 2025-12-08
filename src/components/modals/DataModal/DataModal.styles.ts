@@ -71,32 +71,32 @@ export const ModalHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.xl};
+  padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
   background: ${({ theme }) => theme.colors.gray100};
 
   @media (max-width: 768px) {
-    padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
+    padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
   }
 
   @media (max-width: 480px) {
-    padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
+    padding: ${({ theme }) => theme.spacing.xs} ${({ theme }) => theme.spacing.sm};
   }
   
   h2 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 700;
     letter-spacing: -0.02em;
     color: ${({ theme }) => theme.colors.black200};
     font-family: titulo;
 
     @media (max-width: 768px) {
-      font-size: 1.3rem;
+      font-size: 1.1rem;
     }
 
     @media (max-width: 480px) {
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
   }
 `;
@@ -130,15 +130,15 @@ export const ModalBody = styled.div`
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: ${({ theme }) => theme.spacing.xl};
+  padding: ${({ theme }) => theme.spacing.lg};
   min-height: 0;
 
   @media (max-width: 768px) {
-    padding: ${({ theme }) => theme.spacing.lg};
+    padding: ${({ theme }) => theme.spacing.md};
   }
 
   @media (max-width: 480px) {
-    padding: ${({ theme }) => theme.spacing.md};
+    padding: ${({ theme }) => theme.spacing.sm};
   }
   
   /* Scrollbar personalizado moderno */
@@ -163,7 +163,7 @@ export const ModalBody = styled.div`
 
 // Footer elegante y sutil
 export const ModalFooter = styled.div`
-  padding: ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.xl};
+  padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
   border-top: 1px solid ${({ theme }) => theme.colors.gray200};
   text-align: right;
   color: ${({ theme }) => theme.colors.gray500};
@@ -178,7 +178,7 @@ export const TableWrapper = styled.div`
   width: 100%;
   overflow-x: auto;
   overflow-y: auto;
-  max-height: calc(85vh - 200px);
+  max-height: calc(85vh - 140px);
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   border: 1px solid ${({ theme }) => theme.colors.gray200};
   
@@ -215,12 +215,12 @@ export const Table = styled.table`
 
 export const TableHeader = styled.th`
   text-align: left;
-  padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
+  padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
   border-bottom: 2px solid ${({ theme }) => theme.colors.gray300};
   cursor: pointer;
   user-select: none;
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: ${({ theme }) => theme.colors.gray600};
@@ -278,9 +278,9 @@ export const TableRow = styled.tr`
 `;
 
 export const TableCell = styled.td`
-  padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
+  padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
   color: ${({ theme }) => theme.colors.black200};
-  font-size: 0.9375rem;
+  font-size: 0.9rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
   font-family: cuerpo;
 `;
@@ -289,7 +289,7 @@ export const TableCell = styled.td`
 export const ActionsMenu = styled.div`
   position: absolute;
   left: calc(100% + 8px);
-  top: 50%;
+  top: -80%;
   transform: translateY(-50%);
   background: ${({ theme }) => theme.colors.surface};
   box-shadow: ${({ theme }) => theme.shadows.heavy};
@@ -298,8 +298,8 @@ export const ActionsMenu = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.xs};
-  z-index: 10;
-  min-width: 160px;
+  z-index: 15;
+  min-width: 100px;
   border: 1px solid ${({ theme }) => theme.colors.gray200};
   animation: ${fadeIn} 0.2s ease forwards;
   
@@ -321,9 +321,9 @@ export const ActionsMenu = styled.div`
     color: ${({ theme }) => theme.colors.black200};
     cursor: pointer;
     text-align: left;
-    padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
+    padding: ${({ theme }) => theme.spacing.xs} ${({ theme }) => theme.spacing.sm};
     border-radius: ${({ theme }) => theme.borderRadius.md};
-    font-size: 0.875rem;
+    font-size: 0.82rem;
     transition: ${({ theme }) => theme.transitions.fast};
     font-weight: 500;
     font-family: cuerpo;
