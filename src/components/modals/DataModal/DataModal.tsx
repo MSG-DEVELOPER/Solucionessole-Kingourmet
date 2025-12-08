@@ -17,7 +17,6 @@ import {
   TableHeader,
   TableRow,
   TableCell,
-  ActionsMenu,
   SearchBar,
   FilterIcon,
   CloseButton,
@@ -26,6 +25,8 @@ import {
   ActionsIconWrapper,
   TableWrapper,
 } from "./DataModal.styles.ts";
+
+import ActionsMenu from "./actionsMenu/ActionsMenu";
 
 interface DataModalProps {
   isOpen: boolean;
@@ -39,7 +40,9 @@ interface DataModalProps {
   onSearch?: (value: string) => void;
   onSort?: (column: string) => void;
   onFilter?: () => void;
-  onRowAction?: (action: string, row: any) => void;
+  
+  // Nuevo: acciones dinámicas por fila
+  rowActions?: (row: any) => { label: string; onClick: (row: any) => void }[];
 }
 
 const DataModal: React.FC<DataModalProps> = ({
@@ -52,7 +55,7 @@ const DataModal: React.FC<DataModalProps> = ({
   onSearch,
   onSort,
   onFilter,
-  onRowAction,
+  rowActions
 }) => {
   const [openRowMenu, setOpenRowMenu] = useState<number | null>(null);
 
@@ -98,10 +101,7 @@ const DataModal: React.FC<DataModalProps> = ({
               <thead>
                 <TableRow>
                   {columns.map((col) => (
-                    <TableHeader
-                      key={col}
-                      onClick={() => onSort?.(col)}
-                    >
+                    <TableHeader key={col} onClick={() => onSort?.(col)}>
                       {col}
                     </TableHeader>
                   ))}
@@ -124,20 +124,8 @@ const DataModal: React.FC<DataModalProps> = ({
                       >
                         <LucideMoreVertical size={20} />
 
-                        {openRowMenu === index && (
-                          <ActionsMenu>
-                            <button
-                              onClick={() => onRowAction?.("edit", row)}
-                            >
-                              Editar
-                            </button>
-
-                            <button
-                              onClick={() => onRowAction?.("delete", row)}
-                            >
-                              Eliminar
-                            </button>
-                          </ActionsMenu>
+                        {openRowMenu === index && rowActions && (
+                          <ActionsMenu actions={rowActions(row)} row={row} />
                         )}
                       </ActionsIconWrapper>
                     </TableCell>

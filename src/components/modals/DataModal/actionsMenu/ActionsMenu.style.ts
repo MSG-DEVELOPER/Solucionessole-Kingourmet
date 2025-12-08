@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const MenuContainer = styled.div`
   position: absolute;
   left: calc(100% + 8px);
-  top: -80%; /* tu valor actual */
+  top: 50%;
   transform: translateY(-50%);
   background: ${({ theme }) => theme.colors.surface};
   box-shadow: ${({ theme }) => theme.shadows.heavy};
