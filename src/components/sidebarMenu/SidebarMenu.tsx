@@ -1,19 +1,33 @@
-import { NavLink } from "react-router-dom";
-import { Settings, User, UtensilsCrossed } from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Settings, User, UtensilsCrossed, Power } from "lucide-react";
+import { toast } from "sonner";
 import {
   SidebarContainer,
   SidebarHeader,
   SidebarTitle,
   SidebarList,
   SidebarItem,
+  LogoutItem,
   IconWrapper,
   SidebarFooter,
   FooterLogo,
 } from "./SidebarMenu.styles";
 import UserBadge from "./userBadge/UserBadge";
 import logoKG from "../../assets/icons/logoKG.svg";
+import { logout } from "../../redux/slices/auth/authSlice";
+import type { AppDispatch } from "../../redux/store";
 
 function SidebarMenu() {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    toast.success("Sesión cerrada correctamente");
+    navigate("/");
+  };
+
   return (
     <SidebarContainer>
       <SidebarHeader>
@@ -47,6 +61,15 @@ function SidebarMenu() {
             Account
           </NavLink>
         </SidebarItem>
+
+        <LogoutItem>
+          <button type="button" onClick={handleLogout}>
+            <IconWrapper>
+              <Power />
+            </IconWrapper>
+            Logout
+          </button>
+        </LogoutItem>
       </SidebarList>
 
       <SidebarFooter>

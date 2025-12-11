@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Settings, User, UtensilsCrossed } from "lucide-react";
+import { Settings, User, UtensilsCrossed, Power } from "lucide-react";
 import {
   Overlay,
   MenuCard,
@@ -8,10 +8,25 @@ import {
   NavItem,
   StyledNavLink,
   IconWrapper,
+  LogoutButton,
 } from "./BurguerMenuModal.styles";
 import UserBadge from "../../sidebarMenu/userBadge/UserBadge";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../redux/slices/auth/authSlice";
+import type { AppDispatch } from "../../../redux/store";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 function BurguerMenuModal() {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    toast.success("Sesión cerrada correctamente");
+    navigate("/");
+  };
+
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -25,6 +40,9 @@ function BurguerMenuModal() {
     <Overlay>
       <MenuCard>
         <MenuHeader>
+          <LogoutButton type="button" onClick={handleLogout} aria-label="Logout">
+            <Power />
+          </LogoutButton>
           <UserBadge />
         </MenuHeader>
         <NavList>

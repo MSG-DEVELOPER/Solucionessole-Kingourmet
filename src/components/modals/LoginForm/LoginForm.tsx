@@ -1,6 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { toast } from "sonner";
+import { login } from "../../../services/authService";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../../../redux/slices/auth/authSlice";
+
 import {
   ModalOverlay,
   ModalContainer,
@@ -25,13 +30,29 @@ interface LoginFormProps {
 
 export default function LoginForm({ onClose }: LoginFormProps) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm<LoginFormData>();
 
-  const onSubmit = (data: LoginFormData) => {
-    alert("Login data:" + data);
-
-    // Por ahora solo mostramos alert y te lleva al lobby sin hacer comprobacinoes
-    navigate("/lobby");
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      const response = await login(data);
+      // Aquí enviamos los datos al store global
+      dispatch(
+        setCredentials({
+          user: response.user,
+          token: response.token,
+         
+        })
+      );
+      toast.success("Inicio de sesión exitoso");
+      navigate("/lobby");
+    } catch (e) {
+      if (e instanceof Error && e.message === "Credenciales") {
+        toast.error("Credenciales incorrectas");
+      } else {
+        toast.error("Error al iniciar sesión");
+      }
+    }
   };
 
   // Bloquear scroll cuando el modal está abierto

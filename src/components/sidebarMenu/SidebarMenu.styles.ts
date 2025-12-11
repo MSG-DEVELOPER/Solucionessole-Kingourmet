@@ -108,7 +108,8 @@ export const IconWrapper = styled.span`
 export const SidebarItem = styled.li`
   position: relative;
 
-  a {
+  a,
+  button {
     text-decoration: none;
     color: ${(props) => props.theme.colors.gray600};
     font-weight: 500;
@@ -122,6 +123,11 @@ export const SidebarItem = styled.li`
     overflow: hidden;
     letter-spacing: 0.3px;
     font-family: cuerpo;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
 
     @media (max-width: 1024px) {
       font-size: 0.9rem;
@@ -203,6 +209,61 @@ export const SidebarItem = styled.li`
     /* Efecto de ripple al hacer clic */
     &:active {
       transform: translateX(4px) scale(0.98);
+    }
+  }
+`;
+
+export const LogoutItem = styled(SidebarItem)`
+  margin-top: auto;
+
+  a,
+  button {
+    color: ${(props) => props.theme.colors.red600};
+
+    &::before {
+      background: ${(props) => props.theme.colors.red600};
+    }
+
+    &:hover {
+      background: linear-gradient(
+        90deg,
+        ${(props) => props.theme.colors.red100} 0%,
+        ${(props) => props.theme.colors.orange100} 100%
+      );
+      color: ${(props) => props.theme.colors.red700};
+    }
+
+    &.active {
+      background: linear-gradient(
+        90deg,
+        ${(props) => props.theme.colors.red100} 0%,
+        ${(props) => props.theme.colors.orange100} 100%
+      );
+      color: ${(props) => props.theme.colors.red700};
+
+      &::after {
+        background: ${(props) => props.theme.colors.red600};
+        box-shadow: 0 0 8px ${(props) => props.theme.colors.red500};
+      }
+    }
+  }
+
+  /* Hover específico para el botón de logout */
+  button {
+    &::before {
+      display: none;
+    }
+
+    &:hover {
+      background: ${(props) => props.theme.colors.red100};
+      color: ${(props) => props.theme.colors.red700};
+      transform: translateX(0) scale(1.03);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.16);
+    }
+
+    &:active {
+      transform: translateX(0) scale(0.99);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.14);
     }
   }
 `;

@@ -34,8 +34,8 @@ export const TitleRow = styled.div`
 
 export const Title = styled.h3`
   font-size: 1.2rem;
-  font-weight: 700;
-  color: ${theme.colors.gray700};
+  font-weight: 500;
+  color: ${theme.colors.gray400};
   margin: 0;
   padding: ${theme.spacing.sm} 0;
   letter-spacing: -0.02em;
@@ -208,27 +208,44 @@ export const ReservationName = styled.h3`
   }
 `;
 
-export const NamePhoneRow = styled.div`
+export const NameRow = styled.div`
   display: flex;
   align-items: center;
- // justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: ${theme.spacing.sm};
   gap: ${theme.spacing.sm};
 `;
 
-export const ReservationPhone = styled.div`
+export const ReservationStatus = styled.div`
   display: flex;
   align-items: center;
-  gap: ${theme.spacing.xs};
-  color: ${theme.colors.gray600};
-  font-size: 0.85rem;
-  margin: 0;
-  padding: ${theme.spacing.xs} ${theme.spacing.sm};
-  background: ${theme.colors.gray100};
-  border-radius: ${theme.borderRadius.md};
   flex-shrink: 0;
-  border: 1px solid ${theme.colors.gray200};
+`;
+
+export const StatusChip = styled.span<{ $estado: "confirmada" | "Pendiente" }>`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: ${theme.spacing.xs} ${theme.spacing.sm};
+  border-radius: ${theme.borderRadius.md};
+  font-weight: 600;
+  font-size: 0.8rem;
   font-family: cuerpo;
+  text-transform: capitalize;
+  transition: ${theme.transitions.fast};
+  
+  background: ${props => 
+    props.$estado === "confirmada" 
+      ? theme.colors.blue100 
+      : theme.colors.gray500};
+  color: ${props => 
+    props.$estado === "confirmada" 
+      ? theme.colors.black200 
+      : theme.colors.surface};
+  border: 1px solid ${props => 
+    props.$estado === "confirmada" 
+      ? theme.colors.blue300 
+      : theme.colors.gray600};
 
   @media (max-width: 768px) {
     font-size: 0.75rem;
@@ -237,50 +254,54 @@ export const ReservationPhone = styled.div`
 
   @media (max-width: 480px) {
     font-size: 0.7rem;
-    padding: ${theme.spacing.xs};
   }
+`;
+
+export const ReservationInfoRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${theme.spacing.md};
+  flex-wrap: wrap;
+`;
+
+export const ReservationInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${theme.spacing.xs};
+  color: ${theme.colors.gray600};
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: cuerpo;
 
   svg {
     color: ${theme.colors.gray500};
     flex-shrink: 0;
   }
-`;
 
-export const ReservationTable = styled.div`
-  display: flex;
-  align-items: center;
-  gap: ${theme.spacing.sm};
-  font-size: 0.9rem;
-  color: ${theme.colors.gray600};
-  font-weight: 500;
-  font-family: cuerpo;
-`;
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+  }
 
-export const TableChip = styled.span`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  
-  background: ${theme.colors.gray700};
-  color: white;
-  border-radius: ${theme.borderRadius.md};
-  font-weight: 600;
-  font-size: 0.9rem;
-  box-shadow: ${theme.shadows.light};
-  min-width: 40px;
-  transition: ${theme.transitions.fast};
-  font-family: cuerpo;
-
-  ${ReservationCard}:hover & {
-    background: ${theme.colors.gray600};
-    box-shadow: ${theme.shadows.medium};
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
   }
 `;
 
-export const ReservationTime = styled.span`
-  font-style: italic;
+export const LoadingWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: ${theme.spacing.lg};
+  flex: 1;
+`;
+
+export const StatusMessage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: ${theme.spacing.lg};
   color: ${theme.colors.gray600};
-  font-size: 0.9rem;
-  margin-left: ${theme.spacing.xs};
   font-family: cuerpo;
+  font-weight: 500;
+  text-align: center;
 `;

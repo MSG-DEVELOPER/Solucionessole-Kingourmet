@@ -19,14 +19,16 @@ export const Overlay = styled.div`
 
 export const MenuHeader = styled.div`
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
+  gap: ${(props) => props.theme.spacing.sm};
   margin-bottom: ${(props) => props.theme.spacing.md};
   padding-bottom: ${(props) => props.theme.spacing.sm};
   border-bottom: 1px solid ${(props) => props.theme.colors.gray200};
   opacity: 0.9;
 
   /* Desenfatiza ligeramente el badge para dar jerarquía a las opciones */
-  > * {
+  > *:not(button) {
     max-width: 260px;
     transform: scale(0.96);
     filter: saturate(0.85);
@@ -122,4 +124,36 @@ export const IconWrapper = styled.span`
   border-radius: ${(props) => props.theme.borderRadius.md};
   background: ${(props) => props.theme.colors.gray100};
   border: 1px solid ${(props) => props.theme.colors.gray200};
+`;
+
+export const LogoutButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: ${(props) => props.theme.colors.red700};
+  box-shadow: none;
+  transition: ${(props) => props.theme.transitions.fast};
+  cursor: pointer;
+
+  svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2.25;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    background: transparent;
+  }
+
+  &:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
+  }
 `;

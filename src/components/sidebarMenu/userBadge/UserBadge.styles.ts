@@ -36,6 +36,11 @@ export const InfoArea = styled.div`
   letter-spacing: 0.2px;
 `;
 
+export const Role = styled.span`
+  color: ${({ theme }) => theme.colors.gray500};
+  font-weight: 500;
+`;
+
 // Avatar como punta del misil
 export const Avatar = styled.img`
   position: absolute;
