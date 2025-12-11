@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { getReservations } from "../../../services/reservationsService";
+import { useState, useEffect, useCallback } from "react";
+import { getReservations, createReservation } from "../../../services/reservationsService";
 import { Users, Clock, Plus, Search, Armchair } from "lucide-react";
 import {
   Container,
@@ -40,30 +40,49 @@ export default function DailyReservations() {
 
   const formatHour = (hora?: string) => (hora ? hora.slice(0, 5) : "");
 
-  useEffect(() => {
-    let mounted = true;
-    async function getDataReservations() {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await getReservations(); // ← obtiene array del backend
-        if (mounted) {
-          setArrayReservations(response);
-        }
-      } catch {
-        if (mounted) {
-          setError("No se pudieron cargar las reservas. Si el problema persiste, contacta al soporte.");
-          setArrayReservations([]);
-        }
-      } finally {
-        if (mounted) setLoading(false);
-      }
+  const loadReservations = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await getReservations(); // ← obtiene array del backend
+      setArrayReservations(response);
+    } catch {
+      setError("No se pudieron cargar las reservas. Si el problema persiste, contacta al soporte.");
+      setArrayReservations([]);
+    } finally {
+      setLoading(false);
     }
-    getDataReservations();
-    return () => {
-      mounted = false;
-    };
   }, []);
+
+  useEffect(() => {
+    loadReservations();
+  }, [loadReservations]);
+
+  const handleCreateReservation = async (payload: {
+    establecimiento_id: number;
+    sala_id: number;
+    horario_id: number;
+    nombre_cliente: string;
+    telefono_cliente: string;
+    email_cliente: string | null;
+    comensales: number;
+    fecha: string;
+    hora: string;
+    notas: string;
+  }) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await createReservation(payload);
+      await loadReservations();
+      alert("reserva creada");
+    } catch {
+      setError("No se pudo crear la reserva. Inténtalo de nuevo.");
+    } finally {
+      setLoading(false);
+      setShowAddModal(false);
+    }
+  };
 
   return (
     <Container>
@@ -130,6 +149,7 @@ export default function DailyReservations() {
       <AddReservationModal
         open={showAddModal}
         onClose={() => setShowAddModal(false)}
+        onSubmit={handleCreateReservation}
       />
     </Container>
   );

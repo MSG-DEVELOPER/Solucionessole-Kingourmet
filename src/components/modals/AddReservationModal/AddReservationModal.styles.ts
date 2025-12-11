@@ -23,7 +23,7 @@ export const Overlay = styled.div`
 `;
 
 export const ModalCard = styled.div`
-  width: min(480px, 92vw);
+  width: min(460px, 92vw);
   background: ${({ theme }) => theme.colors.surface};
   border-radius: ${({ theme }) => theme.borderRadius.xl};
   box-shadow: ${({ theme }) => theme.shadows.heavy};
@@ -32,6 +32,7 @@ export const ModalCard = styled.div`
   animation: ${fadeIn} 0.22s ease;
   display: flex;
   flex-direction: column;
+  max-height: 86vh;
 `;
 
 export const Header = styled.div`
@@ -70,9 +71,11 @@ export const CloseButton = styled.button`
 
 export const Body = styled.div`
   padding: ${({ theme }) => theme.spacing.lg};
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: ${({ theme }) => theme.spacing.md};
+  overflow-y: auto;
+  max-height: 62vh;
 `;
 
 export const Field = styled.div`
@@ -83,6 +86,7 @@ export const Field = styled.div`
 
 export const Label = styled.label`
   font-weight: 600;
+  font-size: 0.9rem;
   color: ${({ theme }) => theme.colors.gray700};
   font-family: cuerpo;
 `;
@@ -105,6 +109,47 @@ export const Input = styled.input`
     border-color: ${({ theme }) => theme.colors.blue500};
     box-shadow: 0 0 0 3px ${({ theme }) => theme.colors.blue100};
   }
+`;
+
+export const Select = styled.select`
+  padding: 0.75rem ${({ theme }) => theme.spacing.md};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  border: 1.5px solid ${({ theme }) => theme.colors.gray300};
+  background: ${({ theme }) => theme.colors.surface};
+  color: ${({ theme }) => theme.colors.black200};
+  font-family: cuerpo;
+  transition: ${({ theme }) => theme.transitions.fast};
+  appearance: none;
+
+  &:focus {
+    outline: none;
+    border-color: ${({ theme }) => theme.colors.blue500};
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.colors.blue100};
+  }
+`;
+
+export const TextArea = styled.textarea`
+  padding: 0.75rem ${({ theme }) => theme.spacing.md};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  border: 1.5px solid ${({ theme }) => theme.colors.gray300};
+  background: ${({ theme }) => theme.colors.surface};
+  color: ${({ theme }) => theme.colors.black200};
+  font-family: cuerpo;
+  transition: ${({ theme }) => theme.transitions.fast};
+  min-height: 96px;
+  resize: vertical;
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.gray400};
+  }
+
+  &:focus {
+    outline: none;
+    border-color: ${({ theme }) => theme.colors.blue500};
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.colors.blue100};
+  }
+  grid-column: 1 / -1;
+  min-height: 72px;
 `;
 
 export const Actions = styled.div`
