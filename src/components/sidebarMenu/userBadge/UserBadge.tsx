@@ -1,5 +1,5 @@
 import { Container, InfoArea, Avatar, Role } from "./UserBadge.styles";
-import placeholderUser from "../../../assets/icons/placeholderUser.svg";
+import bbSvg from "../../../assets/icons/bb.svg";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../redux/store";
@@ -25,7 +25,7 @@ function UserBadge() {
       </InfoArea>
 
       <Avatar
-        src = {placeholderUser} 
+        src = {bbSvg} 
         alt="User avatar"
         onClick={()=>navigate("/lobby/account")}
       />

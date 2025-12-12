@@ -1,7 +1,7 @@
 import { useState } from "react";
 import LoginForm from "../../components/modals/LoginForm/LoginForm";
 import SignupForm from "../../components/modals/SignupForm/SignupForm";
-import logoKG from "../../assets/icons/logoKG.svg";
+import logoKG from "../../assets/icons/Kingourmet_no_bg.svg";
 
 import {
   HeroSection,

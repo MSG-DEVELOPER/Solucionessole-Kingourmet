@@ -7,6 +7,7 @@ import LobbyPage from "./pages/LobbyPage/LobbyPage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import AccountPage from "./pages/AccountPage/AccountPage";
 import RestaurantPage from "./pages/RestaurantPage/RestaurantPage";
+import FAQSPage from "./pages/FAQSPage/FAQSPage";
 import ProtectedRoute from "./router/ProtectedRoute";
 
 import "./App.css";
@@ -23,6 +24,7 @@ function App() {
           <Route path="restaurant" element={<RestaurantPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="account" element={<AccountPage />} />
+          <Route path="faqs" element={<FAQSPage />} />
         </Route>
       </Routes>
     </>

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Settings, User, UtensilsCrossed, Power } from "lucide-react";
+import { Settings, User, UtensilsCrossed, Power, BookOpenCheck } from "lucide-react";
 import {
   Overlay,
   MenuCard,
@@ -70,6 +70,15 @@ function BurguerMenuModal() {
                 <User />
               </IconWrapper>
               Account
+            </StyledNavLink>
+          </NavItem>
+
+          <NavItem>
+            <StyledNavLink to="faqs">
+              <IconWrapper>
+                <BookOpenCheck />
+              </IconWrapper>
+              FAQS
             </StyledNavLink>
           </NavItem>
         </NavList>

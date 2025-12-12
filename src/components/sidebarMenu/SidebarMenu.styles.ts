@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SidebarContainer = styled.aside`
-  width: 240px;
+  width: 180px;
   height: 100%;
   background: linear-gradient(
     180deg,
@@ -18,12 +18,12 @@ export const SidebarContainer = styled.aside`
   overflow-x: hidden;
 
   @media (max-width: 1024px) {
-    width: 200px;
+    width: 160px;
     padding: ${(props) => props.theme.spacing.xs} ${(props) => props.theme.spacing.xs};
   }
 
   @media (max-width: 768px) {
-    width: 180px;
+    width: 150px;
   }
 
   @media (max-width: 480px) {
@@ -95,12 +95,12 @@ export const IconWrapper = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: ${(props) => props.theme.spacing.md};
+  margin-right: ${(props) => props.theme.spacing.sm};
   transition: ${(props) => props.theme.transitions.fast};
   
   svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     stroke-width: 2;
   }
 `;
@@ -113,8 +113,8 @@ export const SidebarItem = styled.li`
     text-decoration: none;
     color: ${(props) => props.theme.colors.gray600};
     font-weight: 500;
-    font-size: 0.95rem;
-    padding: ${(props) => props.theme.spacing.md} ${(props) => props.theme.spacing.lg};
+    font-size: 0.9rem;
+    padding: ${(props) => props.theme.spacing.md} ${(props) => props.theme.spacing.md};
     display: flex;
     align-items: center;
     border-radius: ${(props) => props.theme.borderRadius.lg};
@@ -255,15 +255,19 @@ export const LogoutItem = styled(SidebarItem)`
     }
 
     &:hover {
-      background: ${(props) => props.theme.colors.red100};
-      color: ${(props) => props.theme.colors.red700};
-      transform: translateX(0) scale(1.03);
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.16);
+      background: none;
+      color: ${(props) => props.theme.colors.red600};
+      transform: none;
+      box-shadow: none;
+
+      ${IconWrapper} {
+        transform: scale(1.1);
+      }
     }
 
     &:active {
-      transform: translateX(0) scale(0.99);
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.14);
+      transform: none;
+      box-shadow: none;
     }
   }
 `;
@@ -277,11 +281,12 @@ export const SidebarFooter = styled.div`
   align-items: center;
   gap: ${(props) => props.theme.spacing.sm};
   border-top: 1px solid ${(props) => props.theme.colors.gray200};
+  background-color: ${(props) => props.theme.colors.background};
 `;
 
 export const FooterLogo = styled.img`
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
 `;

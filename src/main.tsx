@@ -16,7 +16,12 @@ createRoot(document.getElementById("root")!).render(
       <Provider store={store}>
         <StrictMode>
           <App />
-          <Toaster position="bottom-right"/>
+          <Toaster 
+            position="bottom-right"
+            expand={true}
+            richColors={false}
+            closeButton={true}
+          />
         </StrictMode>
       </Provider>
     </ThemeProvider>

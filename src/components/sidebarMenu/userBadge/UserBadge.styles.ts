@@ -6,7 +6,9 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   height: 60px;
-  width: 100%;
+  width: calc(100% + 2 * ${({ theme }) => theme.spacing.md});
+  margin-left: calc(-1 * ${({ theme }) => theme.spacing.md});
+  margin-right: calc(-1 * ${({ theme }) => theme.spacing.md});
   background: linear-gradient(
     120deg,
     ${({ theme }) => theme.colors.gray100},
@@ -53,4 +55,10 @@ export const Avatar = styled.img`
   border: 2px solid ${({ theme }) => theme.colors.surface};
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   background: ${({ theme }) => theme.colors.surface};
+  cursor: pointer;
+  transition: ${({ theme }) => theme.transitions.fast};
+
+  &:hover {
+    transform: scale(1.15);
+  }
 `;
