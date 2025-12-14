@@ -12,7 +12,7 @@ interface User {
 
 interface AuthState {
   user: User | null;
-  token: string | null;
+  establecimientoId: number | null;
   isLoggedIn: boolean;
 }
 
@@ -20,7 +20,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   user: null,
-  token: null,
+  establecimientoId: null,
   isLoggedIn: false,
 };
 
@@ -28,15 +28,17 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setCredentials: (state, action: PayloadAction<{ user: User; token: string }>) => {
+    setCredentials: (state, action: PayloadAction<{ user: User; establecimientoId: number }>) => {
       state.user = action.payload.user;
-      state.token = action.payload.token;
+      state.establecimientoId = action.payload.establecimientoId;
       state.isLoggedIn = true;
     },
     logout: (state) => {
       state.user = null;
-      state.token = null;
+      state.establecimientoId = null;
       state.isLoggedIn = false;
+      // Limpiar token de sessionStorage
+      sessionStorage.removeItem("token");
     },
   },
 });

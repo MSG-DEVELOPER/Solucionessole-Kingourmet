@@ -10,6 +10,7 @@ export interface LoginData {
     nombre: string;
     email: string;
     rol: string;
+    establecimiento_id?: number;
     [key: string]: any;
   }
   

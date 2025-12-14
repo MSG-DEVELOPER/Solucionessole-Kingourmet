@@ -36,12 +36,13 @@ export default function LoginForm({ onClose }: LoginFormProps) {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await login(data);
-      // Aquí enviamos los datos al store global
+      // Guardar token en sessionStorage
+      sessionStorage.setItem("token", response.token);
+      // Aquí enviamos los datos al store global (sin el token)
       dispatch(
         setCredentials({
           user: response.user,
-          token: response.token,
-         
+          establecimientoId: response.user.establecimiento_id ?? 0,
         })
       );
       toast.success("Inicio de sesión exitoso");
