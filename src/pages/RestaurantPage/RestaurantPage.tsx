@@ -20,7 +20,6 @@ function RestaurantPage() {
   const config = useSelector((state: RootState) => state.config.data);
 
   useEffect(() => {
-    // Si ya tenemos la config en Redux, no hacemos fetch
     if (config || !establecimientoId) return;
 
     const token = sessionStorage.getItem("token");
@@ -29,11 +28,10 @@ function RestaurantPage() {
     async function loadConfig() {
       try {
         const res = await getConfig(token as string, establecimientoId);
-        // Guardamos toda la data en Redux
         if (res.data) {
           dispatch(setConfig(res.data));
         }
-        console.log(res.message); // alert opcional o console
+        console.log(res.message);
       } catch (error) {
         console.error(error);
       }

@@ -1,20 +1,55 @@
 // SettingsGrid.tsx
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../redux/store";
+
 import { settingsData } from "../../../assets/data/settingsData";
 import SettingsItem from "../settingsItem/SettingsItem";
 import { GridContainer } from "./SettingsGrid.styles";
 import { mockData } from "../../../assets/data/mockData";
 
 import DataModal from "../../modals/DataModal/DataModal";
-import { genericActions, productActions } from "../../../assets/data/rowActions";
+import { genericActions } from "../../../assets/data/rowActions";
+
+import { configToTableData } from "../../../utils/configAdapters";
 
 function SettingsGrid() {
   const [selectedSetting, setSelectedSetting] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
+  // 👉 config desde redux
+  const config = useSelector((state: RootState) => state.config.data);
+
   function handleOpenModal(title: string) {
     setSelectedSetting(title);
     setModalOpen(true);
+  }
+
+  function resolveData() {
+    if (!selectedSetting) return [];
+
+    if (selectedSetting === "Ajustes Generales") {
+      return configToTableData(config);
+    }
+
+    return mockData[selectedSetting] ?? [];
+  }
+
+  function resolveRowActions(row: any) {
+    if (selectedSetting === "Ajustes Generales") {
+      return [
+        {
+          label: "Editar",
+          onClick: () => {
+            alert(
+              `Editar configuración\n\nCampo: ${row.label}\nValor actual: ${row.value}\nKey: ${row.key}`
+            );
+          },
+        },
+      ];
+    }
+
+    return genericActions;
   }
 
   return (
@@ -36,24 +71,10 @@ function SettingsGrid() {
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         title={selectedSetting ?? ""}
-        data={selectedSetting ? mockData[selectedSetting] : []}
+        data={resolveData()}
         showSearchBar
         showFilterIcon
-        rowActions={() => {
-          if (selectedSetting === "Reservas") return genericActions;
-          if (selectedSetting === "Clientes") return genericActions;
-          if (selectedSetting === "Mesas") return genericActions;
-          if (selectedSetting === "Horarios") return genericActions;
-          if (selectedSetting === "Duraciones") return genericActions;
-          if (selectedSetting === "Aperturas") return genericActions;
-          if (selectedSetting === "Plantillas") return genericActions;
-          if (selectedSetting === "Integraciones") return genericActions;
-          if (selectedSetting === "Seguridad") return genericActions;
-          if (selectedSetting === "Idioma y Región") return genericActions;
-          if (selectedSetting === "Estadísticas") return genericActions;
-          if (selectedSetting === "Ajustes Generales") return productActions;
-          return [];
-        }}
+        rowActions={resolveRowActions}
       />
     </>
   );

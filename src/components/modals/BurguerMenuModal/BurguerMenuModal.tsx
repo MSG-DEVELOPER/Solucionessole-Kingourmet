@@ -13,6 +13,7 @@ import {
 import UserBadge from "../../sidebarMenu/userBadge/UserBadge";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/slices/auth/authSlice";
+import { clearConfig } from "../../../redux/slices/config/configSlice";
 import type { AppDispatch } from "../../../redux/store";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -23,6 +24,7 @@ function BurguerMenuModal() {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(clearConfig());
     toast.success("Sesión cerrada correctamente");
     navigate("/");
   };

@@ -1,10 +1,15 @@
 import { useState, useEffect, useCallback } from "react";
 import { getReservations, createReservation } from "../../../services/reservationsService";
-import { Users, Clock, Plus, Search, Armchair } from "lucide-react";
+import { Users, Clock, Plus, Search, Armchair, Calendar } from "lucide-react";
 import {
   Container,
   TitleRow,
-  Title,
+  DateSelectorWrapper,
+  DateDisplay,
+  DayNumber,
+  DateRest,
+  DateInput,
+  CalendarIcon,
   ButtonsGroup,
   SearchBarWrapper,
   SearchBar,
@@ -37,8 +42,25 @@ export default function DailyReservations() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
+  
+  // Estado para la fecha seleccionada (inicialmente hoy)
+  const [selectedDate, setSelectedDate] = useState<string>(() => {
+    const today = new Date();
+    return today.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+  });
 
   const formatHour = (hora?: string) => (hora ? hora.slice(0, 5) : "");
+
+  // Obtener el día y el resto de la fecha por separado
+  const getDateParts = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const rest = date.toLocaleDateString('es-ES', {
+      month: 'long',
+      year: 'numeric'
+    });
+    return { day, rest };
+  };
 
   const loadReservations = useCallback(async () => {
     setLoading(true);
@@ -87,7 +109,21 @@ export default function DailyReservations() {
   return (
     <Container>
       <TitleRow>
-        <Title>RESERVAS</Title>
+        <DateSelectorWrapper>
+          <DateDisplay>
+            <DayNumber>{getDateParts(selectedDate).day}</DayNumber>
+            <DateRest> de {getDateParts(selectedDate).rest}</DateRest>
+          </DateDisplay>
+          <CalendarIcon>
+            <Calendar size={18} />
+            <DateInput
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              aria-label="Seleccionar fecha"
+            />
+          </CalendarIcon>
+        </DateSelectorWrapper>
         <ButtonsGroup>
           <SearchBarWrapper>
             <SearchBar placeholder="Buscar..." onChange={() => {}} />

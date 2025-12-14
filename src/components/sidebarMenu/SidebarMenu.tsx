@@ -16,6 +16,7 @@ import {
 import UserBadge from "./userBadge/UserBadge";
 import logoKG from "../../assets/icons/Kingourmet_no_bg.svg";
 import { logout } from "../../redux/slices/auth/authSlice";
+import { clearConfig } from "../../redux/slices/config/configSlice";
 import type { AppDispatch } from "../../redux/store";
 
 function SidebarMenu() {
@@ -24,6 +25,7 @@ function SidebarMenu() {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(clearConfig());
     toast.success("Sesión cerrada correctamente");
     navigate("/");
   };

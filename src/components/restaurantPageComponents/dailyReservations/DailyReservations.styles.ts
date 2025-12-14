@@ -55,6 +55,118 @@ export const Title = styled.h3`
   }
 `;
 
+export const DateSelectorWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: ${theme.spacing.sm};
+`;
+
+export const DateDisplay = styled.div`
+  display: flex;
+  align-items: baseline;
+  gap: ${theme.spacing.xs};
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: ${theme.colors.gray400};
+  padding: ${theme.spacing.sm} 0;
+  letter-spacing: -0.02em;
+  font-family: titulo;
+  text-transform: capitalize;
+
+  @media (max-width: 1024px) {
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
+`;
+
+export const DayNumber = styled.span`
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: ${theme.colors.black200};
+  font-family: titulo;
+
+  @media (max-width: 1024px) {
+    font-size: 1.3rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
+  }
+`;
+
+export const DateRest = styled.span`
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: ${theme.colors.gray400};
+  font-family: titulo;
+
+  @media (max-width: 1024px) {
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
+`;
+
+export const CalendarIcon = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${theme.colors.gray500};
+  cursor: pointer;
+  transition: ${theme.transitions.fast};
+  padding: ${theme.spacing.xs};
+  border-radius: ${theme.borderRadius.md};
+
+  &:hover {
+    color: ${theme.colors.blue500};
+    background: ${theme.colors.blue50};
+  }
+
+  svg {
+    pointer-events: none;
+  }
+`;
+
+export const DateInput = styled.input`
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 1;
+  left: 0;
+  top: 0;
+
+  &::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+`;
+
 export const ButtonsGroup = styled.div`
   display: flex;
   gap: ${theme.spacing.sm};
