@@ -17,7 +17,7 @@ function SettingsGrid() {
   const [selectedSetting, setSelectedSetting] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // 👉 config desde redux
+  // 👉 config desde redux para cuando entras a Ajustes generales
   const config = useSelector((state: RootState) => state.config.data);
 
   function handleOpenModal(title: string) {
@@ -38,18 +38,7 @@ function SettingsGrid() {
   }
 
   function resolveRowActions(row: any) {
-    if (selectedSetting === "Ajustes Generales") {
-      return [
-        {
-          label: "Editar",
-          onClick: () => {
-            alert(
-              `Editar configuración\n\nCampo: ${row.label}\nValor actual: ${row.value}\nKey: ${row.key}`
-            );
-          },
-        },
-      ];
-    }
+    if (!row) return [];
 
     return genericActions;
   }

@@ -34,14 +34,12 @@ interface DataModalProps {
   data: Record<string, any>[];
   title?: string;
 
-  // Opcionales para lógica futura
   showSearchBar?: boolean;
   showFilterIcon?: boolean;
   onSearch?: (value: string) => void;
   onSort?: (column: string) => void;
   onFilter?: () => void;
-  
-  // Nuevo: acciones dinámicas por fila
+
   rowActions?: (row: any) => { label: string; onClick: (row: any) => void }[];
 }
 
@@ -55,18 +53,21 @@ const DataModal: React.FC<DataModalProps> = ({
   onSearch,
   onSort,
   onFilter,
-  rowActions
+  rowActions,
 }) => {
   const [openRowMenu, setOpenRowMenu] = useState<number | null>(null);
 
   if (!isOpen) return null;
 
-  const columns = data.length > 0 ? Object.keys(data[0]) : [];
+  // 👇 KISS: no pintamos keys internas
+  const columns =
+    data.length > 0
+      ? Object.keys(data[0]).filter((key) => !key.startsWith("_"))
+      : [];
 
   return (
     <ModalOverlay>
       <ModalContainer>
-        {/* Header */}
         <ModalHeader>
           <h2>{title}</h2>
           <CloseButton onClick={onClose}>
@@ -95,7 +96,6 @@ const DataModal: React.FC<DataModalProps> = ({
             </SearchContainer>
           )}
 
-          {/* Tabla */}
           <TableWrapper>
             <Table>
               <thead>

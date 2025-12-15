@@ -23,6 +23,7 @@ export function configToTableData(config?: ConfigData) {
   if (!config) return [];
 
   return Object.entries(config).map(([key, value]) => ({
+    _key: key, // 👈 clave real (NO UI)
     Parámetro: configLabels[key] ?? key,
     Valor: value ?? "-",
   }));
