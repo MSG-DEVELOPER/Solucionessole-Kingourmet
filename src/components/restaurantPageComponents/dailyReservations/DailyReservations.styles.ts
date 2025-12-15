@@ -138,7 +138,7 @@ export const CalendarIcon = styled.div`
 
   &:hover {
     color: ${theme.colors.blue500};
-    background: ${theme.colors.blue50};
+    background: ${theme.colors.blue100};
   }
 
   svg {

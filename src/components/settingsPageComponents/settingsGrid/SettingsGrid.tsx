@@ -29,6 +29,8 @@ function SettingsGrid() {
     if (!selectedSetting) return [];
 
     if (selectedSetting === "Ajustes Generales") {
+      if (!config) return [];
+
       return configToTableData(config);
     }
 
