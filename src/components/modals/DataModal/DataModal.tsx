@@ -31,7 +31,7 @@ import ActionsMenu from "./actionsMenu/ActionsMenu";
 interface DataModalProps {
   isOpen: boolean;
   onClose: () => void;
-  data: Record<string, any>[];
+  data: Record<string, unknown>[];
   title?: string;
 
   showSearchBar?: boolean;
@@ -40,7 +40,9 @@ interface DataModalProps {
   onSort?: (column: string) => void;
   onFilter?: () => void;
 
-  rowActions?: (row: any) => { label: string; onClick: (row: any) => void }[];
+  rowActions?: (
+    row: Record<string, unknown>
+  ) => { label: string; onClick: (row: Record<string, unknown>) => void }[];
 }
 
 const DataModal: React.FC<DataModalProps> = ({
@@ -113,7 +115,9 @@ const DataModal: React.FC<DataModalProps> = ({
                 {data.map((row, index) => (
                   <TableRow key={index}>
                     {columns.map((col) => (
-                      <TableCell key={col}>{row[col]}</TableCell>
+                      <TableCell key={col}>
+                        {String(row[col] ?? "")}
+                      </TableCell>
                     ))}
 
                     <TableCell>

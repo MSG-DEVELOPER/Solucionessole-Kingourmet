@@ -17,7 +17,7 @@ export interface ConfigData {
   politica_cancelacion?: string;
   dias_anticipacion_max?: number;
   dias_anticipacion_min?: number;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface ConfigState {

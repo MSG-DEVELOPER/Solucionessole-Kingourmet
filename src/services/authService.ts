@@ -11,7 +11,7 @@ export interface LoginData {
     email: string;
     rol: string;
     establecimiento_id?: number;
-    [key: string]: any;
+  [key: string]: unknown;
   }
   
   export interface LoginResponse {

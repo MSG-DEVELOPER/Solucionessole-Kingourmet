@@ -7,7 +7,7 @@ interface User {
   nombre: string;
   email: string;
   rol: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface AuthState {

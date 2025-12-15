@@ -1,6 +1,6 @@
 // src/adapters/configAdapter.ts
 
-type ConfigData = Record<string, any>;
+type ConfigData = Record<string, unknown>;
 
 const configLabels: Record<string, string> = {
   duracion_media_reserva: "Duración media de la reserva (min)",
