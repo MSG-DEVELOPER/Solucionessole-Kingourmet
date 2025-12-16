@@ -1,13 +1,17 @@
 // EditRowModal.tsx
+//modal de edición de fila,este se puede reutilizar para cualquier tabla que SOLO tenga la accion editar
+//en el futuro quizas haya que hacer un modal con acciones diferentes , por ejemplo, editar y eliminar
 import React, { useState } from "react";
 import {
-  ModalOverlay,
-  ModalContainer,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  CloseButton,
-} from "../DataModal.styles";
+  EditModalOverlay,
+  EditModalContainer,
+  EditModalHeader,
+  EditModalBody,
+  EditModalFooter,
+  EditCloseButton,
+  TextInput,
+  PrimaryButton,
+} from "./EditRowModal.styles";
 import { LucideX } from "lucide-react";
 
 interface EditRowModalProps {
@@ -35,37 +39,34 @@ const EditRowModal: React.FC<EditRowModalProps> = ({
     if (row._key && onSave) {
       onSave(row._key, value);
     }
-    alert(`Guardar: ${row._key} → ${value}`); // por ahora solo alert
+   
     onClose();
   }
 
   return (
-    <ModalOverlay>
-      <ModalContainer>
-        <ModalHeader>
-          <h2>Editar {row.Parámetro}</h2>
-          <CloseButton onClick={onClose}>
+    <EditModalOverlay>
+      <EditModalContainer>
+        <EditModalHeader>
+          <h2>Editar campo</h2>
+          <EditCloseButton onClick={onClose}>
             <LucideX size={20} />
-          </CloseButton>
-        </ModalHeader>
+          </EditCloseButton>
+        </EditModalHeader>
 
-        <ModalBody>
+        <EditModalBody>
           <label>{row.Parámetro}</label>
-          <input
+          <TextInput
             type="text"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            style={{ width: "100%", padding: "8px", marginTop: "8px" }}
           />
-        </ModalBody>
+        </EditModalBody>
 
-        <ModalFooter>
-          <button onClick={handleSave} style={{ padding: "8px 12px" }}>
-            Guardar
-          </button>
-        </ModalFooter>
-      </ModalContainer>
-    </ModalOverlay>
+        <EditModalFooter>
+          <PrimaryButton onClick={handleSave}>Guardar</PrimaryButton>
+        </EditModalFooter>
+      </EditModalContainer>
+    </EditModalOverlay>
   );
 };
 

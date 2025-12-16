@@ -11,7 +11,7 @@ interface ActionsMenuProps {
   row: Record<string, unknown>;
 }
 
-const ActionsMenu: React.FC<ActionsMenuProps> = ({ actions, row }) => {
+const ActionsMenu: React.FC<ActionsMenuProps> = ({ actions, row }) => { 
   // row fila clickada , array de acciones YA creadas para esa fila
   return (
     <MenuContainer>

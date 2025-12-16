@@ -24,6 +24,7 @@ import {
   SearchBarWrapper,
   ActionsIconWrapper,
   TableWrapper,
+  HeaderRight,
 } from "./DataModal.styles.ts";
 
 import ActionsMenu from "./actionsMenu/ActionsMenu";
@@ -72,32 +73,35 @@ const DataModal: React.FC<DataModalProps> = ({
       <ModalContainer>
         <ModalHeader>
           <h2>{title}</h2>
-          <CloseButton onClick={onClose}>
-            <LucideX size={20} />
-          </CloseButton>
+
+          <HeaderRight>
+            {(showSearchBar || showFilterIcon) && (
+              <SearchContainer>
+                {showSearchBar && (
+                  <SearchBarWrapper>
+                    <SearchBar
+                      placeholder="Buscar..."
+                      onChange={(e) => onSearch?.(e.target.value)}
+                    />
+                    <LucideSearch size={18} />
+                  </SearchBarWrapper>
+                )}
+
+                {showFilterIcon && (
+                  <FilterIcon onClick={() => onFilter?.()}>
+                    <LucideSliders size={20} />
+                  </FilterIcon>
+                )}
+              </SearchContainer>
+            )}
+
+            <CloseButton onClick={onClose}>
+              <LucideX size={20} />
+            </CloseButton>
+          </HeaderRight>
         </ModalHeader>
 
         <ModalBody>
-          {(showSearchBar || showFilterIcon) && (
-            <SearchContainer>
-              {showSearchBar && (
-                <SearchBarWrapper>
-                  <SearchBar
-                    placeholder="Buscar..."
-                    onChange={(e) => onSearch?.(e.target.value)}
-                  />
-                  <LucideSearch size={18} />
-                </SearchBarWrapper>
-              )}
-
-              {showFilterIcon && (
-                <FilterIcon onClick={() => onFilter?.()}>
-                  <LucideSliders size={20} />
-                </FilterIcon>
-              )}
-            </SearchContainer>
-          )}
-
           <TableWrapper>
             <Table>
               <thead>

@@ -69,7 +69,6 @@ export const ModalContainer = styled.div`
 // Header moderno con separador sutil
 export const ModalHeader = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
@@ -101,13 +100,20 @@ export const ModalHeader = styled.div`
   }
 `;
 
+export const HeaderRight = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.md};
+  margin-left: auto;
+`;
+
 export const CloseButton = styled.button`
-  background: ${({ theme }) => theme.colors.gray100};
-  border: 1px solid ${({ theme }) => theme.colors.gray300};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
+  background: ${({ theme }) => theme.colors.surface};
+  border: 1.5px solid ${({ theme }) => theme.colors.gray300};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
   color: ${({ theme }) => theme.colors.gray600};
   cursor: pointer;
-  padding: ${({ theme }) => theme.spacing.sm};
+  padding: 0.875rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -339,8 +345,8 @@ export const FilterIcon = styled.div`
 export const SearchContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
   gap: ${({ theme }) => theme.spacing.md};
+  max-width: 420px;
 `;
 
 // Wrapper para la barra de búsqueda con icono

@@ -9,11 +9,13 @@ import { mockData } from "../../../assets/data/mockData";
 import DataModal from "../../modals/DataModal/DataModal";
 import EditRowModal from "../../modals/DataModal/editRowModal/EditRowModal";
 import { configToTableData } from "../../../utils/configAdapters";
-
+import { resolveSwitchTitleEndpoint } from "../../../utils/resolveSwitchTitleEndpoint";
 function SettingsGrid() {
   const [selectedSetting, setSelectedSetting] = useState<string | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [editingRow, setEditingRow] = useState<{
+  // lectura
+  const [tableModalOpen, setTableModalOpen] = useState(false);
+  // edición
+  const [rowBeingEdited, setRowBeingEdited] = useState<{
     Parámetro: string;
     Valor: unknown;
     _key?: string;
@@ -21,13 +23,16 @@ function SettingsGrid() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   // 👉 config desde redux para cuando entras a Ajustes generales
   const config = useSelector((state: RootState) => state.config.data);
+  // establecimientoId desde redux para cuando entras a Ajustes generales y tienes que enviar el establecimientoId por URl
+  const establecimientoId = useSelector((state: RootState) => state.auth.establecimientoId);
+  
 
   function handleOpenModal(title: string) {
     setSelectedSetting(title);
-    setModalOpen(true);
+    setTableModalOpen(true);
   }
 
-  function resolveData() {
+  function resolveData() { //helper que te dice los datos de la tabla a renderizar
     if (!selectedSetting) return [];
 
     if (selectedSetting === "Ajustes Generales") {
@@ -39,53 +44,75 @@ function SettingsGrid() {
     return mockData[selectedSetting] ?? [];
   }
 
+  function handleEditRow(row: Record<string, unknown>) { //pàra editar una fila en tablas que solo tengan la accion editar
+    setRowBeingEdited(
+      row as {
+        Parámetro: string;
+        Valor: unknown;
+        _key?: string;
+      }
+    );
+    setEditModalOpen(true);
+  }
+
   function resolveRowActions(row: Record<string, unknown>) {
     return [
       {
         label: "Editar",
-        onClick: () => {
-          setEditingRow(
-            row as {
-              Parámetro: string;
-              Valor: unknown;
-              _key?: string;
-            }
-          );
-          setEditModalOpen(true);
-        },
+        onClick: () => handleEditRow(row),
       },
     ];
   }
+
+  function handleSaveEdit(key: string, newValue: string) {
+    if (!selectedSetting) return;
+  
+    const endpoint = resolveSwitchTitleEndpoint(selectedSetting);
+    if (!endpoint) {
+      console.warn("No endpoint for:", selectedSetting);
+      return;
+    }
+  
+    // de momento solo probamos que TODO llega bien
+    alert(`PUT ${endpoint}/${establecimientoId}/${key} = ${newValue}`);
+  
+    // más adelante:
+    // await api.put(endpoint, { [key]: newValue });
+    // dispatch(updateConfig({ key, value: newValue }));
+  }
+  
   
   return (
     <>
       <GridContainer>
-        {settingsData.map((item, index) => (
+        {settingsData.map((item, index) => ( //renderizamos los items del grid, los botones
           <SettingsItem
             key={index}
             icon={item.icon}
             title={item.title}
             desc={item.desc}
-            onClick={() => handleOpenModal(item.title)}
+            onClick={() => handleOpenModal(item.title)} 
           />
         ))}
       </GridContainer>
 
       {/* Modal global */}
-      <DataModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
+      <DataModal //modal global que contiene la tabla
+        isOpen={tableModalOpen}
+        onClose={() => setTableModalOpen(false)}
         title={selectedSetting ?? ""}
-        data={resolveData()}
+        data={resolveData()} //datos de la tabla a renderizar
         showSearchBar
         showFilterIcon
-        rowActions={resolveRowActions}
+        rowActions={resolveRowActions} //actions para la fila clickada
       />
-      {/* Modal de edición de fila */}
+      {/* Modal de edición de fila,este se puede reutilizar para cualquier tabla que SOLO tenga la accion editar */}
       <EditRowModal
+        key={rowBeingEdited?._key ?? "edit-modal"}
         isOpen={editModalOpen}
         onClose={() => setEditModalOpen(false)}
-        row={editingRow}
+        row={rowBeingEdited} //datos de la fila a editar
+        onSave={handleSaveEdit} //funcion que se ejecuta cuando le das al boton guardar en el modal de edición de fila
       />
     </>
   );

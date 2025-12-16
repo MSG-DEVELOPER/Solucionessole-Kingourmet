@@ -1,6 +1,6 @@
 // src/assets/data/rowActions.ts
-
-export interface Action {
+//parece que no lo estoy utilzando
+/*export interface Action {
   label: string;
   onClick: (row: Record<string, unknown>) => void;
 }
@@ -30,4 +30,4 @@ export const productActions: Action[] = [
     label: "Eliminar producto",
     onClick: (row) => alert(`Eliminar producto: ${JSON.stringify(row)}`),
   },
-];
+];*/
