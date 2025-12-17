@@ -2,12 +2,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/auth/authSlice";
 import configReducer from "./slices/config/configSlice";
+import establishmentReducer from "./slices/establishment/establishmentSlice";
 
 export const store = configureStore({
   reducer: {
     // aquía vamos añadir los slices
     auth: authReducer,
     config: configReducer,
+    establishment: establishmentReducer,
   },
 });
 

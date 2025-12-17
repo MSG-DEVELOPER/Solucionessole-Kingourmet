@@ -14,7 +14,8 @@ export const MenuContainer = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.xs};
   z-index: 15;
-  min-width: 100px; /* tu valor actual */
+  min-width: 70px;
+  max-width: 80px;
   border: 1px solid ${({ theme }) => theme.colors.gray200};
 
   /* Flecha apuntando al botón */
@@ -35,12 +36,13 @@ export const MenuContainer = styled.div`
     color: ${({ theme }) => theme.colors.black200};
     cursor: pointer;
     text-align: left;
-    padding: ${({ theme }) => theme.spacing.xs} ${({ theme }) => theme.spacing.sm};
+    padding: ${({ theme }) => theme.spacing.xs} ${({ theme }) => theme.spacing.xs};
     border-radius: ${({ theme }) => theme.borderRadius.md};
-    font-size: 0.82rem; /* tu valor actual */
+    font-size: 0.82rem;
     transition: ${({ theme }) => theme.transitions.fast};
     font-weight: 500;
     font-family: cuerpo;
+    white-space: nowrap;
 
     &:hover {
       background: ${({ theme }) => theme.colors.blue100};

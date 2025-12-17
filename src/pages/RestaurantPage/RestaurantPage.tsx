@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import DailyReservations from "../../components/restaurantPageComponents/dailyReservations/DailyReservations";
 import RestaurantLayout from "../../components/restaurantPageComponents/restaurantLayout/RestaurantLayout";
 import { getConfig } from "../../services/configService";
+import { getEstablishment } from "../../services/establishmentService";
 import type { RootState } from "../../redux/store";
 import { setConfig } from "../../redux/slices/config/configSlice";
+import { setEstablishment } from "../../redux/slices/establishment/establishmentSlice";
 
 import {
   RestaurantPageContainer,
@@ -37,7 +39,26 @@ function RestaurantPage() {
       }
     }
 
+    async function loadEstablishment() {
+      try {
+        const data = await getEstablishment(
+          token as string,
+          establecimientoId
+        );
+    
+        if (data) {
+          dispatch(setEstablishment(data));
+        }
+    
+       
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    
+
     loadConfig();
+    loadEstablishment();
   }, [dispatch, config, establecimientoId]);
 
   return (
