@@ -22,7 +22,7 @@ const configLabels: Record<string, string> = {
 export function configToTableData(config?: ConfigData) {
   if (!config) return [];
 
-  return Object.entries(config).map(([key, value]) => ({
+  return Object.entries(config).map(([key, value]) => ({ //.entries() devuelve un array de [key, value]
     _key: key, // 👈 clave real (NO UI)
     Parámetro: configLabels[key] ?? key,
     Valor: value ?? "-",

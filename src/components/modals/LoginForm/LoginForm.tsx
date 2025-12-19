@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { login } from "../../../services/authService";
+import { login } from "../../../services/auth/authService";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../../redux/slices/auth/authSlice";
 

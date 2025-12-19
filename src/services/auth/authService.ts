@@ -1,4 +1,4 @@
-// src/services/authService.ts
+// src/services/auth/authService.ts
 
 export interface LoginData {
     email: string;
@@ -44,4 +44,4 @@ export interface LoginData {
     const json = await res.json();
     return json;
   }
-  
+

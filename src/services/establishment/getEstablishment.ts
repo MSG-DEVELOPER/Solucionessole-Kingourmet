@@ -1,6 +1,6 @@
-// src/services/establishmentService.ts
+// src/services/establishment/getEstablishment.ts
 
-import type { EstablishmentData } from "../redux/slices/establishment/establishmentSlice";
+import type { EstablishmentData } from "../../redux/slices/establishment/establishmentSlice";
 
 export async function getEstablishment(
   token: string,
@@ -24,3 +24,4 @@ export async function getEstablishment(
   const json = await res.json();
   return json;
 }
+

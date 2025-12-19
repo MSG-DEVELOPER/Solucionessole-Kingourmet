@@ -14,7 +14,7 @@ import {
   SecondaryButton,
   PrimaryButton,
 } from "./AddReservationModal.styles";
-import type { CreateReservationPayload } from "../../../services/reservationsService";
+import type { CreateReservationPayload } from "../../../services/reservations/postReservation";
 
 interface AddReservationModalProps {
   open: boolean;

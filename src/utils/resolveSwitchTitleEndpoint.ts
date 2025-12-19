@@ -5,11 +5,10 @@ export function resolveSwitchTitleEndpoint(title: string): string | null {
       case "Ajustes Generales":
         return "kingourmet-api/api/configuracion";
   
-      case "Horarios":
-        return "/api/settings/horarios";
+      case "Establecimiento":
+        return "kingourmet-api/api/establecimientos";
   
-      case "Mesas":
-        return "/api/mesas";
+    
   
       default:
         return null;

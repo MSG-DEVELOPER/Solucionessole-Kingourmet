@@ -9,8 +9,9 @@ import {
     ClipboardList,
     Smartphone,
     ShieldCheck,
-    Globe,
-    BarChart3,
+    
+   PartyPopper,
+    Store,
   } from "lucide-react";
   
   export const settingsData = [
@@ -60,14 +61,14 @@ import {
       desc: "Roles, permisos y privacidad",
     },
     {
-      icon: Globe,
-      title: "Idioma y Región",
-      desc: "Zona horaria y traducciones",
+      icon: PartyPopper,
+      title: "Festivos",
+      desc: "Festivos y cierres especiales",
     },
     {
-      icon: BarChart3,
-      title: "Estadísticas",
-      desc: "Informes, rendimiento y métricas",
+      icon: Store,
+      title: "Establecimiento",
+      desc: "Información de tu local",
     },
     {
       icon: Settings2,

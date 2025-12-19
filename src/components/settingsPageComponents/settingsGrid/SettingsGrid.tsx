@@ -1,6 +1,6 @@
 // SettingsGrid.tsx, el orquestador de la pagina de settings
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { toast } from "sonner";
 import type { RootState } from "../../../redux/store";
 import { settingsData } from "../../../assets/data/settingsData";
@@ -10,12 +10,9 @@ import { mockData } from "../../../assets/data/mockData";
 import DataModal from "../../modals/DataModal/DataModal";
 import EditRowModal from "../../modals/DataModal/editRowModal/EditRowModal";
 import { configToTableData } from "../../../utils/configAdapters";
-import { resolveSwitchTitleEndpoint } from "../../../utils/resolveSwitchTitleEndpoint";
-import { resolveConfigValueType } from "../../../utils/resolveConfigValueType";
-import { updateConfig } from "../../../services/configService";
-import {getConfig} from "../../../services/configService";
-import { setConfig } from "../../../redux/slices/config/configSlice";
-import { useDispatch } from "react-redux";
+import { establishmentToTableData } from "../../../utils/establishmentAdapter";
+import { handleSaveConfigEdit } from "./handlers/handleSaveConfigEdit";
+import { handleSaveEstablishmentEdit } from "./handlers/handleSaveEstablishmentEdit";
 
 function SettingsGrid() {
   const dispatch = useDispatch();
@@ -31,6 +28,7 @@ function SettingsGrid() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   // 👉 config desde redux para cuando entras a Ajustes generales
   const config = useSelector((state: RootState) => state.config.data);
+  const establishment = useSelector((state: RootState) => state.establishment.data);
   // establecimientoId desde redux para cuando entras a Ajustes generales y tienes que enviar el establecimientoId por URl
   const establecimientoId = useSelector(
     (state: RootState) => state.auth.establecimientoId
@@ -47,8 +45,11 @@ function SettingsGrid() {
 
     if (selectedSetting === "Ajustes Generales") {
       if (!config) return [];
-
       return configToTableData(config);
+
+    }else if (selectedSetting === "Establecimiento") {
+      if (!establishment) return [];
+      return establishmentToTableData(establishment);
     }
 
     return mockData[selectedSetting] ?? [];
@@ -75,34 +76,18 @@ function SettingsGrid() {
     ];
   }
 
-  async function handleSaveEdit(key: string, newValue: string) { //para editar cuando solo hay un campo
+  async function handleSaveEdit(key: string, newValue: string) {
     if (!selectedSetting || !establecimientoId) return;
 
-    const endpoint = resolveSwitchTitleEndpoint(selectedSetting);
-    if (!endpoint) return;
-
-    const url = `http://localhost/${endpoint}/${establecimientoId}/${key}`;
-    const payload = {
-      valor: newValue,
-      tipo: resolveConfigValueType(key),
-    };
-
-    try {
-      await updateConfig(url, payload);
+    switch (selectedSetting) {
+      case "Ajustes Generales":
+        return handleSaveConfigEdit(key, newValue, establecimientoId, dispatch);
       
-      const token = sessionStorage.getItem("token");
-      if (!token) {
-        throw new Error("Token no encontrado");
-      }
+      case "Establecimiento":
+        return handleSaveEstablishmentEdit(key, newValue, establecimientoId, dispatch);
       
-      const configResponse = await getConfig(token, establecimientoId);
-      if (configResponse.data) {
-        dispatch(setConfig(configResponse.data));
-      }
-      
-      toast.success("Configuración actualizada correctamente");
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Error al guardar la configuración");
+      default:
+        toast.error("Tipo de ajuste no soportado");
     }
   }
 

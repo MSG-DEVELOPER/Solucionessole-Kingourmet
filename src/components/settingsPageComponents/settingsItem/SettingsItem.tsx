@@ -1,3 +1,5 @@
+//el settings item es el componente que renderiza cada item del grid de settings
+
 import { SettingsItemCard, IconWrapper, ItemTitle, ItemDesc } from "./SettingsItem.styles";
 import type { LucideIcon } from "lucide-react";
 

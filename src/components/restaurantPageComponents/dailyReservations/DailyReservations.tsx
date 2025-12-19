@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { getReservations, createReservation } from "../../../services/reservationsService";
+import { getReservations } from "../../../services/reservations/getReservations";
+import { createReservation } from "../../../services/reservations/postReservation";
 import { Users, Clock, Plus, Search, Armchair, Calendar } from "lucide-react";
 import {
   Container,
