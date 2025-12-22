@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { toast } from "sonner";
 import { getReservations } from "../../../services/reservations/getReservations";
 import { createReservation } from "../../../services/reservations/postReservation";
 import { Users, Clock, Plus, Search, Armchair, Calendar } from "lucide-react";
@@ -98,7 +99,7 @@ export default function DailyReservations() {
     try {
       await createReservation(payload);
       await loadReservations();
-      alert("reserva creada");
+      toast.success("Reserva creada");
     } catch {
       setError("No se pudo crear la reserva. Inténtalo de nuevo.");
     } finally {

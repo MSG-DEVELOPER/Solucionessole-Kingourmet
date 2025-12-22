@@ -14,6 +14,7 @@ import { establishmentToTableData } from "../../../utils/establishmentAdapter";
 import { festivosToTableData } from "../../../utils/festivesAdapter";
 import { handleSaveConfigEdit } from "./handlers/handleSaveConfigEdit";
 import { handleSaveEstablishmentEdit } from "./handlers/handleSaveEstablishmentEdit";
+import { handleDeleteRow as handleDeleteRowHandler } from "./handlers/handleDeleteRow";
 
 function SettingsGrid() {
   const dispatch = useDispatch();
@@ -72,7 +73,27 @@ function SettingsGrid() {
     setEditModalOpen(true);
   }
 
-  function resolveRowActions(row: Record<string, unknown>) {
+  async function handleDeleteRow(row: Record<string, unknown>) {
+    //pàra eliminar una fila en tablas que tengan la accion eliminar
+    if (!selectedSetting || !establecimientoId) return;
+    await handleDeleteRowHandler(row, selectedSetting, establecimientoId, dispatch);
+  }
+
+  function resolveRowActions(row: Record<string, unknown>) { //lo que pones aqui es el menu de acciones que se muestra en la fila clickada
+
+    if (selectedSetting === "Festivos") {
+
+      return [
+        {
+          label: "Eliminar",
+          onClick: () => handleDeleteRow(row),
+        },
+        {
+          label: "Otra",
+          onClick: () => handleDeleteRow(row),
+        },
+      ];
+    }
     return [
       {
         label: "Editar",

@@ -7,8 +7,8 @@ const festivoLabels: Record<string, string> = {
   fecha: "Fecha",
   fecha_fin: "Fin",
   tipo: "Tipo",
-  es_recurrente: "Recurrente",
-  descripcion: "Descripción",
+ 
+ 
   cerrado: "Cerrado",
   horario_especial: "Horario",
 };
