@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { RefreshCcw } from "lucide-react";
 import DailyReservations from "../../components/restaurantPageComponents/dailyReservations/DailyReservations";
 import RestaurantLayout from "../../components/restaurantPageComponents/restaurantLayout/RestaurantLayout";
 import { getConfig } from "../../services/config/getConfig";
@@ -12,12 +13,18 @@ import { setFestivos } from "../../redux/slices/festive/festiveSlice";
 
 import {
   RestaurantPageContainer,
+  DesktopContainer,
   LeftSection,
   RightSection,
+  MobileContainer,
+  MobileSwitchWrapper,
+  SwitchButton,
+  MobileContent,
 } from "./RestaurantPage.styles";
 
 function RestaurantPage() {
   const dispatch = useDispatch();
+  const [showLayout, setShowLayout] = useState(true);
   const establecimientoId = useSelector(
     (state: RootState) => state.auth.establecimientoId
   );
@@ -81,13 +88,31 @@ function RestaurantPage() {
 
   return (
     <RestaurantPageContainer>
-      <LeftSection>
-        <RestaurantLayout />
-      </LeftSection>
+      <DesktopContainer>
+        <LeftSection>
+          <RestaurantLayout />
+        </LeftSection>
 
-      <RightSection>
-        <DailyReservations />
-      </RightSection>
+        <RightSection>
+          <DailyReservations />
+        </RightSection>
+      </DesktopContainer>
+
+      <MobileContainer>
+        <MobileSwitchWrapper>
+          <SwitchButton
+            onClick={() => setShowLayout((prev) => !prev)}
+            aria-label="Cambiar vista"
+            title="Cambiar vista"
+          >
+            <RefreshCcw size={20} />
+          </SwitchButton>
+        </MobileSwitchWrapper>
+
+        <MobileContent>
+          {showLayout ? <RestaurantLayout /> : <DailyReservations />}
+        </MobileContent>
+      </MobileContainer>
     </RestaurantPageContainer>
   );
 }
