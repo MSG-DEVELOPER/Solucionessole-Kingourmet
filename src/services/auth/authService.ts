@@ -7,11 +7,19 @@ export interface LoginData {
   
   export interface User {
     id: number;
+    establecimiento_id: number;
     nombre: string;
+    apellidos: string | null;
     email: string;
+    telefono: string | null;
     rol: string;
-    establecimiento_id?: number;
-  [key: string]: unknown;
+    estado: string;
+    fecha_nacimiento: string | null;
+    preferencias: string | null;
+    notas: string | null;
+    ultimo_acceso: string;
+    created_at: string;
+    updated_at: string;
   }
   
   export interface LoginResponse {

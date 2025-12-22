@@ -36,9 +36,9 @@ export const ModalContainer = styled.div`
   color: ${({ theme }) => theme.colors.black200};
   font-family: cuerpo;
   border-radius: ${({ theme }) => theme.borderRadius.xl};
-  width: 90%;
-  max-width: 900px;
-  max-height: 85vh;
+  width: 95%;
+  max-width: 1200px;
+  max-height: 90vh;
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -49,7 +49,7 @@ export const ModalContainer = styled.div`
 
   @media (max-width: 1024px) {
     width: 95%;
-    max-width: 800px;
+    max-width: 1000px;
   }
 
   @media (max-width: 768px) {
@@ -131,13 +131,14 @@ export const CloseButton = styled.button`
   }
 `;
 
-// Body con scroll personalizado
+// Body sin scroll (el scroll está solo en la tabla)
 export const ModalBody = styled.div`
   flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   padding: ${({ theme }) => theme.spacing.lg};
   min-height: 0;
+  display: flex;
+  flex-direction: column;
 
   @media (max-width: 768px) {
     padding: ${({ theme }) => theme.spacing.md};
@@ -145,25 +146,6 @@ export const ModalBody = styled.div`
 
   @media (max-width: 480px) {
     padding: ${({ theme }) => theme.spacing.sm};
-  }
-  
-  /* Scrollbar personalizado moderno */
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  &::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.gray100};
-    border-radius: ${({ theme }) => theme.borderRadius.md};
-  }
-  
-  &::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.gray300};
-    border-radius: ${({ theme }) => theme.borderRadius.md};
-    
-    &:hover {
-      background: ${({ theme }) => theme.colors.gray400};
-    }
   }
 `;
 
@@ -182,9 +164,10 @@ export const ModalFooter = styled.div`
 // Contenedor de tabla con scroll
 export const TableWrapper = styled.div`
   width: 100%;
+  flex: 1;
   overflow-x: auto;
   overflow-y: auto;
-  max-height: calc(85vh - 140px);
+  min-height: 0;
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   border: 1px solid ${({ theme }) => theme.colors.gray200};
   

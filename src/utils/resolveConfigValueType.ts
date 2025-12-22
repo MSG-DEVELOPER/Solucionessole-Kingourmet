@@ -1,5 +1,5 @@
 // src/utils/configTypeResolver.ts
-
+//En la peticion a la bbdd para hacer el put se tiene que mandar en el body el tipo de dato qu es
 export type ConfigValueType = "number" | "boolean" | "string";
 
 const CONFIG_TYPES: Record<string, ConfigValueType> = {

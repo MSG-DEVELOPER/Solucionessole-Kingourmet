@@ -14,16 +14,16 @@ export const Overlay = styled.div`
   align-items: flex-start;
   overflow-y: auto; /* Permite scroll si el contenido es largo */
   overflow-x: hidden;
-  padding: ${(props) => props.theme.spacing.lg} ${(props) => props.theme.spacing.md};
+  padding: ${(props) => props.theme.spacing.md} ${(props) => props.theme.spacing.sm};
 `;
 
 export const MenuHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: ${(props) => props.theme.spacing.sm};
-  margin-bottom: ${(props) => props.theme.spacing.md};
-  padding-bottom: ${(props) => props.theme.spacing.sm};
+  gap: ${(props) => props.theme.spacing.xs};
+  margin-bottom: ${(props) => props.theme.spacing.sm};
+  padding-bottom: ${(props) => props.theme.spacing.xs};
   border-bottom: 1px solid ${(props) => props.theme.colors.gray200};
   opacity: 0.9;
 
@@ -42,10 +42,10 @@ export const MenuCard = styled.nav`
   border: 1px solid ${(props) => props.theme.colors.gray200};
   border-radius: ${(props) => props.theme.borderRadius.xl};
   box-shadow: ${(props) => props.theme.shadows.heavy};
-  padding: ${(props) => props.theme.spacing.lg};
+  padding: ${(props) => props.theme.spacing.md};
   display: flex;
   flex-direction: column;
-  gap: ${(props) => props.theme.spacing.md};
+  gap: ${(props) => props.theme.spacing.sm};
 `;
 
 export const Title = styled.h3`
@@ -62,8 +62,8 @@ export const NavList = styled.ul`
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: ${(props) => props.theme.spacing.sm};
-  padding-top: ${(props) => props.theme.spacing.sm};
+  gap: ${(props) => props.theme.spacing.xs};
+  padding-top: ${(props) => props.theme.spacing.xs};
 `;
 
 export const NavItem = styled.li`
@@ -74,9 +74,9 @@ export const StyledNavLink = styled(NavLink)`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: ${(props) => props.theme.spacing.sm};
+  gap: ${(props) => props.theme.spacing.xs};
   width: 100%;
-  padding: ${(props) => props.theme.spacing.md};
+  padding: ${(props) => props.theme.spacing.sm};
   border-radius: ${(props) => props.theme.borderRadius.lg};
   text-decoration: none;
   text-align: center;
@@ -120,7 +120,7 @@ export const IconWrapper = styled.span`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 8px;
   border-radius: ${(props) => props.theme.borderRadius.md};
   background: ${(props) => props.theme.colors.gray100};
   border: 1px solid ${(props) => props.theme.colors.gray200};
