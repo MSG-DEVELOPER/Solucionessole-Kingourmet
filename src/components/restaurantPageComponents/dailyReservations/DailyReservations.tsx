@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { toast } from "sonner";
 import { getReservations } from "../../../services/reservations/getReservations";
 import { createReservation } from "../../../services/reservations/postReservation";
@@ -46,6 +46,7 @@ export default function DailyReservations() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   
   // Estado para la fecha seleccionada (inicialmente hoy)
   const [selectedDate, setSelectedDate] = useState<string>(() => {
@@ -81,6 +82,23 @@ export default function DailyReservations() {
   useEffect(() => {
     loadReservations();
   }, [loadReservations]);
+
+  // Filtrar reservas basado en la búsqueda
+  const filteredReservations = useMemo(() => {
+    if (!searchQuery.trim()) return arrayReservations;
+
+    const query = searchQuery.toLowerCase();
+    return arrayReservations.filter((res) => {
+      const horaFormateada = formatHour(res.hora);
+      return (
+        res.nombre_cliente.toLowerCase().includes(query) ||
+        horaFormateada.includes(query) ||
+        res.comensales.toString().includes(query) ||
+        res.sala_id.toString().includes(query) ||
+        res.estado.toLowerCase().includes(query)
+      );
+    });
+  }, [arrayReservations, searchQuery]);
 
   const handleCreateReservation = async (payload: {
     establecimiento_id: number;
@@ -128,7 +146,11 @@ export default function DailyReservations() {
         </DateSelectorWrapper>
         <ButtonsGroup>
           <SearchBarWrapper>
-            <SearchBar placeholder="Buscar..." onChange={() => {}} />
+            <SearchBar
+              placeholder="Buscar..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
             <Search size={18} />
           </SearchBarWrapper>
           <AddButton
@@ -150,11 +172,15 @@ export default function DailyReservations() {
         <StatusMessage>{error}</StatusMessage>
       )}
 
-      {!loading && !error && arrayReservations.length === 0 && (
+      {!loading && !error && filteredReservations.length === 0 && arrayReservations.length === 0 && (
         <StatusMessage>No hay reservas para mostrar.</StatusMessage>
       )}
 
-      {!loading && !error && arrayReservations.map((res, index) => (
+      {!loading && !error && filteredReservations.length === 0 && arrayReservations.length > 0 && (
+        <StatusMessage>No se encontraron reservas que coincidan con la búsqueda.</StatusMessage>
+      )}
+
+      {!loading && !error && filteredReservations.map((res, index) => (
         <ReservationCard key={index}>
           <NameRow>
             <ReservationName>
