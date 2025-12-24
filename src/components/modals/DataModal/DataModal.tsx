@@ -1,5 +1,5 @@
 // DataModal.tsx
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   LucideMoreVertical,
   LucideX,
@@ -63,13 +63,34 @@ const DataModal: React.FC<DataModalProps> = ({
   rowActions,
 }) => {
   const [openRowMenu, setOpenRowMenu] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Resetear búsqueda cuando se cierra el modal
+  useEffect(() => {
+    if (!isOpen) {
+      setSearchQuery("");
+    }
+  }, [isOpen]);
+
+  // Filtrar datos basado en la búsqueda
+  const filteredData = useMemo(() => {
+    if (!searchQuery.trim()) return data;
+
+    const query = searchQuery.toLowerCase();
+    return data.filter((row) => {
+      return Object.values(row).some((value) => {
+        const stringValue = String(value ?? "").toLowerCase();
+        return stringValue.includes(query);
+      });
+    });
+  }, [data, searchQuery]);
 
   if (!isOpen) return null;
 
   // 👇 KISS: no pintamos keys internas
   const columns =
-    data.length > 0
-      ? Object.keys(data[0]).filter((key) => !key.startsWith("_"))
+    filteredData.length > 0
+      ? Object.keys(filteredData[0]).filter((key) => !key.startsWith("_"))
       : [];
 
   return (
@@ -91,7 +112,11 @@ const DataModal: React.FC<DataModalProps> = ({
                   <SearchBarWrapper>
                     <SearchBar
                       placeholder="Buscar..."
-                      onChange={(e) => onSearch?.(e.target.value)}
+                      value={searchQuery}
+                      onChange={(e) => {
+                        setSearchQuery(e.target.value);
+                        onSearch?.(e.target.value);
+                      }}
                     />
                     <LucideSearch size={18} />
                   </SearchBarWrapper>
@@ -126,7 +151,7 @@ const DataModal: React.FC<DataModalProps> = ({
               </thead>
 
               <tbody>
-                {data.map((row, index) => (
+                {filteredData.map((row, index) => (
                   <TableRow key={index}>
                     {columns.map((col) => (
                       <TableCell key={col}>
@@ -155,7 +180,10 @@ const DataModal: React.FC<DataModalProps> = ({
         </ModalBody>
 
         <ModalFooter>
-          {data.length} registro{data.length !== 1 ? "s" : ""}
+          {filteredData.length} registro{filteredData.length !== 1 ? "s" : ""}
+          {searchQuery && filteredData.length !== data.length && (
+            <span> de {data.length} total{data.length !== 1 ? "es" : ""}</span>
+          )}
         </ModalFooter>
       </ModalContainer>
     </ModalOverlay>
