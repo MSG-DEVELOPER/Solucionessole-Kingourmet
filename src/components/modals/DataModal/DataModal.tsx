@@ -5,6 +5,7 @@ import {
   LucideX,
   LucideSearch,
   LucideSliders,
+  LucidePlus,
 } from "lucide-react";
 
 import {
@@ -25,6 +26,7 @@ import {
   ActionsIconWrapper,
   TableWrapper,
   HeaderRight,
+  AddButton,
 } from "./DataModal.styles.ts";
 
 import ActionsMenu from "./actionsMenu/ActionsMenu";
@@ -40,6 +42,7 @@ interface DataModalProps {
   onSearch?: (value: string) => void;
   onSort?: (column: string) => void;
   onFilter?: () => void;
+  onAdd?: () => void;
 
   rowActions?: (
     row: Record<string, unknown>
@@ -56,6 +59,7 @@ const DataModal: React.FC<DataModalProps> = ({
   onSearch,
   onSort,
   onFilter,
+  onAdd,
   rowActions,
 }) => {
   const [openRowMenu, setOpenRowMenu] = useState<number | null>(null);
@@ -75,6 +79,12 @@ const DataModal: React.FC<DataModalProps> = ({
           <h2>{title}</h2>
 
           <HeaderRight>
+            {onAdd && (
+              <AddButton onClick={onAdd}>
+                <LucidePlus size={20} />
+              </AddButton>
+            )}
+
             {(showSearchBar || showFilterIcon) && (
               <SearchContainer>
                 {showSearchBar && (

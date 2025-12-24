@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { getReservations } from "../../../services/reservations/getReservations";
 import { createReservation } from "../../../services/reservations/postReservation";
-import { Users, Clock, Plus, Search, Armchair, Calendar } from "lucide-react";
+import { Users, Clock, Plus, Search, Calendar } from "lucide-react";
+import tableIcon from "../../../assets/icons/tableMin.svg";
 import {
   Container,
   TitleRow,
@@ -25,6 +26,7 @@ import {
   StatusChip,
   LoadingWrapper,
   StatusMessage,
+  TableIcon,
 } from "./DailyReservations.styles";
 import Spinner from "../../spinner/Spinner";
 import AddReservationModal from "../../modals/AddReservationModal/AddReservationModal";
@@ -53,15 +55,13 @@ export default function DailyReservations() {
 
   const formatHour = (hora?: string) => (hora ? hora.slice(0, 5) : "");
 
-  // Obtener el día y el resto de la fecha por separado
+  // Obtener fecha en formato DD/MM/YYYY, con día separado para estilo
   const getDateParts = (dateString: string) => {
     const date = new Date(dateString);
     const day = date.getDate();
-    const rest = date.toLocaleDateString('es-ES', {
-      month: 'long',
-      year: 'numeric'
-    });
-    return { day, rest };
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return { day, rest: `/${month}/${year}` };
   };
 
   const loadReservations = useCallback(async () => {
@@ -114,7 +114,7 @@ export default function DailyReservations() {
         <DateSelectorWrapper>
           <DateDisplay>
             <DayNumber>{getDateParts(selectedDate).day}</DayNumber>
-            <DateRest> de {getDateParts(selectedDate).rest}</DateRest>
+            <DateRest>  {getDateParts(selectedDate).rest}</DateRest>
           </DateDisplay>
           <CalendarIcon>
             <Calendar size={18} />
@@ -178,7 +178,7 @@ export default function DailyReservations() {
             </ReservationInfo>
 
             <ReservationInfo>
-              <Armchair size={14} /> {res.sala_id}
+              <TableIcon src={tableIcon} alt="Mesa" /> {res.sala_id}
             </ReservationInfo>
           </ReservationInfoRow>
         </ReservationCard>

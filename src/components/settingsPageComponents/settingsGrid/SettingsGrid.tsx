@@ -8,6 +8,7 @@ import SettingsItem from "../settingsItem/SettingsItem";
 import { GridContainer } from "./SettingsGrid.styles";
 import { mockData } from "../../../assets/data/mockData";
 import DataModal from "../../modals/DataModal/DataModal";
+import AddRowModal from "../../modals/DataModal/addRowModal/AddRowModal";
 import EditRowModal from "../../modals/DataModal/editRowModal/EditRowModal";
 import { configToTableData } from "../../../utils/configAdapters";
 import { establishmentToTableData } from "../../../utils/establishmentAdapter";
@@ -15,6 +16,9 @@ import { festivosToTableData } from "../../../utils/festivesAdapter";
 import { handleSaveConfigEdit } from "./handlers/handleSaveConfigEdit";
 import { handleSaveEstablishmentEdit } from "./handlers/handleSaveEstablishmentEdit";
 import { handleDeleteRow as handleDeleteRowHandler } from "./handlers/handleDeleteRow";
+import { handleAddFestivo } from "./handlers/handleAddFestivo";
+import { addSchemas } from "../../../utils/addRowSchemas";
+import type { AddField } from "../../modals/DataModal/addRowModal/AddRowModal";
 
 function SettingsGrid() {
   const dispatch = useDispatch();
@@ -28,6 +32,9 @@ function SettingsGrid() {
     _key?: string;
   } | null>(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  // alta
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [addFields, setAddFields] = useState<AddField[]>([]);
   // 👉 config desde redux para cuando entras a Ajustes generales
   const config = useSelector((state: RootState) => state.config.data);
   const establishment = useSelector((state: RootState) => state.establishment.data);
@@ -62,7 +69,7 @@ function SettingsGrid() {
   }
 
   function handleEditRow(row: Record<string, unknown>) {
-    //pàra editar una fila en tablas que solo tengan la accion editar
+    //pàra editar una fila en tablas que solo tengan la accion editar y un solo campo,clave-valor
     setRowBeingEdited(
       row as {
         Parámetro: string;
@@ -100,6 +107,15 @@ function SettingsGrid() {
         onClick: () => handleEditRow(row),
       },
     ];
+  }
+
+  function handleAddRow() {//para añadir una nueva fila en tablas que tengan el boton de añadir
+    if (!selectedSetting) return;
+
+    if (selectedSetting === "Festivos") {
+      setAddFields(addSchemas.Festivos);
+      setAddModalOpen(true);
+    }
   }
 
   async function handleSaveEdit(key: string, newValue: string) {
@@ -144,7 +160,29 @@ function SettingsGrid() {
         data={resolveData()} //datos de la tabla a renderizar
         showSearchBar
         showFilterIcon
+        onAdd={selectedSetting === "Festivos" ? handleAddRow : undefined}
         rowActions={resolveRowActions} //actions para la fila clickada
+      />
+      {/* Modal de añadir nueva fila, este se puede reutilizar para cualquier tabla que tenga el boton de añadir*/}
+      <AddRowModal
+        open={addModalOpen}
+        title={selectedSetting ? `Añadir ${selectedSetting}` : "Añadir registro"}
+        fields={addFields}
+        onClose={() => setAddModalOpen(false)}
+        onSubmit={async (values) => {
+          if (!selectedSetting || !establecimientoId) return;
+
+          try {
+            if (selectedSetting === "Festivos") {
+              await handleAddFestivo(values, establecimientoId, dispatch);
+              setAddModalOpen(false);
+            } else {
+              toast.error("Tipo de ajuste no soportado para añadir");
+            }
+          } catch {
+            // El error ya se maneja en el handler con toast
+          }
+        }}
       />
       {/* Modal de edición de fila,este se puede reutilizar para cualquier tabla que SOLO tenga la accion editar y un solo campo,clave-valor */}
       <EditRowModal

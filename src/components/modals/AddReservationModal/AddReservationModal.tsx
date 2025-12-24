@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import {
   Overlay,
   ModalCard,
@@ -13,6 +14,9 @@ import {
   Actions,
   SecondaryButton,
   PrimaryButton,
+  Form,
+  ErrorMessage,
+  TimeSelectsContainer,
 } from "./AddReservationModal.styles";
 import type { CreateReservationPayload } from "../../../services/reservations/postReservation";
 
@@ -22,16 +26,37 @@ interface AddReservationModalProps {
   onSubmit: (payload: CreateReservationPayload) => Promise<void>;
 }
 
+type ReservationFormData = {
+  nombre: string;
+  telefono: string;
+  email: string;
+  fecha: string;
+  hora: string;
+  minuto: string;
+  comensales: string;
+  estado: "Pendiente" | "confirmada";
+  notas: string;
+};
+
 function AddReservationModal({ open, onClose, onSubmit }: AddReservationModalProps) {
-  const [nombre, setNombre] = useState("");
-  const [telefono, setTelefono] = useState("");
-  const [email, setEmail] = useState("");
-  const [hora, setHora] = useState("");
-  const [fecha, setFecha] = useState("");
-  const [comensales, setComensales] = useState<number | "">("");
-  const [estado, setEstado] = useState<"Pendiente" | "confirmada">("Pendiente");
-  const [notas, setNotas] = useState("");
-  const [submitting, setSubmitting] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<ReservationFormData>({
+    defaultValues: {
+      nombre: "",
+      telefono: "",
+      email: "",
+      fecha: "",
+      hora: "",
+      minuto: "",
+      comensales: "",
+      estado: "Pendiente",
+      notas: "",
+    },
+  });
 
   useEffect(() => {
     if (!open) return;
@@ -42,31 +67,45 @@ function AddReservationModal({ open, onClose, onSubmit }: AddReservationModalPro
     };
   }, [open]);
 
-  const handleCreate = async () => {
-    if (!nombre || !telefono || !hora || !fecha || !comensales) {
-      alert("Completa los campos obligatorios");
-      return;
+  useEffect(() => {
+    if (open) {
+      reset();
     }
+  }, [open, reset]);
+
+  // Generar opciones de horas (0-23)
+  const hourOptions = Array.from({ length: 24 }, (_, i) => ({
+    value: i.toString().padStart(2, "0"),
+    label: i.toString().padStart(2, "0"),
+  }));
+
+  // Generar opciones de minutos (00, 15, 30, 45)
+  const minuteOptions = [
+    { value: "00", label: "00" },
+    { value: "15", label: "15" },
+    { value: "30", label: "30" },
+    { value: "45", label: "45" },
+  ];
+
+  const onSubmitForm = async (data: ReservationFormData) => {
+    // Combinar hora y minuto en formato "HH:MM"
+    const horaCompleta = `${data.hora}:${data.minuto}`;
 
     const payload: CreateReservationPayload = {
       establecimiento_id: 1,
       sala_id: 1,
       horario_id: 1,
-      nombre_cliente: nombre,
-      telefono_cliente: telefono,
-      email_cliente: email || null,
-      comensales: Number(comensales),
-      fecha,
-      hora: hora.length === 5 ? `${hora}:00` : hora,
-      notas,
+      nombre_cliente: data.nombre,
+      telefono_cliente: data.telefono,
+      email_cliente: data.email || null,
+      comensales: Number(data.comensales),
+      fecha: data.fecha,
+      hora: `${horaCompleta}:00`,
+      notas: data.notas,
     };
 
-    try {
-      setSubmitting(true);
-      await onSubmit(payload);
-    } finally {
-      setSubmitting(false);
-    }
+    await onSubmit(payload);
+    reset();
   };
 
   if (!open) return null;
@@ -80,93 +119,148 @@ function AddReservationModal({ open, onClose, onSubmit }: AddReservationModalPro
         </Header>
 
         <Body>
-          <Field>
-            <Label>Nombre</Label>
-            <Input
-              placeholder="Nombre del cliente"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-            />
-          </Field>
+          <Form id="reservation-form" onSubmit={handleSubmit(onSubmitForm)}>
+            <Field>
+              <Label htmlFor="nombre">Nombre *</Label>
+              <Input
+                id="nombre"
+                placeholder="Nombre del cliente"
+                {...register("nombre", {
+                  required: "El nombre es obligatorio",
+                })}
+              />
+              {errors.nombre && (
+                <ErrorMessage>{errors.nombre.message}</ErrorMessage>
+              )}
+            </Field>
 
-          <Field>
-            <Label>Teléfono</Label>
-            <Input
-              type="tel"
-              placeholder="Teléfono del cliente"
-              value={telefono}
-              onChange={(e) => setTelefono(e.target.value)}
-            />
-          </Field>
+            <Field>
+              <Label htmlFor="telefono">Teléfono *</Label>
+              <Input
+                id="telefono"
+                type="tel"
+                placeholder="Teléfono del cliente"
+                {...register("telefono", {
+                  required: "El teléfono es obligatorio",
+                })}
+              />
+              {errors.telefono && (
+                <ErrorMessage>{errors.telefono.message}</ErrorMessage>
+              )}
+            </Field>
 
-          <Field>
-            <Label>Email</Label>
-            <Input
-              type="email"
-              placeholder="Email del cliente"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Field>
+            <Field>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Email del cliente"
+                {...register("email")}
+              />
+              {errors.email && (
+                <ErrorMessage>{errors.email.message}</ErrorMessage>
+              )}
+            </Field>
 
-          <Field>
-            <Label>Hora</Label>
-            <Input
-              type="time"
-              value={hora}
-              onChange={(e) => setHora(e.target.value)}
-            />
-          </Field>
+            <Field className="date-field">
+              <Label htmlFor="fecha">Fecha *</Label>
+              <Input
+                id="fecha"
+                type="date"
+                {...register("fecha", {
+                  required: "La fecha es obligatoria",
+                })}
+              />
+              {errors.fecha && (
+                <ErrorMessage>{errors.fecha.message}</ErrorMessage>
+              )}
+            </Field>
 
-          <Field>
-            <Label>Fecha</Label>
-            <Input
-              type="date"
-              value={fecha}
-              onChange={(e) => setFecha(e.target.value)}
-            />
-          </Field>
+            <Field className="time-field">
+              <Label>Hora *</Label>
+              <TimeSelectsContainer>
+                <Select
+                  {...register("hora", {
+                    required: "La hora es obligatoria",
+                  })}
+                >
+                  <option value="">Hora</option>
+                  {hourOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </Select>
+                <Select
+                  {...register("minuto", {
+                    required: "Los minutos son obligatorios",
+                  })}
+                >
+                  <option value="">Min</option>
+                  {minuteOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </Select>
+              </TimeSelectsContainer>
+              {(errors.hora || errors.minuto) && (
+                <ErrorMessage>
+                  {errors.hora?.message || errors.minuto?.message}
+                </ErrorMessage>
+              )}
+            </Field>
 
-          <Field>
-            <Label>Comensales</Label>
-            <Input
-              type="number"
-              min={1}
-              placeholder="Número de comensales"
-              value={comensales}
-              onChange={(e) =>
-                setComensales(e.target.value === "" ? "" : Number(e.target.value))
-              }
-            />
-          </Field>
+            <Field className="comensales-field">
+              <Label htmlFor="comensales">Comensales *</Label>
+              <Input
+                id="comensales"
+                type="number"
+                min={1}
+                placeholder="Número de comensales"
+                {...register("comensales", {
+                  required: "El número de comensales es obligatorio",
+                  min: {
+                    value: 1,
+                    message: "Debe haber al menos 1 comensal",
+                  },
+                })}
+              />
+              {errors.comensales && (
+                <ErrorMessage>{errors.comensales.message}</ErrorMessage>
+              )}
+            </Field>
 
-          <Field>
-            <Label>Estado</Label>
-            <Select
-              value={estado}
-              onChange={(e) =>
-                setEstado(e.target.value as "Pendiente" | "confirmada")
-              }
-            >
-              <option value="Pendiente">Pendiente</option>
-              <option value="confirmada">Confirmada</option>
-            </Select>
-          </Field>
+            <Field>
+              <Label htmlFor="estado">Estado</Label>
+              <Select
+                id="estado"
+                {...register("estado")}
+              >
+                <option value="Pendiente">Pendiente</option>
+                <option value="confirmada">Confirmada</option>
+              </Select>
+            </Field>
 
-          <Field>
-            <Label>Notas</Label>
-            <TextArea
-              placeholder="Alergias, indicaciones especiales..."
-              value={notas}
-              onChange={(e) => setNotas(e.target.value)}
-            />
-          </Field>
+            <Field>
+              <Label htmlFor="notas">Notas</Label>
+              <TextArea
+                id="notas"
+                placeholder="Alergias, indicaciones especiales..."
+                {...register("notas")}
+              />
+            </Field>
+          </Form>
         </Body>
 
         <Actions>
           <SecondaryButton onClick={onClose}>Cancelar</SecondaryButton>
-          <PrimaryButton onClick={handleCreate} disabled={submitting}>
-            {submitting ? "Guardando..." : "Aceptar"}
+          <PrimaryButton
+            type="submit"
+            form="reservation-form"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Guardando..." : "Aceptar"}
           </PrimaryButton>
         </Actions>
       </ModalCard>

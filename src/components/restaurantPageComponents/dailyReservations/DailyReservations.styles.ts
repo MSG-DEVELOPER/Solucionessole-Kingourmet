@@ -399,6 +399,13 @@ export const ReservationInfo = styled.div`
   }
 `;
 
+export const TableIcon = styled.img`
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  object-fit: contain;
+`;
+
 export const LoadingWrapper = styled.div`
   display: flex;
   align-items: center;

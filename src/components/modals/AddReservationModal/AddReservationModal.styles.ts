@@ -23,7 +23,7 @@ export const Overlay = styled.div`
 `;
 
 export const ModalCard = styled.div`
-  width: min(460px, 92vw);
+  width: min(600px, 92vw);
   background: ${({ theme }) => theme.colors.surface};
   border-radius: ${({ theme }) => theme.borderRadius.xl};
   box-shadow: ${({ theme }) => theme.shadows.heavy};
@@ -32,7 +32,7 @@ export const ModalCard = styled.div`
   animation: ${fadeIn} 0.22s ease;
   display: flex;
   flex-direction: column;
-  max-height: 86vh;
+  max-height: 90vh;
 `;
 
 export const Header = styled.div`
@@ -72,10 +72,34 @@ export const CloseButton = styled.button`
 export const Body = styled.div`
   padding: ${({ theme }) => theme.spacing.lg};
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: ${({ theme }) => theme.spacing.md};
-  overflow-y: auto;
-  max-height: 62vh;
+  overflow: visible;
+
+  .date-field,
+  .time-field,
+  .comensales-field {
+    grid-column: span 1;
+  }
+
+  /* Campos que ocupan toda la fila (excepto los tres de arriba) */
+  > *:not(.date-field):not(.time-field):not(.comensales-field) {
+    grid-column: 1 / -1;
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    
+    .date-field,
+    .time-field,
+    .comensales-field {
+      grid-column: span 1;
+    }
+    
+    > *:not(.date-field):not(.time-field):not(.comensales-field) {
+      grid-column: span 1;
+    }
+  }
 `;
 
 export const Field = styled.div`
@@ -136,8 +160,10 @@ export const TextArea = styled.textarea`
   color: ${({ theme }) => theme.colors.black200};
   font-family: cuerpo;
   transition: ${({ theme }) => theme.transitions.fast};
-  min-height: 96px;
   resize: vertical;
+  grid-column: 1 / -1;
+  min-height: 60px;
+  max-height: 80px;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray400};
@@ -148,8 +174,6 @@ export const TextArea = styled.textarea`
     border-color: ${({ theme }) => theme.colors.blue500};
     box-shadow: 0 0 0 3px ${({ theme }) => theme.colors.blue100};
   }
-  grid-column: 1 / -1;
-  min-height: 72px;
 `;
 
 export const Actions = styled.div`
@@ -195,5 +219,29 @@ export const PrimaryButton = styled.button`
 
   &:active {
     transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+`;
+
+export const Form = styled.form`
+  display: contents;
+`;
+
+export const ErrorMessage = styled.span`
+  color: ${({ theme }) => theme.colors.red600};
+  font-size: 0.875rem;
+  margin-top: ${({ theme }) => theme.spacing.xs};
+`;
+
+export const TimeSelectsContainer = styled.div`
+  display: flex;
+  gap: ${({ theme }) => theme.spacing.xs};
+
+  ${Select} {
+    flex: 1;
   }
 `;

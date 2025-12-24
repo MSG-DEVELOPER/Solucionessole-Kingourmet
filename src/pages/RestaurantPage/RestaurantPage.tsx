@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RefreshCcw } from "lucide-react";
+import { ArrowLeftRight } from "lucide-react";
 import DailyReservations from "../../components/restaurantPageComponents/dailyReservations/DailyReservations";
 import RestaurantLayout from "../../components/restaurantPageComponents/restaurantLayout/RestaurantLayout";
 import { getConfig } from "../../services/config/getConfig";
@@ -105,7 +105,7 @@ function RestaurantPage() {
             aria-label="Cambiar vista"
             title="Cambiar vista"
           >
-            <RefreshCcw size={20} />
+            <ArrowLeftRight size={20} />
           </SwitchButton>
         </MobileSwitchWrapper>
 

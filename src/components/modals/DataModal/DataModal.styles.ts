@@ -107,6 +107,33 @@ export const HeaderRight = styled.div`
   margin-left: auto;
 `;
 
+export const AddButton = styled.button`
+  background: ${({ theme }) => theme.colors.surface};
+  border: 1.5px solid ${({ theme }) => theme.colors.gray300};
+  border-radius: 50%;
+  color: ${({ theme }) => theme.colors.gray600};
+  cursor: pointer;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: ${({ theme }) => theme.transitions.fast};
+  flex-shrink: 0;
+  
+  &:hover {
+    background: ${({ theme }) => theme.colors.green100};
+    border-color: ${({ theme }) => theme.colors.green500};
+    color: ${({ theme }) => theme.colors.green600};
+    transform: scale(1.1);
+    box-shadow: ${({ theme }) => theme.shadows.medium};
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
 export const CloseButton = styled.button`
   background: ${({ theme }) => theme.colors.surface};
   border: 1.5px solid ${({ theme }) => theme.colors.gray300};
