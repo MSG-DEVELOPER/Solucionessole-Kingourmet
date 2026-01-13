@@ -65,7 +65,7 @@ function AccountPage() {
           <ProfileImage src={bbIcon} alt="Foto de perfil" />
           <ProfileName>
             <FullName>{fullName}</FullName>
-            <UserRole>{user.rol}</UserRole>
+            <UserRole>{user.rol_nombre}</UserRole>
           </ProfileName>
         </ProfileHeader>
 

@@ -7,12 +7,13 @@ export interface LoginData {
   
   export interface User {
     id: number;
-    establecimiento_id: number;
+    id_establecimiento: number;
     nombre: string;
     apellidos: string | null;
     email: string;
     telefono: string | null;
-    rol: string;
+    id_rol: number;
+    rol_nombre: string;
     estado: string;
     fecha_nacimiento: string | null;
     preferencias: string | null;
@@ -32,6 +33,7 @@ export interface LoginData {
   }
   
   export async function login(data: LoginData): Promise<LoginResponse> {
+    console.log("DEBUG - Iniciando login con datos:", data);
     const res = await fetch("http://localhost/kingourmet-api/api/auth/login", {
       method: "POST",
       headers: {
@@ -39,7 +41,9 @@ export interface LoginData {
       },
       body: JSON.stringify(data),
     });
-  
+
+    console.log("DEBUG - Status de respuesta:", res.status);
+    
     if (res.status === 401) {
       throw new Error("Credenciales");
     }
@@ -50,6 +54,8 @@ export interface LoginData {
       
   
     const json = await res.json();
+    console.log("DEBUG - Datos recibidos del login (JSON completo):", json);
+    console.log("DEBUG - Estructura del user recibido:", json.user);
     return json;
   }
 

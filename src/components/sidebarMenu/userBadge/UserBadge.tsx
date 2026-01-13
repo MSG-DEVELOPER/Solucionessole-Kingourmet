@@ -16,7 +16,7 @@ function UserBadge() {
           {user ? (
             <>
               {user.nombre}{" "}
-              {user.rol && <Role>{user.rol}</Role>}
+              {user.rol_nombre && <Role>{user.rol_nombre}</Role>}
             </>
           ) : (
             "Cargando..."

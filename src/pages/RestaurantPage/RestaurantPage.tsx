@@ -29,6 +29,16 @@ function RestaurantPage() {
     (state: RootState) => state.auth.establecimientoId
   );
   const config = useSelector((state: RootState) => state.config.data);
+  const establishment = useSelector((state: RootState) => state.establishment.data);
+  const festivos = useSelector((state: RootState) => state.festive.data);
+
+  // 🔍 Console log provisional para verificar estado de Redux
+  useEffect(() => {
+    console.log("📦 Estado actual de Redux:");
+    console.log("  - Config:", config);
+    console.log("  - Establishment:", establishment);
+    console.log("  - Festivos:", festivos);
+  }, [config, establishment, festivos]);
 
   useEffect(() => {
     if (config || !establecimientoId) return;
@@ -36,47 +46,64 @@ function RestaurantPage() {
     const token = sessionStorage.getItem("token");
     if (!token) return;
 
+    console.log("🚀 Iniciando carga de datos - establecimientoId:", establecimientoId);
+
     async function loadConfig() {
       try {
+        console.log("📡 GET Config - Iniciando...");
         const res = await getConfig(token as string, establecimientoId);
+        console.log("📡 GET Config - Respuesta completa:", res);
         if (res.data) {
           dispatch(setConfig(res.data));
+          console.log("✅ Config guardado en Redux:", res.data);
+        } else {
+          console.warn("⚠️ GET Config - No hay data en la respuesta");
         }
         console.log(res.message);
       } catch (error) {
-        console.error(error);
+        console.error("❌ GET Config - Error:", error);
       }
     }
 
     async function loadEstablishment() {
       try {
+        console.log("📡 GET Establishment - Iniciando...");
         const data = await getEstablishment(
           token as string,
           establecimientoId
         );
+        console.log("📡 GET Establishment - Respuesta completa:", data);
     
         if (data) {
           dispatch(setEstablishment(data));
+          console.log("✅ Establishment guardado en Redux:", data);
+        } else {
+          console.warn("⚠️ GET Establishment - No hay data en la respuesta");
         }
     
        
       } catch (error) {
-        console.error(error);
+        console.error("❌ GET Establishment - Error:", error);
       }
     }
 
     async function loadFestivos() {
       try {
+        console.log("📡 GET Festivos - Iniciando...");
         const festivos = await getFestivos(
           token as string,
           establecimientoId
         );
+        console.log("📡 GET Festivos - Respuesta completa:", festivos);
     
         if (festivos) {
           dispatch(setFestivos(festivos));
+          console.log("✅ Festivos guardado en Redux:", festivos);
+        } else {
+          console.warn("⚠️ GET Festivos - No hay data en la respuesta");
         }
       } catch (error) {
-        console.error("Error al cargar festivos:", error);
+        console.error("❌ GET Festivos - Error:", error);
       }
     }
     

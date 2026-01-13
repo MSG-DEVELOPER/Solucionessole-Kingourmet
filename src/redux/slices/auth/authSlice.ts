@@ -4,12 +4,13 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 interface User {
   id: number;
-  establecimiento_id: number;
+  id_establecimiento: number;
   nombre: string;
   apellidos: string | null;
   email: string;
   telefono: string | null;
-  rol: string;
+  id_rol: number;
+  rol_nombre: string;
   estado: string;
   fecha_nacimiento: string | null;
   preferencias: string | null;

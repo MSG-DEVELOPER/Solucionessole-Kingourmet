@@ -42,7 +42,7 @@ export default function LoginForm({ onClose }: LoginFormProps) {
       dispatch(
         setCredentials({
           user: response.user,
-          establecimientoId: response.user.establecimiento_id ?? 0,
+          establecimientoId: response.user.id_establecimiento ?? 0,
         })
       );
       toast.success("Inicio de sesión exitoso");
