@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { middleware } from "../../middleware/middleware";
+import PermissionDeniedModal from "../../middleware/DeniedModalMiddleware";
 import { useSelector } from "react-redux";
 import { Mail, Phone, Lock } from "lucide-react";
 import type { RootState } from "../../redux/store";
@@ -29,6 +32,7 @@ import {
 
 function AccountPage() {
   const user = useSelector((state: RootState) => state.auth.user);
+  const [showModal, setShowModal] = useState(false);
 
   if (!user) {
     return (
@@ -54,7 +58,15 @@ function AccountPage() {
 
   const fullName = `${user.nombre}${user.apellidos ? ` ${user.apellidos}` : ""}`;
 
-  const handleChangePassword = () => {
+  const openDeniedModal = () => {
+    setShowModal(true);
+  };
+
+  const handleChangePassword = async () => {
+    const allowed = await middleware(1, "actualizar", openDeniedModal);
+
+    if (!allowed) return;
+
     alert("Función de cambio de contraseña en desarrollo");
   };
 
@@ -130,6 +142,11 @@ function AccountPage() {
           </EditButton>
         </ActionsSection>
       </AccountCard>
+
+      <PermissionDeniedModal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+      />
     </AccountPageContainer>
   );
 }
