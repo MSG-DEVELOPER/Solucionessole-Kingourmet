@@ -8,7 +8,7 @@ import {
     DoorOpen,
     ClipboardList,
     Smartphone,
-    ShieldCheck,
+    
     NutOff,
    PartyPopper,
     Store,
