@@ -18,6 +18,7 @@ import { handleSaveConfigEdit } from "./handlers/handleSaveConfigEdit";
 import { handleSaveEstablishmentEdit } from "./handlers/handleSaveEstablishmentEdit";
 import { handleDeleteRow as handleDeleteRowHandler } from "./handlers/handleDeleteRow";
 import { handleAddFestivo } from "./handlers/handleAddFestivo";
+import { handleAddAlergeno } from "./handlers/handleAddAlergeno";
 import { addSchemas } from "../../../utils/addRowSchemas";
 import type { AddField } from "../../modals/DataModal/addRowModal/AddRowModal";
 
@@ -93,7 +94,7 @@ function SettingsGrid() {
 
   function resolveRowActions(row: Record<string, unknown>) { //lo que pones aqui es el menu de acciones que se muestra en la fila clickada
 
-    if (selectedSetting === "Festivos") {
+    if (selectedSetting === "Festivos" || selectedSetting === "Alérgenos") {
 
       return [
         {
@@ -101,8 +102,8 @@ function SettingsGrid() {
           onClick: () => handleDeleteRow(row),
         },
         {
-          label: "Otra",
-          onClick: () => handleDeleteRow(row),
+          label: "Editar",
+          onClick: () => handleEditRow(row),
         },
       ];
     }
@@ -119,6 +120,9 @@ function SettingsGrid() {
 
     if (selectedSetting === "Festivos") {
       setAddFields(addSchemas.Festivos);
+      setAddModalOpen(true);
+    } else if (selectedSetting === "Alérgenos") {
+      setAddFields(addSchemas.Alérgenos);
       setAddModalOpen(true);
     }
   }
@@ -165,7 +169,7 @@ function SettingsGrid() {
         data={resolveData()} //datos de la tabla a renderizar
         showSearchBar
         showFilterIcon
-        onAdd={selectedSetting === "Festivos" ? handleAddRow : undefined}
+        onAdd={selectedSetting === "Festivos" || selectedSetting === "Alérgenos" ? handleAddRow : undefined}
         rowActions={resolveRowActions} //actions para la fila clickada
       />
       {/* Modal de añadir nueva fila, este se puede reutilizar para cualquier tabla que tenga el boton de añadir*/}
@@ -175,11 +179,15 @@ function SettingsGrid() {
         fields={addFields}
         onClose={() => setAddModalOpen(false)}
         onSubmit={async (values) => {
-          if (!selectedSetting || !establecimientoId) return;
+          if (!selectedSetting) return;
 
           try {
             if (selectedSetting === "Festivos") {
+              if (!establecimientoId) return;
               await handleAddFestivo(values, establecimientoId, dispatch);
+              setAddModalOpen(false);
+            } else if (selectedSetting === "Alérgenos") {
+              await handleAddAlergeno(values, dispatch);
               setAddModalOpen(false);
             } else {
               toast.error("Tipo de ajuste no soportado para añadir");

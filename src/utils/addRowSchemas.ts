@@ -1,6 +1,6 @@
 import type { AddField } from "../components/modals/DataModal/addRowModal/AddRowModal";
 
-export type AddSchemaKey = "Festivos";
+export type AddSchemaKey = "Festivos" | "Alérgenos";
 
 export const addSchemas: Record<AddSchemaKey, AddField[]> = {
   Festivos: [
@@ -27,6 +27,10 @@ export const addSchemas: Record<AddSchemaKey, AddField[]> = {
         { label: "No", value: "0" },
       ],
     },
+  ],
+  Alérgenos: [
+    { key: "nombre", label: "Nombre", type: "text", required: true },
+    { key: "descripcion", label: "Descripción", type: "text", required: true },
   ],
 };
 
