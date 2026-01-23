@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
+import { useSelector } from "react-redux";
 import { toast } from "sonner";
 import { getReservations } from "../../../services/reservations/getReservations";
-import { createReservation } from "../../../services/reservations/postReservation";
+import { createReservation, type CreateReservationPayload } from "../../../services/reservations/postReservation";
 import { Users, Clock, Plus, Search, Calendar } from "lucide-react";
 import tableIcon from "../../../assets/icons/tableMin.svg";
+import type { RootState } from "../../../redux/store";
 import {
   Container,
   TitleRow,
@@ -47,6 +49,9 @@ export default function DailyReservations() {
   const [error, setError] = useState<string | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const establecimientoId = useSelector(
+    (state: RootState) => state.auth.user?.id_establecimiento ?? 1
+  );
   
   // Estado para la fecha seleccionada (inicialmente hoy)
   const [selectedDate, setSelectedDate] = useState<string>(() => {
@@ -100,18 +105,7 @@ export default function DailyReservations() {
     });
   }, [arrayReservations, searchQuery]);
 
-  const handleCreateReservation = async (payload: {
-    establecimiento_id: number;
-    sala_id: number;
-    horario_id: number;
-    nombre_cliente: string;
-    telefono_cliente: string;
-    email_cliente: string | null;
-    comensales: number;
-    fecha: string;
-    hora: string;
-    notas: string;
-  }) => {
+  const handleCreateReservation = async (payload: CreateReservationPayload) => {
     setLoading(true);
     setError(null);
     try {
@@ -214,6 +208,7 @@ export default function DailyReservations() {
         open={showAddModal}
         onClose={() => setShowAddModal(false)}
         onSubmit={handleCreateReservation}
+        establecimientoId={establecimientoId}
       />
     </Container>
   );

@@ -2,7 +2,7 @@
 
 export interface Reservation {
   id: number;
-  establecimiento_id: number;
+  id_establecimiento: number;
   sala_id: number;
   horario_id: number;
   usuario_id: number | null;
@@ -36,7 +36,7 @@ export interface Reservation {
 }
 
 export interface CreateReservationPayload {
-  establecimiento_id: number;
+  id_establecimiento: number;
   sala_id: number;
   horario_id: number;
   nombre_cliente: string;

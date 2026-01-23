@@ -63,11 +63,13 @@ function AccountPage() {
   };
 
   const handleChangePassword = async () => {
-    const allowed = await middleware(1, "actualizar", openDeniedModal);
+    const allowed = await middleware(1, "actualizar", openDeniedModal); //realmente nose si es id recurso 1...nose cual poner 
 
     if (!allowed) return;
 
     alert("Función de cambio de contraseña en desarrollo");
+
+    
   };
 
   return (

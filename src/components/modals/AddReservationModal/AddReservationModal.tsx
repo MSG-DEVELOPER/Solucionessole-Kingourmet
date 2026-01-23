@@ -24,6 +24,7 @@ interface AddReservationModalProps {
   open: boolean;
   onClose: () => void;
   onSubmit: (payload: CreateReservationPayload) => Promise<void>;
+  establecimientoId: number;
 }
 
 type ReservationFormData = {
@@ -38,7 +39,7 @@ type ReservationFormData = {
   notas: string;
 };
 
-function AddReservationModal({ open, onClose, onSubmit }: AddReservationModalProps) {
+function AddReservationModal({ open, onClose, onSubmit, establecimientoId }: AddReservationModalProps) {
   const {
     register,
     handleSubmit,
@@ -92,7 +93,7 @@ function AddReservationModal({ open, onClose, onSubmit }: AddReservationModalPro
     const horaCompleta = `${data.hora}:${data.minuto}`;
 
     const payload: CreateReservationPayload = {
-      establecimiento_id: 1,
+      id_establecimiento: establecimientoId,
       sala_id: 1,
       horario_id: 1,
       nombre_cliente: data.nombre,

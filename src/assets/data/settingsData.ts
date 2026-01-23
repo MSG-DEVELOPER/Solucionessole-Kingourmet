@@ -57,7 +57,7 @@ import {
     },
     {
       icon: ShieldCheck,
-      title: "Seguridad",
+      title: "Alérgenos",
       desc: "Roles, permisos y privacidad",
     },
     {

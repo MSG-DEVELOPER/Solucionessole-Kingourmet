@@ -63,9 +63,12 @@ function SettingsGrid() {
     }else if (selectedSetting === "Festivos") {
       if (!festivos) return [];
       return festivosToTableData(festivos);
+    }else if (selectedSetting === "Alérgenos") {
+     
+      return [];
     }
 
-    return mockData[selectedSetting] ?? [];
+   return mockData[selectedSetting] ?? [];
   }
 
   function handleEditRow(row: Record<string, unknown>) {
