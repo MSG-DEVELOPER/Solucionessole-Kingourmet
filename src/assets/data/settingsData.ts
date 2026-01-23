@@ -9,7 +9,7 @@ import {
     ClipboardList,
     Smartphone,
     ShieldCheck,
-    
+    NutOff,
    PartyPopper,
     Store,
   } from "lucide-react";
@@ -56,9 +56,9 @@ import {
       desc: "Google, IG, APIs externas",
     },
     {
-      icon: ShieldCheck,
+      icon: NutOff,
       title: "Alérgenos",
-      desc: "Roles, permisos y privacidad",
+      desc: "Lista de alérgenos",
     },
     {
       icon: PartyPopper,

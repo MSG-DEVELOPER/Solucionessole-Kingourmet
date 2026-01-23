@@ -13,6 +13,7 @@ import EditRowModal from "../../modals/DataModal/editRowModal/EditRowModal";
 import { configToTableData } from "../../../utils/configAdapters";
 import { establishmentToTableData } from "../../../utils/establishmentAdapter";
 import { festivosToTableData } from "../../../utils/festivesAdapter";
+import { alergenosToTableData } from "../../../utils/alergenosAdapter";
 import { handleSaveConfigEdit } from "./handlers/handleSaveConfigEdit";
 import { handleSaveEstablishmentEdit } from "./handlers/handleSaveEstablishmentEdit";
 import { handleDeleteRow as handleDeleteRowHandler } from "./handlers/handleDeleteRow";
@@ -39,6 +40,7 @@ function SettingsGrid() {
   const config = useSelector((state: RootState) => state.config.data);
   const establishment = useSelector((state: RootState) => state.establishment.data);
   const festivos = useSelector((state: RootState) => state.festive.data);
+  const alergenos = useSelector((state: RootState) => state.alergenos.data);
   // establecimientoId desde redux para cuando entras a Ajustes generales y tienes que enviar el establecimientoId por URl
   const establecimientoId = useSelector(
     (state: RootState) => state.auth.establecimientoId
@@ -64,8 +66,8 @@ function SettingsGrid() {
       if (!festivos) return [];
       return festivosToTableData(festivos);
     }else if (selectedSetting === "Alérgenos") {
-     
-      return [];
+      if (!alergenos || alergenos.length === 0) return [];
+      return alergenosToTableData(alergenos);
     }
 
    return mockData[selectedSetting] ?? [];

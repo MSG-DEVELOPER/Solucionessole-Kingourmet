@@ -4,6 +4,7 @@ import authReducer from "./slices/auth/authSlice";
 import configReducer from "./slices/config/configSlice";
 import establishmentReducer from "./slices/establishment/establishmentSlice";
 import festiveReducer from "./slices/festive/festiveSlice";
+import alergenosReducer from "./slices/alergenos/alergenosSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     config: configReducer,
     establishment: establishmentReducer,
     festive: festiveReducer,
+    alergenos: alergenosReducer,
   },
 });
 

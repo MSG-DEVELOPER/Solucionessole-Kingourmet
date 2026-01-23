@@ -6,10 +6,12 @@ import RestaurantLayout from "../../components/restaurantPageComponents/restaura
 import { getConfig } from "../../services/config/getConfig";
 import { getEstablishment } from "../../services/establishment/getEstablishment";
 import { getFestivos } from "../../services/festivos/getFestivos";
+import { getAlergenos } from "../../services/alergenos/getAlergenos";
 import type { RootState } from "../../redux/store";
 import { setConfig } from "../../redux/slices/config/configSlice";
 import { setEstablishment } from "../../redux/slices/establishment/establishmentSlice";
 import { setFestivos } from "../../redux/slices/festive/festiveSlice";
+import { setAlergenos } from "../../redux/slices/alergenos/alergenosSlice";
 
 import {
   RestaurantPageContainer,
@@ -31,6 +33,7 @@ function RestaurantPage() {
   const config = useSelector((state: RootState) => state.config.data);
   const establishment = useSelector((state: RootState) => state.establishment.data);
   const festivos = useSelector((state: RootState) => state.festive.data);
+  const alergenos = useSelector((state: RootState) => state.alergenos.data);
 
   // 🔍 Console log provisional para verificar estado de Redux
   useEffect(() => {
@@ -38,7 +41,8 @@ function RestaurantPage() {
     console.log("  - Config:", config);
     console.log("  - Establishment:", establishment);
     console.log("  - Festivos:", festivos);
-  }, [config, establishment, festivos]);
+    console.log("  - Alérgenos:", alergenos);
+  }, [config, establishment, festivos, alergenos]);
 
   useEffect(() => {
     if (config || !establecimientoId) return;
@@ -106,11 +110,29 @@ function RestaurantPage() {
         console.error("❌ GET Festivos - Error:", error);
       }
     }
+
+    async function loadAlergenos() {
+      try {
+        console.log("📡 GET Alérgenos - Iniciando...");
+        const alergenos = await getAlergenos(token as string);
+        console.log("📡 GET Alérgenos - Respuesta completa:", alergenos);
+    
+        if (alergenos) {
+          dispatch(setAlergenos(alergenos));
+          console.log("✅ Alérgenos guardado en Redux:", alergenos);
+        } else {
+          console.warn("⚠️ GET Alérgenos - No hay data en la respuesta");
+        }
+      } catch (error) {
+        console.error("❌ GET Alérgenos - Error:", error);
+      }
+    }
     
 
     loadConfig();
     loadEstablishment();
     loadFestivos();
+    loadAlergenos();
   }, [dispatch, config, establecimientoId]);
 
   return (
