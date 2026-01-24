@@ -7,11 +7,13 @@ import { getConfig } from "../../services/config/getConfig";
 import { getEstablishment } from "../../services/establishment/getEstablishment";
 import { getFestivos } from "../../services/festivos/getFestivos";
 import { getAlergenos } from "../../services/alergenos/getAlergenos";
+import { getClientes } from "../../services/clientes/getClientes";
 import type { RootState } from "../../redux/store";
 import { setConfig } from "../../redux/slices/config/configSlice";
 import { setEstablishment } from "../../redux/slices/establishment/establishmentSlice";
 import { setFestivos } from "../../redux/slices/festive/festiveSlice";
 import { setAlergenos } from "../../redux/slices/alergenos/alergenosSlice";
+import { setClientes } from "../../redux/slices/clientes/clientesSlice";
 
 import {
   RestaurantPageContainer,
@@ -34,6 +36,7 @@ function RestaurantPage() {
   const establishment = useSelector((state: RootState) => state.establishment.data);
   const festivos = useSelector((state: RootState) => state.festive.data);
   const alergenos = useSelector((state: RootState) => state.alergenos.data);
+  const clientes = useSelector((state: RootState) => state.clientes.data);
 
   // 🔍 Console log provisional para verificar estado de Redux
   useEffect(() => {
@@ -42,7 +45,8 @@ function RestaurantPage() {
     console.log("  - Establishment:", establishment);
     console.log("  - Festivos:", festivos);
     console.log("  - Alérgenos:", alergenos);
-  }, [config, establishment, festivos, alergenos]);
+    console.log("  - Clientes:", clientes);
+  }, [config, establishment, festivos, alergenos, clientes]);
 
   useEffect(() => {
     if (config || !establecimientoId) return;
@@ -127,12 +131,30 @@ function RestaurantPage() {
         console.error("❌ GET Alérgenos - Error:", error);
       }
     }
+
+    async function loadClientes() {
+      try {
+        console.log("📡 GET Clientes - Iniciando...");
+        const clientes = await getClientes(token as string);
+        console.log("📡 GET Clientes - Respuesta completa:", clientes);
+    
+        if (clientes) {
+          dispatch(setClientes(clientes));
+          console.log("✅ Clientes guardado en Redux:", clientes);
+        } else {
+          console.warn("⚠️ GET Clientes - No hay data en la respuesta");
+        }
+      } catch (error) {
+        console.error("❌ GET Clientes - Error:", error);
+      }
+    }
     
 
     loadConfig();
     loadEstablishment();
     loadFestivos();
     loadAlergenos();
+    loadClientes();
   }, [dispatch, config, establecimientoId]);
 
   return (

@@ -4,11 +4,16 @@ import {
     NutOff,
    PartyPopper,
     Store,
+    Users,
   } from "lucide-react";
   
   export const settingsData = [
     
-   
+    {
+      icon: Users,
+      title: "Clientes",
+      desc: "Gestión de clientes",
+    },
     {
       icon: NutOff,
       title: "Alérgenos",

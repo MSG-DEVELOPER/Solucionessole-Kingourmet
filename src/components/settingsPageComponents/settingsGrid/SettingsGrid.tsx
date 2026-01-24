@@ -10,16 +10,21 @@ import { mockData } from "../../../assets/data/mockData";
 import DataModal from "../../modals/DataModal/DataModal";
 import AddRowModal from "../../modals/DataModal/addRowModal/AddRowModal";
 import EditRowModal from "../../modals/DataModal/editRowModal/EditRowModal";
+import EditMultiFieldModal from "../../modals/DataModal/editMultiFieldModal/EditMultiFieldModal";
+import type { EditField } from "../../modals/DataModal/editMultiFieldModal/EditMultiFieldModal";
 import { configToTableData } from "../../../utils/configAdapters";
 import { establishmentToTableData } from "../../../utils/establishmentAdapter";
 import { festivosToTableData } from "../../../utils/festivesAdapter";
 import { alergenosToTableData } from "../../../utils/alergenosAdapter";
+import { clientesToTableData } from "../../../utils/clientesAdapter";
 import { handleSaveConfigEdit } from "./handlers/handleSaveConfigEdit";
 import { handleSaveEstablishmentEdit } from "./handlers/handleSaveEstablishmentEdit";
 import { handleSaveAlergenoEdit } from "./handlers/handleSaveAlergenoEdit";
 import { handleDeleteRow as handleDeleteRowHandler } from "./handlers/handleDeleteRow";
 import { handleAddFestivo } from "./handlers/handleAddFestivo";
 import { handleAddAlergeno } from "./handlers/handleAddAlergeno";
+import { handleAddCliente } from "./handlers/handleAddCliente";
+import { handleSaveClienteEdit } from "./handlers/handleSaveClienteEdit";
 import { addSchemas } from "../../../utils/addRowSchemas";
 import type { AddField } from "../../modals/DataModal/addRowModal/AddRowModal";
 
@@ -35,6 +40,10 @@ function SettingsGrid() {
     _key?: string;
   } | null>(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  // edición multi-campo
+  const [editMultiFieldModalOpen, setEditMultiFieldModalOpen] = useState(false);
+  const [editFields, setEditFields] = useState<EditField[]>([]);
+  const [editingRowId, setEditingRowId] = useState<string | null>(null);
   // alta
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [addFields, setAddFields] = useState<AddField[]>([]);
@@ -43,6 +52,7 @@ function SettingsGrid() {
   const establishment = useSelector((state: RootState) => state.establishment.data);
   const festivos = useSelector((state: RootState) => state.festive.data);
   const alergenos = useSelector((state: RootState) => state.alergenos.data);
+  const clientes = useSelector((state: RootState) => state.clientes.data);
   // establecimientoId desde redux para cuando entras a Ajustes generales y tienes que enviar el establecimientoId por URl
   const establecimientoId = useSelector(
     (state: RootState) => state.auth.establecimientoId
@@ -70,6 +80,9 @@ function SettingsGrid() {
     }else if (selectedSetting === "Alérgenos") {
       if (!alergenos || alergenos.length === 0) return [];
       return alergenosToTableData(alergenos);
+    }else if (selectedSetting === "Clientes") {
+      if (!clientes || clientes.length === 0) return [];
+      return clientesToTableData(clientes);
     }
 
    return mockData[selectedSetting] ?? [];
@@ -87,6 +100,23 @@ function SettingsGrid() {
     setEditModalOpen(true);
   }
 
+  function handleEditClienteRow(row: Record<string, unknown>) {
+    //para editar un cliente con múltiples campos
+    const rowId = row._key as string;
+    
+    // Usar keys que coincidan con el backend (lowercase) para evitar conversiones
+    const fields: EditField[] = [
+      { key: "nombre", label: "Nombre", type: "text", value: row.Nombre as string, required: true },
+      { key: "apellidos", label: "Apellidos", type: "text", value: row.Apellidos as string, required: true },
+      { key: "email", label: "Email", type: "email", value: row.Email as string, required: true },
+      { key: "telefono", label: "Teléfono", type: "text", value: row.Teléfono as string, required: true },
+    ];
+
+    setEditingRowId(rowId);
+    setEditFields(fields);
+    setEditMultiFieldModalOpen(true);
+  }
+
   async function handleDeleteRow(row: Record<string, unknown>) {
     //pàra eliminar una fila en tablas que tengan la accion eliminar
     if (!selectedSetting || !establecimientoId) return;
@@ -96,7 +126,6 @@ function SettingsGrid() {
   function resolveRowActions(row: Record<string, unknown>) { //lo que pones aqui es el menu de acciones que se muestra en la fila clickada
 
     if (selectedSetting === "Festivos" ) {
-
       return [
         {
           label: "Eliminar",
@@ -108,6 +137,16 @@ function SettingsGrid() {
         },
       ];
     }
+
+    if (selectedSetting === "Clientes") {
+      return [
+        {
+          label: "Editar",
+          onClick: () => handleEditClienteRow(row),
+        },
+      ];
+    }
+
     return [
       {
         label: "Editar",
@@ -124,6 +163,9 @@ function SettingsGrid() {
       setAddModalOpen(true);
     } else if (selectedSetting === "Alérgenos") {
       setAddFields(addSchemas.Alérgenos);
+      setAddModalOpen(true);
+    } else if (selectedSetting === "Clientes") {
+      setAddFields(addSchemas.Clientes);
       setAddModalOpen(true);
     }
   }
@@ -175,7 +217,7 @@ function SettingsGrid() {
         data={resolveData()} //datos de la tabla a renderizar
         showSearchBar
         showFilterIcon
-        onAdd={selectedSetting === "Festivos" || selectedSetting === "Alérgenos" ? handleAddRow : undefined}
+        onAdd={selectedSetting === "Festivos" || selectedSetting === "Alérgenos" || selectedSetting === "Clientes" ? handleAddRow : undefined}
         rowActions={resolveRowActions} //actions para la fila clickada
       />
       {/* Modal de añadir nueva fila, este se puede reutilizar para cualquier tabla que tenga el boton de añadir*/}
@@ -195,6 +237,10 @@ function SettingsGrid() {
             } else if (selectedSetting === "Alérgenos") {
               await handleAddAlergeno(values, dispatch);
               setAddModalOpen(false);
+            } else if (selectedSetting === "Clientes") {
+              if (!establecimientoId) return;
+              await handleAddCliente(values, establecimientoId, dispatch);
+              setAddModalOpen(false);
             } else {
               toast.error("Tipo de ajuste no soportado para añadir");
             }
@@ -210,6 +256,34 @@ function SettingsGrid() {
         onClose={() => setEditModalOpen(false)}
         row={rowBeingEdited} //datos de la fila a editar
         onSave={handleSaveEdit} //funcion que se ejecuta cuando le das al boton guardar en el modal de edición de fila
+      />
+      {/* Modal de edición multi-campo, para tablas con múltiples campos editables como Clientes */}
+      <EditMultiFieldModal
+        open={editMultiFieldModalOpen}
+        title={selectedSetting ? `Editar ${selectedSetting}` : "Editar registro"}
+        fields={editFields}
+        onClose={() => {
+          setEditMultiFieldModalOpen(false);
+          setEditingRowId(null);
+          setEditFields([]);
+        }}
+        onSubmit={async (changedValues) => {
+          if (!selectedSetting || !editingRowId) return;
+
+          try {
+            if (selectedSetting === "Clientes") {
+              await handleSaveClienteEdit(editingRowId, changedValues, dispatch);
+              setEditMultiFieldModalOpen(false);
+            } else {
+              toast.error("Tipo de ajuste no soportado para edición multi-campo");
+            }
+            
+            setEditingRowId(null);
+            setEditFields([]);
+          } catch {
+            // El error ya se maneja en el handler con toast
+          }
+        }}
       />
     </>
   );
