@@ -16,6 +16,7 @@ import { festivosToTableData } from "../../../utils/festivesAdapter";
 import { alergenosToTableData } from "../../../utils/alergenosAdapter";
 import { handleSaveConfigEdit } from "./handlers/handleSaveConfigEdit";
 import { handleSaveEstablishmentEdit } from "./handlers/handleSaveEstablishmentEdit";
+import { handleSaveAlergenoEdit } from "./handlers/handleSaveAlergenoEdit";
 import { handleDeleteRow as handleDeleteRowHandler } from "./handlers/handleDeleteRow";
 import { handleAddFestivo } from "./handlers/handleAddFestivo";
 import { handleAddAlergeno } from "./handlers/handleAddAlergeno";
@@ -94,7 +95,7 @@ function SettingsGrid() {
 
   function resolveRowActions(row: Record<string, unknown>) { //lo que pones aqui es el menu de acciones que se muestra en la fila clickada
 
-    if (selectedSetting === "Festivos" || selectedSetting === "Alérgenos") {
+    if (selectedSetting === "Festivos" ) {
 
       return [
         {
@@ -128,14 +129,19 @@ function SettingsGrid() {
   }
 
   async function handleSaveEdit(key: string, newValue: string) {
-    if (!selectedSetting || !establecimientoId) return;
+    if (!selectedSetting) return;
 
     switch (selectedSetting) {
       case "Ajustes Generales":
+        if (!establecimientoId) return;
         return handleSaveConfigEdit(key, newValue, establecimientoId, dispatch);
       
       case "Establecimiento":
+        if (!establecimientoId) return;
         return handleSaveEstablishmentEdit(key, newValue, establecimientoId, dispatch);
+      
+      case "Alérgenos":
+        return handleSaveAlergenoEdit(key, newValue, dispatch);
       
       default:
         toast.error("Tipo de ajuste no soportado");
