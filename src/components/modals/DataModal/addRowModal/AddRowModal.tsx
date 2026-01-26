@@ -17,7 +17,7 @@ import {
   Form,
 } from "./AddRowModal.styles";
 
-type FieldType = "text" | "date" | "select";
+type FieldType = "text" | "date" | "select" | "email" | "tel";
 
 export interface AddField {
   key: string;
