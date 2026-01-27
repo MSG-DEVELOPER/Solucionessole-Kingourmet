@@ -5,6 +5,7 @@ import {
    PartyPopper,
     Store,
     Users,
+    Clock,
   } from "lucide-react";
   
   export const settingsData = [
@@ -23,6 +24,11 @@ import {
       icon: PartyPopper,
       title: "Festivos",
       desc: "Festivos y cierres especiales",
+    },
+    {
+      icon: Clock,
+      title: "Horarios",
+      desc: "Gestión de horarios",
     },
     {
       icon: Store,

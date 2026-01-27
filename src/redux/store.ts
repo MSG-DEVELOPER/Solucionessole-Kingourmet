@@ -6,6 +6,7 @@ import establishmentReducer from "./slices/establishment/establishmentSlice";
 import festiveReducer from "./slices/festive/festiveSlice";
 import alergenosReducer from "./slices/alergenos/alergenosSlice";
 import clientesReducer from "./slices/clientes/clientesSlice";
+import horariosReducer from "./slices/horarios/horariosSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     festive: festiveReducer,
     alergenos: alergenosReducer,
     clientes: clientesReducer,
+    horarios: horariosReducer,
   },
 });
 

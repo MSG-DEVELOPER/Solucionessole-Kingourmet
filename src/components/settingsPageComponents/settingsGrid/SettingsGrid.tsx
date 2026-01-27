@@ -17,6 +17,8 @@ import { establishmentToTableData } from "../../../utils/establishmentAdapter";
 import { festivosToTableData } from "../../../utils/festivesAdapter";
 import { alergenosToTableData } from "../../../utils/alergenosAdapter";
 import { clientesToTableData } from "../../../utils/clientesAdapter";
+import { horariosToTableData } from "../../../utils/horariosAdapter";
+import { handleSaveHorarioEdit } from "./handlers/handleSaveHorarioEdit";
 import { handleSaveConfigEdit } from "./handlers/handleSaveConfigEdit";
 import { handleSaveEstablishmentEdit } from "./handlers/handleSaveEstablishmentEdit";
 import { handleSaveAlergenoEdit } from "./handlers/handleSaveAlergenoEdit";
@@ -27,6 +29,20 @@ import { handleAddCliente } from "./handlers/handleAddCliente";
 import { handleSaveClienteEdit } from "./handlers/handleSaveClienteEdit";
 import { addSchemas } from "../../../utils/addRowSchemas";
 import type { AddField } from "../../modals/DataModal/addRowModal/AddRowModal";
+
+function generateTimeOptions(): { label: string; value: string }[] {
+  const options: { label: string; value: string }[] = [];
+  for (let hour = 0; hour < 24; hour++) {
+    for (let minute = 0; minute < 60; minute += 15) {
+      const hh = hour.toString().padStart(2, "0");
+      const mm = minute.toString().padStart(2, "0");
+      const label = `${hh}:${mm}`;
+      const value = `${hh}:${mm}:00`;
+      options.push({ label, value });
+    }
+  }
+  return options;
+}
 
 function SettingsGrid() {
   const dispatch = useDispatch();
@@ -53,6 +69,7 @@ function SettingsGrid() {
   const festivos = useSelector((state: RootState) => state.festive.data);
   const alergenos = useSelector((state: RootState) => state.alergenos.data);
   const clientes = useSelector((state: RootState) => state.clientes.data);
+  const horarios = useSelector((state: RootState) => state.horarios.data);
   // establecimientoId desde redux para cuando entras a Ajustes generales y tienes que enviar el establecimientoId por URl
   const establecimientoId = useSelector(
     (state: RootState) => state.auth.establecimientoId
@@ -83,6 +100,9 @@ function SettingsGrid() {
     }else if (selectedSetting === "Clientes") {
       if (!clientes || clientes.length === 0) return [];
       return clientesToTableData(clientes);
+    }else if (selectedSetting === "Horarios") {
+      if (!horarios || horarios.length === 0) return [];
+      return horariosToTableData(horarios);
     }
 
    return mockData[selectedSetting] ?? [];
@@ -110,6 +130,60 @@ function SettingsGrid() {
       { key: "apellidos", label: "Apellidos", type: "text", value: row.Apellidos as string, required: true },
       { key: "email", label: "Email", type: "email", value: row.Email as string, required: true },
       { key: "telefono", label: "Teléfono", type: "text", value: row.Teléfono as string, required: true },
+    ];
+
+    setEditingRowId(rowId);
+    setEditFields(fields);
+    setEditMultiFieldModalOpen(true);
+  }
+
+  function handleEditHorarioRow(row: Record<string, unknown>) {
+    // para editar un horario con múltiples campos
+    const rowId = row._key as string;
+    const timeOptions = generateTimeOptions();
+
+    const fields: EditField[] = [
+      {
+        key: "nombre",
+        label: "Nombre",
+        type: "text",
+        value: row.Nombre as string,
+        required: true,
+      },
+      {
+        key: "descripcion",
+        label: "Descripción",
+        type: "text",
+        value: (row.Descripción as string) ?? "",
+        required: false,
+      },
+      {
+        key: "hora_inicio",
+        label: "Inicio",
+        type: "select",
+        value: row.Inicio as string,
+        required: true,
+        options: timeOptions,
+      },
+      {
+        key: "hora_fin",
+        label: "Fin",
+        type: "select",
+        value: row.Fin as string,
+        required: true,
+        options: timeOptions,
+      },
+      {
+        key: "estado",
+        label: "Estado",
+        type: "select",
+        value: row.Estado as string,
+        required: true,
+        options: [
+          { label: "Activo", value: "activo" },
+          { label: "Inactivo", value: "inactivo" },
+        ],
+      },
     ];
 
     setEditingRowId(rowId);
@@ -147,7 +221,16 @@ function SettingsGrid() {
       ];
     }
 
-    return [
+    if (selectedSetting === "Horarios") {
+      return [
+        {
+          label: "Editar",
+          onClick: () => handleEditHorarioRow(row),
+        },
+      ];
+    }
+
+    return [ //cuando en la tabla solo hay la accion editar y un solo campo,clave-valor
       {
         label: "Editar",
         onClick: () => handleEditRow(row),
@@ -274,10 +357,13 @@ function SettingsGrid() {
             if (selectedSetting === "Clientes") {
               await handleSaveClienteEdit(editingRowId, changedValues, dispatch);
               setEditMultiFieldModalOpen(false);
+            } else if (selectedSetting === "Horarios") {
+              await handleSaveHorarioEdit(editingRowId, changedValues, dispatch);
+              setEditMultiFieldModalOpen(false);
             } else {
               toast.error("Tipo de ajuste no soportado para edición multi-campo");
             }
-            
+
             setEditingRowId(null);
             setEditFields([]);
           } catch {
