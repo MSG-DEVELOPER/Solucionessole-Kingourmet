@@ -9,6 +9,7 @@ import { getFestivos } from "../../services/festivos/getFestivos";
 import { getAlergenos } from "../../services/alergenos/getAlergenos";
 import { getClientes } from "../../services/clientes/getClientes";
 import { getHorarios } from "../../services/horarios/getHorarios";
+import { getMesas } from "../../services/mesas/getMesas";
 import type { RootState } from "../../redux/store";
 import { setConfig } from "../../redux/slices/config/configSlice";
 import { setEstablishment } from "../../redux/slices/establishment/establishmentSlice";
@@ -16,6 +17,7 @@ import { setFestivos } from "../../redux/slices/festive/festiveSlice";
 import { setAlergenos } from "../../redux/slices/alergenos/alergenosSlice";
 import { setClientes } from "../../redux/slices/clientes/clientesSlice";
 import { setHorarios } from "../../redux/slices/horarios/horariosSlice";
+import { setMesas } from "../../redux/slices/mesas/mesasSlice";
 
 import {
   RestaurantPageContainer,
@@ -40,6 +42,7 @@ function RestaurantPage() {
   const alergenos = useSelector((state: RootState) => state.alergenos.data);
   const clientes = useSelector((state: RootState) => state.clientes.data);
   const horarios = useSelector((state: RootState) => state.horarios.data);
+  const mesas = useSelector((state: RootState) => state.mesas.data);
 
   // 🔍 Console log provisional para verificar estado de Redux
   useEffect(() => {
@@ -50,7 +53,8 @@ function RestaurantPage() {
     console.log("  - Alérgenos:", alergenos);
     console.log("  - Clientes:", clientes);
     console.log("  - Horarios:", horarios);
-  }, [config, establishment, festivos, alergenos, clientes, horarios]);
+    console.log("  - Mesas:", mesas);
+  }, [config, establishment, festivos, alergenos, clientes, horarios, mesas]);
 
   useEffect(() => {
     if (config || !establecimientoId) return;
@@ -170,12 +174,30 @@ function RestaurantPage() {
       }
     }
 
+    async function loadMesas() {
+      try {
+        console.log("📡 GET Mesas - Iniciando...");
+        const mesas = await getMesas(token as string);
+        console.log("📡 GET Mesas - Respuesta completa:", mesas);
+    
+        if (mesas) {
+          dispatch(setMesas(mesas));
+          console.log("✅ Mesas guardadas en Redux:", mesas);
+        } else {
+          console.warn("⚠️ GET Mesas - No hay data en la respuesta");
+        }
+      } catch (error) {
+        console.error("❌ GET Mesas - Error:", error);
+      }
+    }
+
     loadConfig();
     loadEstablishment();
     loadFestivos();
     loadAlergenos();
     loadClientes();
     loadHorarios();
+    loadMesas();
   }, [dispatch, config, establecimientoId]);
 
   return (

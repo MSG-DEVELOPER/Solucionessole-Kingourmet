@@ -1,6 +1,6 @@
 import type { AddField } from "../components/modals/DataModal/addRowModal/AddRowModal";
 
-export type AddSchemaKey = "Festivos" | "Alérgenos" | "Clientes";
+export type AddSchemaKey = "Festivos" | "Alérgenos" | "Clientes" | "Mesas";
 
 export const addSchemas: Record<AddSchemaKey, AddField[]> = {
   Festivos: [
@@ -37,6 +37,33 @@ export const addSchemas: Record<AddSchemaKey, AddField[]> = {
     { key: "apellidos", label: "Apellidos", type: "text", required: true },
     { key: "email", label: "Email", type: "email", required: true },
     { key: "telefono", label: "Teléfono", type: "text", required: true },
+  ],
+  Mesas: [
+    { key: "numero_mesa", label: "Num Mesa", type: "text", required: true },
+    { key: "id_sala", label: "Sala", type: "text", required: true },
+    { key: "capacidad_minima", label: "Capacidad Mínima", type: "text", required: true },
+    { key: "capacidad_maxima", label: "Capacidad Máxima", type: "text", required: true },
+    { key: "capacidad_union", label: "Capacidad Unión", type: "text", required: true },
+    {
+      key: "estado",
+      label: "Estado",
+      type: "select",
+      required: true,
+      options: [
+        { label: "Disponible", value: "disponible" },
+      ],
+    },
+    {
+      key: "es_combinable",
+      label: "Combinable",
+      type: "select",
+      required: true,
+      options: [
+        { label: "Sí", value: "Sí" },
+        { label: "No", value: "No" },
+      ],
+    },
+    { key: "notas", label: "Notas", type: "text", required: false },
   ],
 };
 

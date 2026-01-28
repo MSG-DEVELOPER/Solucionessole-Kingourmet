@@ -6,9 +6,16 @@ import {
     Store,
     Users,
     Clock,
+    Armchair,
   } from "lucide-react";
   
   export const settingsData = [
+
+    {
+      icon: Armchair,
+      title: "Mesas",
+      desc: "Gestión de mesas",
+    },
     
     {
       icon: Users,

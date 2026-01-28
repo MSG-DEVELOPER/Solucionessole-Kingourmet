@@ -18,6 +18,7 @@ import { festivosToTableData } from "../../../utils/festivesAdapter";
 import { alergenosToTableData } from "../../../utils/alergenosAdapter";
 import { clientesToTableData } from "../../../utils/clientesAdapter";
 import { horariosToTableData } from "../../../utils/horariosAdapter";
+import { mesasToTableData } from "../../../utils/mesasAdapter";
 import { handleSaveHorarioEdit } from "./handlers/handleSaveHorarioEdit";
 import { handleSaveConfigEdit } from "./handlers/handleSaveConfigEdit";
 import { handleSaveEstablishmentEdit } from "./handlers/handleSaveEstablishmentEdit";
@@ -26,7 +27,9 @@ import { handleDeleteRow as handleDeleteRowHandler } from "./handlers/handleDele
 import { handleAddFestivo } from "./handlers/handleAddFestivo";
 import { handleAddAlergeno } from "./handlers/handleAddAlergeno";
 import { handleAddCliente } from "./handlers/handleAddCliente";
+import { handleAddMesa } from "./handlers/handleAddMesa";
 import { handleSaveClienteEdit } from "./handlers/handleSaveClienteEdit";
+import { handleSaveMesaEdit } from "./handlers/handleSaveMesaEdit";
 import { addSchemas } from "../../../utils/addRowSchemas";
 import type { AddField } from "../../modals/DataModal/addRowModal/AddRowModal";
 
@@ -70,6 +73,7 @@ function SettingsGrid() {
   const alergenos = useSelector((state: RootState) => state.alergenos.data);
   const clientes = useSelector((state: RootState) => state.clientes.data);
   const horarios = useSelector((state: RootState) => state.horarios.data);
+  const mesas = useSelector((state: RootState) => state.mesas.data);
   // establecimientoId desde redux para cuando entras a Ajustes generales y tienes que enviar el establecimientoId por URl
   const establecimientoId = useSelector(
     (state: RootState) => state.auth.establecimientoId
@@ -103,6 +107,9 @@ function SettingsGrid() {
     }else if (selectedSetting === "Horarios") {
       if (!horarios || horarios.length === 0) return [];
       return horariosToTableData(horarios);
+    }else if (selectedSetting === "Mesas") {
+      if (!mesas || mesas.length === 0) return [];
+      return mesasToTableData(mesas);
     }
 
    return mockData[selectedSetting] ?? [];
@@ -191,6 +198,81 @@ function SettingsGrid() {
     setEditMultiFieldModalOpen(true);
   }
 
+  function handleEditMesaRow(row: Record<string, unknown>) {
+    // para editar una mesa con múltiples campos
+    const rowId = row._key as string;
+
+    const fields: EditField[] = [
+      {
+        key: "numero_mesa",
+        label: "Num Mesa",
+        type: "text",
+        value: row["Num Mesa"] as string,
+        required: true,
+      },
+      {
+        key: "capacidad_minima",
+        label: "Min",
+        type: "text",
+        value: row.Min as string,
+        required: true,
+      },
+      {
+        key: "capacidad_maxima",
+        label: "Max",
+        type: "text",
+        value: row.Max as string,
+        required: true,
+      },
+      {
+        key: "capacidad_union",
+        label: "Union",
+        type: "text",
+        value: row.Union as string,
+        required: true,
+      },
+      {
+        key: "estado",
+        label: "Estado",
+        type: "select",
+        value: row.Estado as string,
+        required: true,
+        options: [
+          { label: "Disponible", value: "disponible" },
+        ],
+      },
+      {
+        key: "es_combinable",
+        label: "Combinable",
+        type: "select",
+        value: row.Combinable as string,
+        required: true,
+        options: [
+          { label: "Sí", value: "Sí" },
+          { label: "No", value: "No" },
+        ],
+      },
+      {
+        key: "id_sala",
+        label: "Sala",
+        type: "text",
+        value: row.Sala as string,
+        required: true,
+      },
+      {
+        key: "notas",
+        label: "Notas",
+        type: "text",
+        value: (row.Notas as string) ?? "",
+        required: false,
+      },
+    ];
+
+    setEditingRowId(rowId);
+    setEditFields(fields);
+    setEditMultiFieldModalOpen(true);
+  }
+
   async function handleDeleteRow(row: Record<string, unknown>) {
     //pàra eliminar una fila en tablas que tengan la accion eliminar
     if (!selectedSetting || !establecimientoId) return;
@@ -230,6 +312,15 @@ function SettingsGrid() {
       ];
     }
 
+    if (selectedSetting === "Mesas") {
+      return [
+        {
+          label: "Editar",
+          onClick: () => handleEditMesaRow(row),
+        },
+      ];
+    }
+
     return [ //cuando en la tabla solo hay la accion editar y un solo campo,clave-valor
       {
         label: "Editar",
@@ -249,6 +340,9 @@ function SettingsGrid() {
       setAddModalOpen(true);
     } else if (selectedSetting === "Clientes") {
       setAddFields(addSchemas.Clientes);
+      setAddModalOpen(true);
+    } else if (selectedSetting === "Mesas") {
+      setAddFields(addSchemas.Mesas);
       setAddModalOpen(true);
     }
   }
@@ -300,7 +394,7 @@ function SettingsGrid() {
         data={resolveData()} //datos de la tabla a renderizar
         showSearchBar
         showFilterIcon
-        onAdd={selectedSetting === "Festivos" || selectedSetting === "Alérgenos" || selectedSetting === "Clientes" ? handleAddRow : undefined}
+        onAdd={selectedSetting === "Festivos" || selectedSetting === "Alérgenos" || selectedSetting === "Clientes" || selectedSetting === "Mesas" ? handleAddRow : undefined}
         rowActions={resolveRowActions} //actions para la fila clickada
       />
       {/* Modal de añadir nueva fila, este se puede reutilizar para cualquier tabla que tenga el boton de añadir*/}
@@ -323,6 +417,9 @@ function SettingsGrid() {
             } else if (selectedSetting === "Clientes") {
               if (!establecimientoId) return;
               await handleAddCliente(values, establecimientoId, dispatch);
+              setAddModalOpen(false);
+            } else if (selectedSetting === "Mesas") {
+              await handleAddMesa(values, dispatch);
               setAddModalOpen(false);
             } else {
               toast.error("Tipo de ajuste no soportado para añadir");
@@ -359,6 +456,9 @@ function SettingsGrid() {
               setEditMultiFieldModalOpen(false);
             } else if (selectedSetting === "Horarios") {
               await handleSaveHorarioEdit(editingRowId, changedValues, dispatch);
+              setEditMultiFieldModalOpen(false);
+            } else if (selectedSetting === "Mesas") {
+              await handleSaveMesaEdit(editingRowId, changedValues, dispatch);
               setEditMultiFieldModalOpen(false);
             } else {
               toast.error("Tipo de ajuste no soportado para edición multi-campo");

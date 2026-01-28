@@ -7,6 +7,7 @@ import festiveReducer from "./slices/festive/festiveSlice";
 import alergenosReducer from "./slices/alergenos/alergenosSlice";
 import clientesReducer from "./slices/clientes/clientesSlice";
 import horariosReducer from "./slices/horarios/horariosSlice";
+import mesasReducer from "./slices/mesas/mesasSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     alergenos: alergenosReducer,
     clientes: clientesReducer,
     horarios: horariosReducer,
+    mesas: mesasReducer,
   },
 });
 

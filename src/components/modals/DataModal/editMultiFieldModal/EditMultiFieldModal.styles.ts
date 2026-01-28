@@ -16,7 +16,7 @@ export const ModalCard = styled.div`
   color: ${({ theme }) => theme.colors.black200};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   width: 90%;
-  max-width: 560px;
+  max-width: 800px;
   box-shadow: ${({ theme }) => theme.shadows.heavy};
   border: 1px solid ${({ theme }) => theme.colors.gray200};
   display: flex;
@@ -162,9 +162,13 @@ export const SecondaryButton = styled.button`
 `;
 
 export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: ${({ theme }) => theme.spacing.md};
+  
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const ErrorMessage = styled.span`
