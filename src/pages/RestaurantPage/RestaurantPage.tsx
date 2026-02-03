@@ -10,6 +10,7 @@ import { getAlergenos } from "../../services/alergenos/getAlergenos";
 import { getClientes } from "../../services/clientes/getClientes";
 import { getHorarios } from "../../services/horarios/getHorarios";
 import { getMesas } from "../../services/mesas/getMesas";
+import { getSalas } from "../../services/salas/getSalas";
 import type { RootState } from "../../redux/store";
 import { setConfig } from "../../redux/slices/config/configSlice";
 import { setEstablishment } from "../../redux/slices/establishment/establishmentSlice";
@@ -18,6 +19,7 @@ import { setAlergenos } from "../../redux/slices/alergenos/alergenosSlice";
 import { setClientes } from "../../redux/slices/clientes/clientesSlice";
 import { setHorarios } from "../../redux/slices/horarios/horariosSlice";
 import { setMesas } from "../../redux/slices/mesas/mesasSlice";
+import { setSalas } from "../../redux/slices/salas/salasSlice";
 
 import {
   RestaurantPageContainer,
@@ -43,6 +45,7 @@ function RestaurantPage() {
   const clientes = useSelector((state: RootState) => state.clientes.data);
   const horarios = useSelector((state: RootState) => state.horarios.data);
   const mesas = useSelector((state: RootState) => state.mesas.data);
+  const salas = useSelector((state: RootState) => state.salas.data);
 
   // 🔍 Console log provisional para verificar estado de Redux
   useEffect(() => {
@@ -54,7 +57,8 @@ function RestaurantPage() {
     console.log("  - Clientes:", clientes);
     console.log("  - Horarios:", horarios);
     console.log("  - Mesas:", mesas);
-  }, [config, establishment, festivos, alergenos, clientes, horarios, mesas]);
+    console.log("  - Salas:", salas);
+  }, [config, establishment, festivos, alergenos, clientes, horarios, mesas, salas]);
 
   useEffect(() => {
     if (config || !establecimientoId) return;
@@ -191,6 +195,23 @@ function RestaurantPage() {
       }
     }
 
+    async function loadSalas() {
+      try {
+        console.log("📡 GET Salas - Iniciando...");
+        const salas = await getSalas(token as string);
+        console.log("📡 GET Salas - Respuesta completa:", salas);
+    
+        if (salas) {
+          dispatch(setSalas(salas));
+          console.log("✅ Salas guardadas en Redux:", salas);
+        } else {
+          console.warn("⚠️ GET Salas - No hay data en la respuesta");
+        }
+      } catch (error) {
+        console.error("❌ GET Salas - Error:", error);
+      }
+    }
+
     loadConfig();
     loadEstablishment();
     loadFestivos();
@@ -198,6 +219,7 @@ function RestaurantPage() {
     loadClientes();
     loadHorarios();
     loadMesas();
+    loadSalas();
   }, [dispatch, config, establecimientoId]);
 
   return (

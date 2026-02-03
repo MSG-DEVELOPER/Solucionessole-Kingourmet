@@ -1,5 +1,17 @@
-export const KANDU = async (recurso: number, accion: string) => {
+type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
+
+
+export const KANDU = async (recurso: number, accion: HttpMethod) => {
+
   const token = sessionStorage.getItem("token");
+  
+  const handleAccion: Record<HttpMethod, "leer" | "crear" | "actualizar" | "eliminar"> = {
+    GET: "leer",
+    POST: "crear",
+    PUT: "actualizar",
+    DELETE: "eliminar",
+  };
+  
 
   
 
@@ -16,7 +28,9 @@ export const KANDU = async (recurso: number, accion: string) => {
 
   const data = await res.json();
 
-  if (data[accion] == 1) {
+
+
+  if (data[handleAccion[accion]] == 1) {
     return true;
   }
 
@@ -28,7 +42,7 @@ export const middleware = async (
   accion: string,
   openModal?: () => void
 ): Promise<boolean> => {
-  const allowed = await KANDU(recurso, accion);
+  const allowed = await KANDU(recurso, accion as HttpMethod);
 
   if (!allowed && openModal) {
     openModal();

@@ -7,9 +7,17 @@ import {
     Users,
     Clock,
     Armchair,
+    Grid
   } from "lucide-react";
   
   export const settingsData = [
+
+    
+    {
+      icon: Grid,
+      title: "Salas",
+      desc: "Gestión de Salas",
+    },
 
     {
       icon: Armchair,

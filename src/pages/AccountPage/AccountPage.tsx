@@ -56,20 +56,23 @@ function AccountPage() {
     });
   };
 
-  const fullName = `${user.nombre}${user.apellidos ? ` ${user.apellidos}` : ""}`;
+  const fullName = `${user.nombre}${
+    user.apellidos ? ` ${user.apellidos}` : ""
+  }`;
 
   const openDeniedModal = () => {
     setShowModal(true);
   };
 
   const handleChangePassword = async () => {
-    const allowed = await middleware(1, "actualizar", openDeniedModal); //realmente nose si es id recurso 1...nose cual poner 
+    const method = "PUT"; 
+    const allowed = await middleware(1, method, openDeniedModal); 
+        //el id recurso deberia piyarlo de la url de la api dentro del mismo middel, es decir no se enviaria
+
+    if (allowed) alert("Función de cambio de contraseña en desarrollo");
+     //if allowed , llamar al service PUT changepassword y enviar el method por argumento , tipo putPasssword(method)
 
     if (!allowed) return;
-
-    alert("Función de cambio de contraseña en desarrollo");
-
-    
   };
 
   return (
@@ -110,19 +113,25 @@ function AccountPage() {
             <DateRow $highlight>
               <DateLabel>ÚLTIMO ACCESO:</DateLabel>
               <DateValue>
-                {formatDate(user.ultimo_acceso) || <EmptyValue>No disponible</EmptyValue>}
+                {formatDate(user.ultimo_acceso) || (
+                  <EmptyValue>No disponible</EmptyValue>
+                )}
               </DateValue>
             </DateRow>
             <DateRow>
               <DateLabel>CUENTA CREADA:</DateLabel>
               <DateValue>
-                {formatDate(user.created_at) || <EmptyValue>No disponible</EmptyValue>}
+                {formatDate(user.created_at) || (
+                  <EmptyValue>No disponible</EmptyValue>
+                )}
               </DateValue>
             </DateRow>
             <DateRow>
               <DateLabel>ÚLTIMA MOD:</DateLabel>
               <DateValue>
-                {formatDate(user.updated_at) || <EmptyValue>No disponible</EmptyValue>}
+                {formatDate(user.updated_at) || (
+                  <EmptyValue>No disponible</EmptyValue>
+                )}
               </DateValue>
             </DateRow>
           </DatesTable>
