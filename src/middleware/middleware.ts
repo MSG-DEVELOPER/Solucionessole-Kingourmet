@@ -1,6 +1,26 @@
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
 
 
+export const middleware = async (
+  recurso: number,
+  accion: HttpMethod,
+  openModal?: () => void
+): Promise<boolean> => {
+  const allowed = await KANDU(recurso, accion);
+
+  if (!allowed && openModal) {
+    openModal();
+  }
+
+  return allowed;
+};
+
+
+
+
+
+
+
 export const KANDU = async (recurso: number, accion: HttpMethod) => {
 
   const token = sessionStorage.getItem("token");
@@ -37,16 +57,3 @@ export const KANDU = async (recurso: number, accion: HttpMethod) => {
   return false;
 };
 
-export const middleware = async (
-  recurso: number,
-  accion: string,
-  openModal?: () => void
-): Promise<boolean> => {
-  const allowed = await KANDU(recurso, accion as HttpMethod);
-
-  if (!allowed && openModal) {
-    openModal();
-  }
-
-  return allowed;
-};
