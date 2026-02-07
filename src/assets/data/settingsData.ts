@@ -7,11 +7,18 @@ import {
     Users,
     Clock,
     Armchair,
-    Grid
+    HandPlatter,
+    Grid,
+    
   } from "lucide-react";
   
   export const settingsData = [
-
+  
+    {
+      icon: HandPlatter,
+      title: "Plantilla",
+      desc: "Gestión de toda la plantilla",
+    },
     
     {
       icon: Grid,

@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Settings, User, UtensilsCrossed, Power,BookOpenCheck } from "lucide-react";
+import { Settings, User, UtensilsCrossed, Power,BookOpenCheck,ShieldCheck} from "lucide-react";
 import { toast } from "sonner";
 import {
   SidebarContainer,
@@ -12,6 +12,7 @@ import {
   IconWrapper,
   SidebarFooter,
   FooterLogo,
+  
 } from "./SidebarMenu.styles";
 import UserBadge from "./userBadge/UserBadge";
 import logoKG from "../../assets/icons/Kingourmet_no_bg.svg";
@@ -61,6 +62,15 @@ function SidebarMenu() {
               <User />
             </IconWrapper>
             Account
+          </NavLink>
+        </SidebarItem>
+
+        <SidebarItem>
+          <NavLink to="roles">
+            <IconWrapper>
+              <ShieldCheck />
+            </IconWrapper>
+            Roles
           </NavLink>
         </SidebarItem>
 

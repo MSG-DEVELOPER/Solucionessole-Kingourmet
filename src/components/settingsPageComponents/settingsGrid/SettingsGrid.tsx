@@ -19,6 +19,7 @@ import { alergenosToTableData } from "../../../utils/alergenosAdapter";
 import { clientesToTableData } from "../../../utils/clientesAdapter";
 import { horariosToTableData } from "../../../utils/horariosAdapter";
 import { mesasToTableData } from "../../../utils/mesasAdapter";
+import { salasToTableData } from "../../../utils/salasAdapter";
 import { handleSaveHorarioEdit } from "./handlers/handleSaveHorarioEdit";
 import { handleSaveConfigEdit } from "./handlers/handleSaveConfigEdit";
 import { handleSaveEstablishmentEdit } from "./handlers/handleSaveEstablishmentEdit";
@@ -74,6 +75,7 @@ function SettingsGrid() {
   const clientes = useSelector((state: RootState) => state.clientes.data);
   const horarios = useSelector((state: RootState) => state.horarios.data);
   const mesas = useSelector((state: RootState) => state.mesas.data);
+  const salas = useSelector((state: RootState) => state.salas.data);
   // establecimientoId desde redux para cuando entras a Ajustes generales y tienes que enviar el establecimientoId por URl
   const establecimientoId = useSelector(
     (state: RootState) => state.auth.establecimientoId
@@ -110,6 +112,9 @@ function SettingsGrid() {
     }else if (selectedSetting === "Mesas") {
       if (!mesas || mesas.length === 0) return [];
       return mesasToTableData(mesas);
+    } else if (selectedSetting === "Salas") {
+      if (!salas || salas.length === 0) return [];
+      return salasToTableData(salas);
     }
 
    return mockData[selectedSetting] ?? [];
