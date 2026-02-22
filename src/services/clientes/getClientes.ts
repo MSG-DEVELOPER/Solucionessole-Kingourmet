@@ -11,9 +11,7 @@ export interface Cliente {
   id_establecimiento: number;
 }
 
-export interface ClientesResponse {
-  clientes: Cliente[];
-}
+
 
 export async function getClientes(token: string): Promise<Cliente[]> {
   const res = await fetch("http://localhost/kingourmet-api/api/clientes", {
@@ -28,6 +26,6 @@ export async function getClientes(token: string): Promise<Cliente[]> {
     throw new Error("Error al obtener los clientes");
   }
 
-  const json: ClientesResponse = await res.json();
-  return json.clientes;
+  const json: Cliente[] = await res.json();
+  return json;
 }

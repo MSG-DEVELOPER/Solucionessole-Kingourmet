@@ -20,7 +20,7 @@ function RolesPageDashboard() {
       if (!token) return;
       try {
         const response = await getRoles(token);
-        setRoles(response.roles ?? []);
+        setRoles(response ?? []);
       } catch {
         console.error("Error al cargar roles");
       }
@@ -46,7 +46,7 @@ function RolesPageDashboard() {
       toast.success("Rol creado");
       setAddRoleOpen(false);
       const response = await getRoles(token);
-      setRoles(response.roles ?? []);
+      setRoles(response ?? []);
     } catch {
       toast.error("Error al crear el rol");
     }
@@ -62,7 +62,7 @@ function RolesPageDashboard() {
       await deleteRole(token, id);
       toast.success("Rol eliminado");
       const response = await getRoles(token);
-      setRoles(response.roles ?? []);
+      setRoles(response ?? []);
     } catch {
       toast.error("Error al eliminar el rol");
     }
