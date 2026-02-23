@@ -29,8 +29,10 @@ import { handleAddFestivo } from "./handlers/handleAddFestivo";
 import { handleAddAlergeno } from "./handlers/handleAddAlergeno";
 import { handleAddCliente } from "./handlers/handleAddCliente";
 import { handleAddMesa } from "./handlers/handleAddMesa";
+import { handleAddSala } from "./handlers/handleAddSala";
 import { handleSaveClienteEdit } from "./handlers/handleSaveClienteEdit";
 import { handleSaveMesaEdit } from "./handlers/handleSaveMesaEdit";
+import { handleSaveSalaEdit } from "./handlers/handleSaveSalaEdit";
 import { addSchemas } from "../../../utils/addRowSchemas";
 import type { AddField } from "../../modals/DataModal/addRowModal/AddRowModal";
 
@@ -278,6 +280,57 @@ function SettingsGrid() {
     setEditMultiFieldModalOpen(true);
   }
 
+  function handleEditSalaRow(row: Record<string, unknown>) {
+    const rowId = row._key as string;
+
+    const fields: EditField[] = [
+      {
+        key: "nombre",
+        label: "Nombre",
+        type: "text",
+        value: row.Nombre as string,
+        required: true,
+      },
+      {
+        key: "descripcion",
+        label: "Descripción",
+        type: "text",
+        value: (row.Descripción as string) ?? "",
+        required: false,
+      },
+      {
+        key: "capacidad_maxima",
+        label: "Capacidad máx.",
+        type: "text",
+        value: row.Max as string,
+        required: true,
+      },
+      {
+        key: "estado",
+        label: "Estado",
+        type: "select",
+        value: row.Estado as string,
+        required: true,
+        options: [
+          { label: "activa", value: "activa" },
+          { label: "inactiva", value: "inactiva" },
+          { label: "mantenimiento", value: "mantenimiento" },
+        ],
+      },
+      {
+        key: "id_horario",
+        label: "Horario (id)",
+        type: "text",
+        value: row.Horario as string,
+        required: true,
+      },
+    ];
+
+    setEditingRowId(rowId);
+    setEditFields(fields);
+    setEditMultiFieldModalOpen(true);
+  }
+
   async function handleDeleteRow(row: Record<string, unknown>) {
     //pàra eliminar una fila en tablas que tengan la accion eliminar
     if (!selectedSetting || !establecimientoId) return;
@@ -326,6 +379,15 @@ function SettingsGrid() {
       ];
     }
 
+    if (selectedSetting === "Salas") {
+      return [
+        {
+          label: "Editar",
+          onClick: () => handleEditSalaRow(row),
+        },
+      ];
+    }
+
     return [ //cuando en la tabla solo hay la accion editar y un solo campo,clave-valor
       {
         label: "Editar",
@@ -348,6 +410,9 @@ function SettingsGrid() {
       setAddModalOpen(true);
     } else if (selectedSetting === "Mesas") {
       setAddFields(addSchemas.Mesas);
+      setAddModalOpen(true);
+    } else if (selectedSetting === "Salas") {
+      setAddFields(addSchemas.Salas);
       setAddModalOpen(true);
     }
   }
@@ -399,7 +464,7 @@ function SettingsGrid() {
         data={resolveData()} //datos de la tabla a renderizar
         showSearchBar
         showFilterIcon
-        onAdd={selectedSetting === "Festivos" || selectedSetting === "Alérgenos" || selectedSetting === "Clientes" || selectedSetting === "Mesas" ? handleAddRow : undefined}
+        onAdd={selectedSetting === "Festivos" || selectedSetting === "Alérgenos" || selectedSetting === "Clientes" || selectedSetting === "Mesas" || selectedSetting === "Salas" ? handleAddRow : undefined}
         rowActions={resolveRowActions} //actions para la fila clickada
       />
       {/* Modal de añadir nueva fila, este se puede reutilizar para cualquier tabla que tenga el boton de añadir*/}
@@ -425,6 +490,10 @@ function SettingsGrid() {
               setAddModalOpen(false);
             } else if (selectedSetting === "Mesas") {
               await handleAddMesa(values, dispatch);
+              setAddModalOpen(false);
+            } else if (selectedSetting === "Salas") {
+              if (!establecimientoId) return;
+              await handleAddSala(values, establecimientoId, dispatch);
               setAddModalOpen(false);
             } else {
               toast.error("Tipo de ajuste no soportado para añadir");
@@ -464,6 +533,9 @@ function SettingsGrid() {
               setEditMultiFieldModalOpen(false);
             } else if (selectedSetting === "Mesas") {
               await handleSaveMesaEdit(editingRowId, changedValues, dispatch);
+              setEditMultiFieldModalOpen(false);
+            } else if (selectedSetting === "Salas") {
+              await handleSaveSalaEdit(editingRowId, changedValues, dispatch);
               setEditMultiFieldModalOpen(false);
             } else {
               toast.error("Tipo de ajuste no soportado para edición multi-campo");

@@ -1,6 +1,6 @@
 import type { AddField } from "../components/modals/DataModal/addRowModal/AddRowModal";
 
-export type AddSchemaKey = "Festivos" | "Alérgenos" | "Clientes" | "Mesas";
+export type AddSchemaKey = "Festivos" | "Alérgenos" | "Clientes" | "Mesas" | "Salas";
 
 export const addSchemas: Record<AddSchemaKey, AddField[]> = {
   Festivos: [
@@ -64,6 +64,24 @@ export const addSchemas: Record<AddSchemaKey, AddField[]> = {
       ],
     },
     { key: "notas", label: "Notas", type: "text", required: false },
+  ],
+  Salas: [
+    { key: "nombre", label: "Nombre", type: "text", required: true },
+    { key: "descripcion", label: "Descripción", type: "text", required: false },
+    { key: "capacidad_maxima", label: "Capacidad máx.", type: "text", required: true },
+    {
+      key: "estado",
+      label: "Estado",
+      type: "select",
+      required: true,
+      options: [
+        { label: "activa", value: "activa" },
+        { label: "inactiva", value: "inactiva" },
+        { label: "mantenimiento", value: "mantenimiento" },
+      ],
+    },
+    { key: "orden", label: "Orden", type: "text", required: true },
+    { key: "id_horario", label: "Horario (id)", type: "text", required: true },
   ],
 };
 
