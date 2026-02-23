@@ -751,3 +751,618 @@ export const CTAButton = styled.button`
     transform: translateY(-2px) scale(1.02);
   }
 `;
+
+// ----------------- PROBLEM SECTION -----------------
+export const ProblemSection = styled.section`
+  padding: ${({ theme }) => theme.spacing.xxl} ${({ theme }) => theme.spacing.md};
+  background: linear-gradient(
+    180deg,
+    ${({ theme }) => theme.colors.background} 0%,
+    ${({ theme }) => theme.colors.gray100} 50%,
+    ${({ theme }) => theme.colors.background} 100%
+  );
+  position: relative;
+  overflow: hidden;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.sm};
+  }
+`;
+
+export const ProblemInner = styled.div`
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  animation: ${fadeInUp} 0.8s ease-out;
+`;
+
+export const ProblemEyebrow = styled.span`
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.8rem;
+  color: ${({ theme }) => theme.colors.gray600};
+  font-weight: 700;
+  margin-bottom: ${({ theme }) => theme.spacing.md};
+  font-family: titulo;
+`;
+
+export const ProblemTitle = styled.h2`
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  color: ${({ theme }) => theme.colors.black200};
+  font-weight: 800;
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
+  line-height: 1.25;
+  font-family: titulo;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin-bottom: ${({ theme }) => theme.spacing.md};
+  }
+`;
+
+export const PainPointsList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: ${({ theme }) => theme.spacing.md};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+export const PainPoint = styled.li`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
+  background: ${({ theme }) => theme.colors.surface};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  border: 1px solid ${({ theme }) => theme.colors.gray200};
+  box-shadow: ${({ theme }) => theme.shadows.light};
+  color: ${({ theme }) => theme.colors.gray600};
+  font-size: 0.95rem;
+  font-weight: 500;
+  max-width: 280px;
+  transition: ${({ theme }) => theme.transitions.fast};
+  font-family: cuerpo;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.blue300};
+    box-shadow: ${({ theme }) => theme.shadows.medium};
+    transform: translateY(-2px);
+  }
+`;
+
+// ----------------- HOW IT WORKS -----------------
+export const HowItWorksSection = styled.section`
+  padding: ${({ theme }) => theme.spacing.xxl} ${({ theme }) => theme.spacing.md};
+  background: ${({ theme }) => theme.colors.surface};
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      ${({ theme }) => theme.colors.blue300},
+      transparent
+    );
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.sm};
+  }
+`;
+
+export const StepsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: ${({ theme }) => theme.spacing.xl};
+  max-width: 1000px;
+  margin: ${({ theme }) => theme.spacing.xxl} auto 0;
+  position: relative;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing.lg};
+    margin-top: ${({ theme }) => theme.spacing.xl};
+  }
+`;
+
+export const StepCard = styled.div<{ $delay?: number }>`
+  text-align: center;
+  padding: ${({ theme }) => theme.spacing.xl};
+  position: relative;
+  animation: ${fadeInUp} 0.6s ease-out backwards;
+  animation-delay: ${(p) => (p.$delay ?? 0) * 0.15}s;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: ${({ theme }) => theme.spacing.lg};
+  }
+`;
+
+export const StepNumber = styled.div`
+  width: 56px;
+  height: 56px;
+  margin: 0 auto ${({ theme }) => theme.spacing.md};
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    ${({ theme }) => theme.colors.blue600},
+    ${({ theme }) => theme.colors.blue800}
+  );
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: ${({ theme }) => theme.shadows.medium};
+  font-family: titulo;
+`;
+
+export const StepTitle = styled.h3`
+  font-size: 1.25rem;
+  color: ${({ theme }) => theme.colors.black200};
+  font-weight: 700;
+  margin-bottom: ${({ theme }) => theme.spacing.sm};
+  font-family: titulo;
+`;
+
+export const StepText = styled.p`
+  font-size: 0.95rem;
+  color: ${({ theme }) => theme.colors.gray600};
+  line-height: 1.6;
+  margin: 0;
+  font-family: cuerpo;
+`;
+
+// ----------------- STATS SECTION -----------------
+export const StatsSection = styled.section`
+  padding: ${({ theme }) => theme.spacing.xxl} ${({ theme }) => theme.spacing.md};
+  background: linear-gradient(
+    135deg,
+    ${({ theme }) => theme.colors.blue800} 0%,
+    ${({ theme }) => theme.colors.blue700} 50%,
+    ${({ theme }) => theme.colors.blue600} 100%
+  );
+  color: white;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 20% 80%,
+      rgba(255, 255, 255, 0.08) 0%,
+      transparent 50%
+    );
+    pointer-events: none;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.sm};
+  }
+`;
+
+export const StatsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: ${({ theme }) => theme.spacing.xl};
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: ${({ theme }) => theme.spacing.lg};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing.md};
+  }
+`;
+
+export const StatItem = styled.div`
+  text-align: center;
+  animation: ${scaleIn} 0.6s ease-out backwards;
+
+  &:nth-child(1) { animation-delay: 0.1s; }
+  &:nth-child(2) { animation-delay: 0.2s; }
+  &:nth-child(3) { animation-delay: 0.3s; }
+  &:nth-child(4) { animation-delay: 0.4s; }
+`;
+
+export const StatValue = styled.div`
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: ${({ theme }) => theme.spacing.xs};
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  font-family: titulo;
+`;
+
+export const StatLabel = styled.div`
+  font-size: 0.9rem;
+  opacity: 0.95;
+  font-weight: 600;
+  font-family: cuerpo;
+`;
+
+// ----------------- BEFORE / AFTER -----------------
+export const BeforeAfterSection = styled.section`
+  padding: ${({ theme }) => theme.spacing.xxl} ${({ theme }) => theme.spacing.md};
+  background: ${({ theme }) => theme.colors.gray100};
+  position: relative;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.sm};
+  }
+`;
+
+export const CompareGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: ${({ theme }) => theme.spacing.xl};
+  max-width: 900px;
+  margin: ${({ theme }) => theme.spacing.xl} auto 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing.lg};
+  }
+`;
+
+export const CompareCard = styled.div<{ $variant?: "before" | "after" }>`
+  padding: ${({ theme }) => theme.spacing.xl};
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
+  border: 2px solid
+    ${(p) =>
+      p.$variant === "after"
+        ? p.theme.colors.blue400
+        : p.theme.colors.gray300};
+  background: ${(p) =>
+    p.$variant === "after" ? p.theme.colors.blue100 : p.theme.colors.surface};
+  box-shadow: ${({ theme }) => theme.shadows.light};
+  animation: ${fadeInUp} 0.6s ease-out backwards;
+  animation-delay: ${(p) => (p.$variant === "after" ? 0.15 : 0)}s;
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: ${({ theme }) => theme.spacing.md};
+    font-family: titulo;
+    color: ${(p) =>
+      p.$variant === "after" ? p.theme.colors.blue800 : p.theme.colors.gray700};
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: ${({ theme }) => theme.colors.gray600};
+    font-family: cuerpo;
+  }
+
+  li {
+    padding-left: 1.5rem;
+    position: relative;
+
+    &::before {
+      content: ${(p) => (p.$variant === "after" ? '"✓"' : '"✕"')};
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      color: ${(p) =>
+        p.$variant === "after" ? p.theme.colors.green600 : p.theme.colors.red500};
+    }
+  }
+`;
+
+// ----------------- TESTIMONIALS -----------------
+export const TestimonialsSection = styled.section`
+  padding: ${({ theme }) => theme.spacing.xxl} ${({ theme }) => theme.spacing.md};
+  background: ${({ theme }) => theme.colors.surface};
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      ${({ theme }) => theme.colors.blue300},
+      transparent
+    );
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.sm};
+  }
+`;
+
+export const TestimonialsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: ${({ theme }) => theme.spacing.xl};
+  max-width: 1100px;
+  margin: ${({ theme }) => theme.spacing.xl} auto 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing.lg};
+  }
+`;
+
+export const TestimonialCard = styled.div`
+  padding: ${({ theme }) => theme.spacing.xl};
+  background: ${({ theme }) => theme.colors.gray100};
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
+  border: 1px solid ${({ theme }) => theme.colors.gray200};
+  transition: ${({ theme }) => theme.transitions.medium};
+  animation: ${scaleIn} 0.5s ease-out backwards;
+
+  &:nth-child(1) { animation-delay: 0.1s; }
+  &:nth-child(2) { animation-delay: 0.2s; }
+  &:nth-child(3) { animation-delay: 0.3s; }
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.blue300};
+    box-shadow: ${({ theme }) => theme.shadows.medium};
+    transform: translateY(-4px);
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: ${({ theme }) => theme.colors.gray700};
+    margin: 0 0 ${({ theme }) => theme.spacing.md};
+    font-style: italic;
+    font-family: cuerpo;
+  }
+`;
+
+export const TestimonialAuthor = styled.div`
+  font-weight: 700;
+  color: ${({ theme }) => theme.colors.black200};
+  font-size: 0.95rem;
+  font-family: titulo;
+`;
+
+export const TestimonialRole = styled.div`
+  font-size: 0.85rem;
+  color: ${({ theme }) => theme.colors.gray500};
+  font-family: cuerpo;
+`;
+
+// ----------------- FAQ -----------------
+export const FAQSection = styled.section`
+  padding: ${({ theme }) => theme.spacing.xxl} ${({ theme }) => theme.spacing.md};
+  background: linear-gradient(
+    180deg,
+    ${({ theme }) => theme.colors.background} 0%,
+    ${({ theme }) => theme.colors.gray100} 100%
+  );
+  position: relative;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.sm};
+  }
+`;
+
+export const FAQList = styled.div`
+  max-width: 700px;
+  margin: ${({ theme }) => theme.spacing.xl} auto 0;
+`;
+
+export const FAQItem = styled.div`
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  margin-bottom: ${({ theme }) => theme.spacing.sm};
+  overflow: hidden;
+  border: 1px solid ${({ theme }) => theme.colors.gray200};
+  background: ${({ theme }) => theme.colors.surface};
+  box-shadow: ${({ theme }) => theme.shadows.light};
+  transition: ${({ theme }) => theme.transitions.fast};
+  animation: ${fadeInUp} 0.5s ease-out backwards;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.blue300};
+  }
+`;
+
+export const FAQQuestion = styled.button<{ $open?: boolean }>`
+  width: 100%;
+  padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
+  text-align: left;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: ${({ theme }) => theme.colors.black200};
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.md};
+  font-family: titulo;
+  transition: ${({ theme }) => theme.transitions.fast};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.blue700};
+  }
+
+  span {
+    flex: 1;
+  }
+
+  svg {
+    flex-shrink: 0;
+    transition: transform ${({ theme }) => theme.transitions.medium};
+    transform: rotate(${(p) => (p.$open ? "180deg" : "0")});
+  }
+`;
+
+export const FAQAnswer = styled.div<{ $open?: boolean }>`
+  padding: 0 ${({ theme }) => theme.spacing.lg};
+  max-height: ${(p) => (p.$open ? "300px" : "0")};
+  overflow: hidden;
+  transition: max-height ${({ theme }) => theme.transitions.medium};
+
+  p {
+    padding-bottom: ${({ theme }) => theme.spacing.md};
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: ${({ theme }) => theme.colors.gray600};
+    font-family: cuerpo;
+  }
+`;
+
+// ----------------- FOOTER -----------------
+export const Footer = styled.footer`
+  padding: ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.md};
+  background: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.gray300};
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      ${({ theme }) => theme.colors.blue600},
+      transparent
+    );
+    opacity: 0.5;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.sm};
+  }
+`;
+
+export const FooterInner = styled.div`
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.lg};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    flex-direction: column;
+    text-align: center;
+  }
+`;
+
+export const FooterBrand = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.sm};
+  font-family: "CinzelDecorative-Bold", serif;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  color: ${({ theme }) => theme.colors.surface};
+`;
+
+export const FooterLinks = styled.nav`
+  display: flex;
+  gap: ${({ theme }) => theme.spacing.lg};
+  flex-wrap: wrap;
+  justify-content: center;
+
+  a {
+    color: ${({ theme }) => theme.colors.gray400};
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: ${({ theme }) => theme.transitions.fast};
+    font-family: cuerpo;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.blue300};
+    }
+  }
+`;
+
+export const FooterCopy = styled.p`
+  margin: 0;
+  font-size: 0.85rem;
+  color: ${({ theme }) => theme.colors.gray500};
+  font-family: cuerpo;
+`;
+
+export const FooterPowered = styled.div`
+  width: 100%;
+  margin-top: ${({ theme }) => theme.spacing.xl};
+  padding-top: ${({ theme }) => theme.spacing.lg};
+  border-top: 1px solid ${({ theme }) => theme.colors.gray700};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: ${({ theme }) => theme.spacing.sm};
+  text-align: center;
+`;
+
+export const FooterPoweredLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  transition: ${({ theme }) => theme.transitions.fast};
+
+  &:hover {
+    opacity: 0.9;
+  }
+`;
+
+export const FooterPoweredText = styled.span`
+  margin: 0;
+  font-size: 0.85rem;
+  color: ${({ theme }) => theme.colors.gray500};
+  font-family: cuerpo;
+  display: inline-flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.sm};
+
+  strong {
+    font-weight: 700;
+    color: ${({ theme }) => theme.colors.gray400};
+  }
+`;
+
+export const FooterPoweredLogo = styled.img`
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.9;
+  vertical-align: middle;
+`;
