@@ -1,6 +1,10 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { middleware } from "../../middleware/middleware";
 import PermissionDeniedModal from "../../middleware/DeniedModalMiddleware";
+import ChangePasswordModal from "../../components/modals/ChangePasswordModal/ChangePasswordModal";
+import type { ChangePasswordFormData } from "../../components/modals/ChangePasswordModal/ChangePasswordModal";
+import { changePassword } from "../../services/auth/changePassword";
 import { useSelector } from "react-redux";
 import { Mail, Phone, Lock } from "lucide-react";
 import type { RootState } from "../../redux/store";
@@ -33,6 +37,7 @@ import {
 function AccountPage() {
   const user = useSelector((state: RootState) => state.auth.user);
   const [showModal, setShowModal] = useState(false);
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
 
   if (!user) {
     return (
@@ -65,14 +70,32 @@ function AccountPage() {
   };
 
   const handleChangePassword = async () => {
-    const method = "PUT"; 
-    const allowed = await middleware(1, method, openDeniedModal); 
-        //el id recurso deberia piyarlo de la url de la api dentro del mismo middel, es decir no se enviaria
+    const method = "PUT";
+    const allowed = await middleware(2, method, openDeniedModal);
+    //el id recurso deberia piyarlo de la url de la api dentro del mismo middel, es decir no se enviaria
 
-    if (allowed) alert("Función de cambio de contraseña en desarrollo");
-     //if allowed , llamar al service PUT changepassword y enviar el method por argumento , tipo putPasssword(method)
-
+    if (allowed) setShowChangePasswordModal(true);
     if (!allowed) return;
+  };
+
+  const handleSubmitChangePassword = async (data: ChangePasswordFormData) => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      toast.error("Sesión no válida. Inicia sesión de nuevo.");
+      return;
+    }
+    try {
+      await changePassword(token, {
+        current_password: data.currentPassword,
+        new_password: data.newPassword,
+      });
+      toast.success("Contraseña actualizada correctamente");
+      setShowChangePasswordModal(false);
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Error al cambiar la contraseña"
+      );
+    }
   };
 
   return (
@@ -158,6 +181,14 @@ function AccountPage() {
         open={showModal}
         onClose={() => setShowModal(false)}
       />
+
+      {showChangePasswordModal && (
+        <ChangePasswordModal
+          onClose={() => setShowChangePasswordModal(false)}
+          onSubmit={handleSubmitChangePassword}
+        />
+      )}
+
     </AccountPageContainer>
   );
 }
