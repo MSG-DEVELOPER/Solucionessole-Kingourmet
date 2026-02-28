@@ -30,6 +30,7 @@ import { handleAddAlergeno } from "./handlers/handleAddAlergeno";
 import { handleAddCliente } from "./handlers/handleAddCliente";
 import { handleAddMesa } from "./handlers/handleAddMesa";
 import { handleAddSala } from "./handlers/handleAddSala";
+import { handleAddHorario } from "./handlers/handleAddHorario";
 import { handleSaveClienteEdit } from "./handlers/handleSaveClienteEdit";
 import { handleSaveMesaEdit } from "./handlers/handleSaveMesaEdit";
 import { handleSaveSalaEdit } from "./handlers/handleSaveSalaEdit";
@@ -414,6 +415,37 @@ function SettingsGrid() {
     } else if (selectedSetting === "Salas") {
       setAddFields(addSchemas.Salas);
       setAddModalOpen(true);
+    } else if (selectedSetting === "Horarios") {
+      const timeOptions = generateTimeOptions();
+      setAddFields([
+        { key: "nombre", label: "Nombre", type: "text", required: true },
+        { key: "descripcion", label: "Descripción", type: "text", required: false },
+        {
+          key: "hora_inicio",
+          label: "Inicio",
+          type: "select",
+          required: true,
+          options: timeOptions,
+        },
+        {
+          key: "hora_fin",
+          label: "Fin",
+          type: "select",
+          required: true,
+          options: timeOptions,
+        },
+        {
+          key: "estado",
+          label: "Estado",
+          type: "select",
+          required: true,
+          options: [
+            { label: "activo", value: "activo" },
+            { label: "inactivo", value: "inactivo" },
+          ],
+        },
+      ]);
+      setAddModalOpen(true);
     }
   }
 
@@ -464,7 +496,7 @@ function SettingsGrid() {
         data={resolveData()} //datos de la tabla a renderizar
         showSearchBar
         showFilterIcon
-        onAdd={selectedSetting === "Festivos" || selectedSetting === "Alérgenos" || selectedSetting === "Clientes" || selectedSetting === "Mesas" || selectedSetting === "Salas" ? handleAddRow : undefined}
+        onAdd={selectedSetting === "Festivos" || selectedSetting === "Alérgenos" || selectedSetting === "Clientes" || selectedSetting === "Mesas" || selectedSetting === "Salas" || selectedSetting === "Horarios" ? handleAddRow : undefined}
         rowActions={resolveRowActions} //actions para la fila clickada
       />
       {/* Modal de añadir nueva fila, este se puede reutilizar para cualquier tabla que tenga el boton de añadir*/}
@@ -494,6 +526,9 @@ function SettingsGrid() {
             } else if (selectedSetting === "Salas") {
               if (!establecimientoId) return;
               await handleAddSala(values, establecimientoId, dispatch);
+              setAddModalOpen(false);
+            } else if (selectedSetting === "Horarios") {
+              await handleAddHorario(values, dispatch);
               setAddModalOpen(false);
             } else {
               toast.error("Tipo de ajuste no soportado para añadir");

@@ -1,6 +1,6 @@
 import type { AddField } from "../components/modals/DataModal/addRowModal/AddRowModal";
 
-export type AddSchemaKey = "Festivos" | "Alérgenos" | "Clientes" | "Mesas" | "Salas";
+export type AddSchemaKey = "Festivos" | "Alérgenos" | "Clientes" | "Mesas" | "Salas" | "Horarios";
 
 export const addSchemas: Record<AddSchemaKey, AddField[]> = {
   Festivos: [
@@ -83,5 +83,7 @@ export const addSchemas: Record<AddSchemaKey, AddField[]> = {
     { key: "orden", label: "Orden", type: "text", required: true },
     { key: "id_horario", label: "Horario (id)", type: "text", required: true },
   ],
+  // Horarios: campos construidos dinámicamente en SettingsGrid (generateTimeOptions para inicio/fin)
+  Horarios: [],
 };
 
