@@ -37,7 +37,12 @@ function RolesPageModal({ roles, title = "Roles", onAdd, onDeleteRole }: RolesPa
         <CellNombre>{role.nombre}</CellNombre>
         <TableCell>{role.descripcion}</TableCell>
         <IconCell>
-          <RowActionButton type="button" className="icon-pencil" aria-label="Editar rol">
+          <RowActionButton
+            type="button"
+            className="icon-pencil"
+            aria-label="Editar rol"
+            onClick={() => alert(role.id)}
+          >
             <Pencil size={22} aria-hidden />
           </RowActionButton>
           {role.permitir_borrar ? (
