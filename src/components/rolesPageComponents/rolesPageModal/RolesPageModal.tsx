@@ -28,9 +28,10 @@ interface RolesPageModalProps {
   title?: string;
   onAdd?: () => void;
   onDeleteRole?: (id: number) => void;
+  onEditRole?: (id: number) => void;
 }
 
-function RolesPageModal({ roles, title = "Roles", onAdd, onDeleteRole }: RolesPageModalProps) {
+function RolesPageModal({ roles, title = "Roles", onAdd, onDeleteRole, onEditRole }: RolesPageModalProps) {
   const rows = roles.map((role) => {
     return (
       <TableRow key={role.id}>
@@ -41,7 +42,7 @@ function RolesPageModal({ roles, title = "Roles", onAdd, onDeleteRole }: RolesPa
             type="button"
             className="icon-pencil"
             aria-label="Editar rol"
-            onClick={() => alert(role.id)}
+            onClick={() => onEditRole?.(role.id)}
           >
             <Pencil size={22} aria-hidden />
           </RowActionButton>

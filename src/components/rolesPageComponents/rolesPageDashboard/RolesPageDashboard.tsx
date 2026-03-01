@@ -7,10 +7,13 @@ import RolesPageModal from "../rolesPageModal/RolesPageModal";
 import type { Role } from "../rolesPageModal/RolesPageModal";
 import RolesPageAddRole from "../rolesPageAddRole/RolesPageAddRole";
 import type { AddRoleFormData } from "../rolesPageAddRole/RolesPageAddRole";
+import PermissionsByRoleModal from "../permissionsByRoleModal/PermissionsByRoleModal";
 
 function RolesPageDashboard() {
   const [roles, setRoles] = useState<Role[]>([]);
   const [addRoleOpen, setAddRoleOpen] = useState(false);
+  const [permissionsModalOpen, setPermissionsModalOpen] = useState(false);
+  const [selectedRoleId, setSelectedRoleId] = useState<number | null>(null);
 
   useEffect(() => {
     loadRoles();
@@ -29,6 +32,11 @@ function RolesPageDashboard() {
 
   function handleAddRole() {
     setAddRoleOpen(true);
+  }
+
+  function handleEditRole(id: number) {
+    setSelectedRoleId(id);
+    setPermissionsModalOpen(true);
   }
 
   async function handleAddRoleSubmit(data: AddRoleFormData) {
@@ -74,6 +82,16 @@ function RolesPageDashboard() {
         roles={roles}
         onAdd={handleAddRole}
         onDeleteRole={handleDeleteRole}
+        onEditRole={handleEditRole}
+      />
+      <PermissionsByRoleModal
+        open={permissionsModalOpen}
+        onClose={() => {
+          setPermissionsModalOpen(false);
+          setSelectedRoleId(null);
+        }}
+        roleId={selectedRoleId}
+        roleName={roles.find((r) => r.id === selectedRoleId)?.nombre}
       />
       <RolesPageAddRole
         open={addRoleOpen}
