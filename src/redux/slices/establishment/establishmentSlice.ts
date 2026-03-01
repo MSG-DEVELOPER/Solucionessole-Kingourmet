@@ -26,6 +26,7 @@ export interface Estadisticas {
 export interface EstablishmentData {
   id: number;
   nombre: string;
+  nombre_fiscal?: string;
   direccion?: string;
   telefono?: string;
   email?: string;
@@ -33,8 +34,11 @@ export interface EstablishmentData {
   logo?: string | null;
   capacidad_total?: number;
   estado: string;
-  salas: Sala[];
-  estadisticas: Estadisticas;
+  dominio?: string;
+  created_at?: string;
+  updated_at?: string;
+  salas?: Sala[];
+  estadisticas?: Estadisticas;
   [key: string]: unknown;
 }
 

@@ -67,14 +67,14 @@ function AddRowModal({
 
   return (
     <ModalOverlay onClick={onClose}>
-      <ModalCard onClick={(e) => e.stopPropagation()}>
+      <ModalCard $narrow={fields.length <= 1} onClick={(e) => e.stopPropagation()}>
         <Header>
           <h3>{title}</h3>
           <CloseButton onClick={onClose}>×</CloseButton>
         </Header>
 
         <Body>
-          <Form id="add-row-form" onSubmit={handleSubmit(onSubmitForm)}>
+            <Form id="add-row-form" onSubmit={handleSubmit(onSubmitForm)} $narrow={fields.length <= 1}>
             {fields.map((field) => (
               <Field key={field.key}>
                 <Label htmlFor={field.key}>

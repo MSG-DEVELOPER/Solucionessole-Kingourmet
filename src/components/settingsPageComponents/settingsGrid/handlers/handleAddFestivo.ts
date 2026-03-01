@@ -16,12 +16,12 @@ export async function handleAddFestivo(
   }
 
   try {
-    // Construir el payload
     const payload = {
-      establecimiento_id: establecimientoId,
+      id_establecimiento: establecimientoId,
       nombre: values.nombre,
-      fecha: values.fecha,
-      cerrado: Number(values.cerrado), // Convertir string "1" o "0" a número
+      fecha_inicio: values.fecha_inicio,
+      fecha_fin: values.fecha_fin,
+      cerrado: Number(values.cerrado),
       tipo: values.tipo,
     };
 
@@ -31,7 +31,7 @@ export async function handleAddFestivo(
     // Refrescar los datos desde el backend
     const festivos = await getFestivos(token, establecimientoId);
     console.log("🔍 Festivos recibidos del backend después de crear:", festivos);
-    console.log("🔍 Festivo creado (fecha enviada):", values.fecha);
+    console.log("🔍 Festivo creado (fechas enviadas):", values.fecha_inicio, values.fecha_fin);
     dispatch(setFestivos(festivos));
 
     toast.success("Festivo creado correctamente");

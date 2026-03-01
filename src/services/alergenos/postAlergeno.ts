@@ -1,9 +1,9 @@
 // src/services/alergenos/postAlergeno.ts
 
 export interface PostAlergenoPayload {
+  id_establecimiento: number;
   nombre: string;
-  descripcion: string;
-  icono: string;
+  imagen: string;
 }
 
 export interface PostAlergenoResponse {

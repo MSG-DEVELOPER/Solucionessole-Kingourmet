@@ -13,6 +13,7 @@ import {
   Table,
   Message,
   ToggleCell,
+  PermissionIcon,
   ToggleSwitch,
   Footer,
   SaveButton,
@@ -136,7 +137,9 @@ function PermissionsByRoleModal({
                     <td>{recursoDescMap[p.id_recurso] ?? p.id_recurso}</td>
                     <td>
                       <ToggleCell>
-                        <span>{permissionValueToLabel(p.leer)}</span>
+                        <PermissionIcon $allowed={p.leer === 1} title={permissionValueToLabel(p.leer)} aria-label={permissionValueToLabel(p.leer)}>
+                          {p.leer === 1 ? "✅" : "⛔"}
+                        </PermissionIcon>
                         <ToggleSwitch
                           type="button"
                           onClick={() => updateDraft(p.id, "leer")}
@@ -148,7 +151,9 @@ function PermissionsByRoleModal({
                     </td>
                     <td>
                       <ToggleCell>
-                        <span>{permissionValueToLabel(p.actualizar)}</span>
+                        <PermissionIcon $allowed={p.actualizar === 1} title={permissionValueToLabel(p.actualizar)} aria-label={permissionValueToLabel(p.actualizar)}>
+                          {p.actualizar === 1 ? "✅" : "⛔"}
+                        </PermissionIcon>
                         <ToggleSwitch
                           type="button"
                           onClick={() => updateDraft(p.id, "actualizar")}
@@ -160,7 +165,9 @@ function PermissionsByRoleModal({
                     </td>
                     <td>
                       <ToggleCell>
-                        <span>{permissionValueToLabel(p.crear)}</span>
+                        <PermissionIcon $allowed={p.crear === 1} title={permissionValueToLabel(p.crear)} aria-label={permissionValueToLabel(p.crear)}>
+                          {p.crear === 1 ? "✅" : "⛔"}
+                        </PermissionIcon>
                         <ToggleSwitch
                           type="button"
                           onClick={() => updateDraft(p.id, "crear")}
@@ -172,7 +179,9 @@ function PermissionsByRoleModal({
                     </td>
                     <td>
                       <ToggleCell>
-                        <span>{permissionValueToLabel(p.eliminar)}</span>
+                        <PermissionIcon $allowed={p.eliminar === 1} title={permissionValueToLabel(p.eliminar)} aria-label={permissionValueToLabel(p.eliminar)}>
+                          {p.eliminar === 1 ? "✅" : "⛔"}
+                        </PermissionIcon>
                         <ToggleSwitch
                           type="button"
                           onClick={() => updateDraft(p.id, "eliminar")}

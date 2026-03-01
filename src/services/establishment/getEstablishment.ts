@@ -7,21 +7,33 @@ export async function getEstablishment(
   establecimientoId: number | null
 ): Promise<EstablishmentData> {
   const res = await fetch(
-    `http://localhost/kingourmet-api/api/establecimientos/${establecimientoId}`,
+    "http://localhost/kingourmet-api/api/establecimientos",
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     }
   );
 
-  if (res.status !== 200) {
+  if (!res.ok) {
     throw new Error("Error al obtener el establecimiento");
   }
 
-  const json = await res.json();
-  return json;
+  const list = await res.json();
+  const arr = Array.isArray(list) ? list : [];
+
+  if (arr.length === 0) {
+    throw new Error("No se encontró ningún establecimiento");
+  }
+
+  const found =
+    establecimientoId != null
+      ? arr.find((e: { id: number }) => e.id === establecimientoId)
+      : null;
+  const establishment = found ?? arr[0];
+
+  return establishment as EstablishmentData;
 }
 

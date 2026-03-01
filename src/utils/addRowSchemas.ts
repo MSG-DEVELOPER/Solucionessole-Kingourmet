@@ -5,7 +5,8 @@ export type AddSchemaKey = "Festivos" | "Alérgenos" | "Clientes" | "Mesas" | "S
 export const addSchemas: Record<AddSchemaKey, AddField[]> = {
   Festivos: [
     { key: "nombre", label: "Nombre", type: "text", required: true },
-    { key: "fecha", label: "Fecha", type: "date", required: true },
+    { key: "fecha_inicio", label: "Fecha inicio", type: "date", required: true },
+    { key: "fecha_fin", label: "Fecha fin", type: "date", required: true },
     {
       key: "tipo",
       label: "Tipo",
@@ -30,7 +31,6 @@ export const addSchemas: Record<AddSchemaKey, AddField[]> = {
   ],
   Alérgenos: [
     { key: "nombre", label: "Nombre", type: "text", required: true },
-    { key: "descripcion", label: "Descripción", type: "text", required: true },
   ],
   Clientes: [
     { key: "nombre", label: "Nombre", type: "text", required: true },

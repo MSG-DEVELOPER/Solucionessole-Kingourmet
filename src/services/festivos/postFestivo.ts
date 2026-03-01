@@ -1,9 +1,10 @@
 // src/services/festivos/postFestivo.ts
 
 export interface PostFestivoPayload {
-  establecimiento_id: number;
+  id_establecimiento: number;
   nombre: string;
-  fecha: string;
+  fecha_inicio: string;
+  fecha_fin: string;
   cerrado: number;
   tipo: string;
 }

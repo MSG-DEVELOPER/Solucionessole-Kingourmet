@@ -145,6 +145,12 @@ export const ToggleCell = styled.div`
   min-width: 0;
 `;
 
+export const PermissionIcon = styled.span<{ $allowed: boolean }>`
+  display: inline-flex;
+  align-items: center;
+  color: ${({ $allowed, theme }) => ($allowed ? theme.colors.green600 : theme.colors.red600)};
+`;
+
 export const ToggleSwitch = styled.button`
   display: inline-flex;
   align-items: center;

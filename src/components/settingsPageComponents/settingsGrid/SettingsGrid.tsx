@@ -514,7 +514,8 @@ function SettingsGrid() {
               await handleAddFestivo(values, establecimientoId, dispatch);
               setAddModalOpen(false);
             } else if (selectedSetting === "Alérgenos") {
-              await handleAddAlergeno(values, dispatch);
+              if (!establecimientoId) return;
+              await handleAddAlergeno(values, establecimientoId, dispatch);
               setAddModalOpen(false);
             } else if (selectedSetting === "Clientes") {
               if (!establecimientoId) return;

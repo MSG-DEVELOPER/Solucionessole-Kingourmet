@@ -7,6 +7,7 @@ import { setAlergenos } from "../../../../redux/slices/alergenos/alergenosSlice"
 
 export async function handleAddAlergeno(
   values: Record<string, string>,
+  establecimientoId: number,
   dispatch: AppDispatch
 ): Promise<void> {
   const token = sessionStorage.getItem("token");
@@ -15,17 +16,14 @@ export async function handleAddAlergeno(
   }
 
   try {
-    // Construir el payload con icono hardcodeado
     const payload = {
+      id_establecimiento: establecimientoId,
       nombre: values.nombre,
-      descripcion: values.descripcion,
-      icono: "fa-circle", // Hardcodeado por defecto
+      imagen: "fa-bread-slice",
     };
 
-    // Crear el alérgeno
     await postAlergeno(token, payload);
 
-    // Refrescar los datos desde el backend
     const alergenos = await getAlergenos(token);
     dispatch(setAlergenos(alergenos));
 
