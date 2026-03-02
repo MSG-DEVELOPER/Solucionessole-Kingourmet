@@ -20,12 +20,21 @@ export async function postRole(
       body: JSON.stringify(payload),
     });
 
-    if (response.status !== 200 && response.status !== 201) {
+    // Acepta cualquier 2xx como éxito
+    if (!response.ok) {
       throw new Error("Error al crear el rol");
     }
 
-    const data = await response.json();
-    return data;
+    // Si el backend devuelve body JSON, lo intentamos parsear,
+    // pero si falla no consideramos que la creación haya fallado.
+    const text = await response.text();
+    if (!text) return null;
+
+    try {
+      return JSON.parse(text);
+    } catch {
+      return null;
+    }
   } catch (error) {
     if (error instanceof Error) {
       throw error;

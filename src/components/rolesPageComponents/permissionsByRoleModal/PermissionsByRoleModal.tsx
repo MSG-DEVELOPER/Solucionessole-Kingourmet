@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { ArrowLeftRight } from "lucide-react";
 import { getPermissionsByRole } from "../../../services/permissions/getPermissionsByRol";
 import type { PermissionByRole } from "../../../services/permissions/getPermissionsByRol";
 import { getRecursos } from "../../../services/recursos/getRecursos";
@@ -14,7 +13,7 @@ import {
   Message,
   ToggleCell,
   PermissionIcon,
-  ToggleSwitch,
+  PermissionCheckbox,
   Footer,
   SaveButton,
 } from "./PermissionsByRoleModal.styles";
@@ -137,58 +136,46 @@ function PermissionsByRoleModal({
                     <td>{recursoDescMap[p.id_recurso] ?? p.id_recurso}</td>
                     <td>
                       <ToggleCell>
-                        <PermissionIcon $allowed={p.leer === 1} title={permissionValueToLabel(p.leer)} aria-label={permissionValueToLabel(p.leer)}>
-                          {p.leer === 1 ? "✅" : "⛔"}
+                        <PermissionIcon $allowed={p.leer === 1}>
+                          <PermissionCheckbox
+                            checked={p.leer === 1}
+                            onChange={() => updateDraft(p.id, "leer")}
+                            aria-label={permissionValueToLabel(p.leer)}
+                          />
                         </PermissionIcon>
-                        <ToggleSwitch
-                          type="button"
-                          onClick={() => updateDraft(p.id, "leer")}
-                          aria-label="Cambiar Leer"
-                        >
-                          <ArrowLeftRight size={14} />
-                        </ToggleSwitch>
                       </ToggleCell>
                     </td>
                     <td>
                       <ToggleCell>
-                        <PermissionIcon $allowed={p.actualizar === 1} title={permissionValueToLabel(p.actualizar)} aria-label={permissionValueToLabel(p.actualizar)}>
-                          {p.actualizar === 1 ? "✅" : "⛔"}
+                        <PermissionIcon $allowed={p.actualizar === 1}>
+                          <PermissionCheckbox
+                            checked={p.actualizar === 1}
+                            onChange={() => updateDraft(p.id, "actualizar")}
+                            aria-label={permissionValueToLabel(p.actualizar)}
+                          />
                         </PermissionIcon>
-                        <ToggleSwitch
-                          type="button"
-                          onClick={() => updateDraft(p.id, "actualizar")}
-                          aria-label="Cambiar Actualizar"
-                        >
-                          <ArrowLeftRight size={14} />
-                        </ToggleSwitch>
                       </ToggleCell>
                     </td>
                     <td>
                       <ToggleCell>
-                        <PermissionIcon $allowed={p.crear === 1} title={permissionValueToLabel(p.crear)} aria-label={permissionValueToLabel(p.crear)}>
-                          {p.crear === 1 ? "✅" : "⛔"}
+                        <PermissionIcon $allowed={p.crear === 1}>
+                          <PermissionCheckbox
+                            checked={p.crear === 1}
+                            onChange={() => updateDraft(p.id, "crear")}
+                            aria-label={permissionValueToLabel(p.crear)}
+                          />
                         </PermissionIcon>
-                        <ToggleSwitch
-                          type="button"
-                          onClick={() => updateDraft(p.id, "crear")}
-                          aria-label="Cambiar Crear"
-                        >
-                          <ArrowLeftRight size={14} />
-                        </ToggleSwitch>
                       </ToggleCell>
                     </td>
                     <td>
                       <ToggleCell>
-                        <PermissionIcon $allowed={p.eliminar === 1} title={permissionValueToLabel(p.eliminar)} aria-label={permissionValueToLabel(p.eliminar)}>
-                          {p.eliminar === 1 ? "✅" : "⛔"}
+                        <PermissionIcon $allowed={p.eliminar === 1}>
+                          <PermissionCheckbox
+                            checked={p.eliminar === 1}
+                            onChange={() => updateDraft(p.id, "eliminar")}
+                            aria-label={permissionValueToLabel(p.eliminar)}
+                          />
                         </PermissionIcon>
-                        <ToggleSwitch
-                          type="button"
-                          onClick={() => updateDraft(p.id, "eliminar")}
-                          aria-label="Cambiar Eliminar"
-                        >
-                          <ArrowLeftRight size={14} />
-                        </ToggleSwitch>
                       </ToggleCell>
                     </td>
                   </tr>

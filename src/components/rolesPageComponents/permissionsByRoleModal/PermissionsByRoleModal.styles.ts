@@ -151,6 +151,13 @@ export const PermissionIcon = styled.span<{ $allowed: boolean }>`
   color: ${({ $allowed, theme }) => ($allowed ? theme.colors.green600 : theme.colors.red600)};
 `;
 
+export const PermissionCheckbox = styled.input.attrs({ type: "checkbox" })`
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: ${({ theme }) => theme.colors.green600};
+`;
+
 export const ToggleSwitch = styled.button`
   display: inline-flex;
   align-items: center;
