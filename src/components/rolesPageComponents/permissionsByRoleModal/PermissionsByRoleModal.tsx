@@ -12,8 +12,10 @@ import {
   Table,
   Message,
   ToggleCell,
-  PermissionIcon,
-  PermissionCheckbox,
+  PermissionSwitchWrapper,
+  PermissionSwitchInput,
+  PermissionSwitchTrack,
+  PermissionSwitchThumb,
   Footer,
   SaveButton,
 } from "./PermissionsByRoleModal.styles";
@@ -136,46 +138,58 @@ function PermissionsByRoleModal({
                     <td>{recursoDescMap[p.id_recurso] ?? p.id_recurso}</td>
                     <td>
                       <ToggleCell>
-                        <PermissionIcon $allowed={p.leer === 1}>
-                          <PermissionCheckbox
+                        <PermissionSwitchWrapper>
+                          <PermissionSwitchInput
                             checked={p.leer === 1}
                             onChange={() => updateDraft(p.id, "leer")}
                             aria-label={permissionValueToLabel(p.leer)}
                           />
-                        </PermissionIcon>
+                          <PermissionSwitchTrack $checked={p.leer === 1}>
+                            <PermissionSwitchThumb $checked={p.leer === 1} />
+                          </PermissionSwitchTrack>
+                        </PermissionSwitchWrapper>
                       </ToggleCell>
                     </td>
                     <td>
                       <ToggleCell>
-                        <PermissionIcon $allowed={p.actualizar === 1}>
-                          <PermissionCheckbox
+                        <PermissionSwitchWrapper>
+                          <PermissionSwitchInput
                             checked={p.actualizar === 1}
                             onChange={() => updateDraft(p.id, "actualizar")}
                             aria-label={permissionValueToLabel(p.actualizar)}
                           />
-                        </PermissionIcon>
+                          <PermissionSwitchTrack $checked={p.actualizar === 1}>
+                            <PermissionSwitchThumb $checked={p.actualizar === 1} />
+                          </PermissionSwitchTrack>
+                        </PermissionSwitchWrapper>
                       </ToggleCell>
                     </td>
                     <td>
                       <ToggleCell>
-                        <PermissionIcon $allowed={p.crear === 1}>
-                          <PermissionCheckbox
+                        <PermissionSwitchWrapper>
+                          <PermissionSwitchInput
                             checked={p.crear === 1}
                             onChange={() => updateDraft(p.id, "crear")}
                             aria-label={permissionValueToLabel(p.crear)}
                           />
-                        </PermissionIcon>
+                          <PermissionSwitchTrack $checked={p.crear === 1}>
+                            <PermissionSwitchThumb $checked={p.crear === 1} />
+                          </PermissionSwitchTrack>
+                        </PermissionSwitchWrapper>
                       </ToggleCell>
                     </td>
                     <td>
                       <ToggleCell>
-                        <PermissionIcon $allowed={p.eliminar === 1}>
-                          <PermissionCheckbox
+                        <PermissionSwitchWrapper>
+                          <PermissionSwitchInput
                             checked={p.eliminar === 1}
                             onChange={() => updateDraft(p.id, "eliminar")}
                             aria-label={permissionValueToLabel(p.eliminar)}
                           />
-                        </PermissionIcon>
+                          <PermissionSwitchTrack $checked={p.eliminar === 1}>
+                            <PermissionSwitchThumb $checked={p.eliminar === 1} />
+                          </PermissionSwitchTrack>
+                        </PermissionSwitchWrapper>
                       </ToggleCell>
                     </td>
                   </tr>

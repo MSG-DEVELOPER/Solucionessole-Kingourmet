@@ -151,11 +151,45 @@ export const PermissionIcon = styled.span<{ $allowed: boolean }>`
   color: ${({ $allowed, theme }) => ($allowed ? theme.colors.green600 : theme.colors.red600)};
 `;
 
-export const PermissionCheckbox = styled.input.attrs({ type: "checkbox" })`
-  width: 18px;
-  height: 18px;
+export const PermissionSwitchWrapper = styled.label`
+  display: inline-flex;
+  align-items: center;
   cursor: pointer;
-  accent-color: ${({ theme }) => theme.colors.green600};
+  position: relative;
+`;
+
+export const PermissionSwitchInput = styled.input.attrs({ type: "checkbox" })`
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+  &:focus-visible + span {
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.blue400};
+  }
+`;
+
+export const PermissionSwitchTrack = styled.span<{ $checked?: boolean }>`
+  display: inline-flex;
+  align-items: center;
+  width: 44px;
+  height: 24px;
+  border-radius: 9999px;
+  background: ${({ $checked, theme }) => ($checked ? theme.colors.green600 : theme.colors.gray300)};
+  transition: ${({ theme }) => theme.transitions.fast};
+  padding: 2px;
+  flex-shrink: 0;
+`;
+
+export const PermissionSwitchThumb = styled.span<{ $checked?: boolean }>`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: ${({ theme }) => theme.colors.surface};
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: ${({ theme }) => theme.transitions.fast};
+  transform: translateX(${({ $checked }) => ($checked ? "20px" : "0")});
 `;
 
 export const ToggleSwitch = styled.button`
