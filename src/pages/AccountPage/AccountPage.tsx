@@ -13,18 +13,21 @@ import {
   AccountPageContainer,
   AccountCard,
   ProfileHeader,
+  ProfileImageWrapper,
   ProfileImage,
   ProfileName,
   FullName,
   UserRole,
-  ContactRow,
+  Content,
+  Section,
+  SectionTitle,
+  ContactGrid,
   ContactInfo,
   ContactIcon,
-  DatesTable,
+  DatesList,
   DateRow,
   DateLabel,
   DateValue,
-  InfoSection,
   InfoLabel,
   InfoValue,
   NotesSection,
@@ -102,79 +105,86 @@ function AccountPage() {
     <AccountPageContainer>
       <AccountCard>
         <ProfileHeader>
-          <ProfileImage src={bbIcon} alt="Foto de perfil" />
+          <ProfileImageWrapper>
+            <ProfileImage src={bbIcon} alt="Foto de perfil" />
+          </ProfileImageWrapper>
           <ProfileName>
             <FullName>{fullName}</FullName>
             <UserRole>{user.rol_nombre}</UserRole>
           </ProfileName>
         </ProfileHeader>
 
-        <InfoSection>
-          <ContactRow>
-            <ContactInfo>
-              <ContactIcon>
-                <Mail size={16} />
-              </ContactIcon>
-              <span>{user.email}</span>
-            </ContactInfo>
+        <Content>
+          <Section>
+            <SectionTitle>Contacto</SectionTitle>
+            <ContactGrid>
+              <ContactInfo>
+                <ContactIcon>
+                  <Mail size={18} />
+                </ContactIcon>
+                <span>{user.email}</span>
+              </ContactInfo>
+              <ContactInfo>
+                <ContactIcon>
+                  <Phone size={18} />
+                </ContactIcon>
+                <span>
+                  {user.telefono ? (
+                    user.telefono
+                  ) : (
+                    <EmptyValue>No proporcionado</EmptyValue>
+                  )}
+                </span>
+              </ContactInfo>
+            </ContactGrid>
+          </Section>
 
-            <ContactInfo>
-              <ContactIcon>
-                <Phone size={16} />
-              </ContactIcon>
-              <span>
-                {user.telefono ? (
-                  user.telefono
-                ) : (
-                  <EmptyValue>No proporcionado</EmptyValue>
-                )}
-              </span>
-            </ContactInfo>
-          </ContactRow>
+          <Section>
+            <SectionTitle>Actividad</SectionTitle>
+            <DatesList>
+              <DateRow $highlight>
+                <DateLabel>Último acceso</DateLabel>
+                <DateValue>
+                  {formatDate(user.ultimo_acceso) || (
+                    <EmptyValue>No disponible</EmptyValue>
+                  )}
+                </DateValue>
+              </DateRow>
+              <DateRow>
+                <DateLabel>Cuenta creada</DateLabel>
+                <DateValue>
+                  {formatDate(user.created_at) || (
+                    <EmptyValue>No disponible</EmptyValue>
+                  )}
+                </DateValue>
+              </DateRow>
+              <DateRow>
+                <DateLabel>Última modificación</DateLabel>
+                <DateValue>
+                  {formatDate(user.updated_at) || (
+                    <EmptyValue>No disponible</EmptyValue>
+                  )}
+                </DateValue>
+              </DateRow>
+            </DatesList>
+          </Section>
 
-          <DatesTable>
-            <DateRow $highlight>
-              <DateLabel>ÚLTIMO ACCESO:</DateLabel>
-              <DateValue>
-                {formatDate(user.ultimo_acceso) || (
-                  <EmptyValue>No disponible</EmptyValue>
-                )}
-              </DateValue>
-            </DateRow>
-            <DateRow>
-              <DateLabel>CUENTA CREADA:</DateLabel>
-              <DateValue>
-                {formatDate(user.created_at) || (
-                  <EmptyValue>No disponible</EmptyValue>
-                )}
-              </DateValue>
-            </DateRow>
-            <DateRow>
-              <DateLabel>ÚLTIMA MOD:</DateLabel>
-              <DateValue>
-                {formatDate(user.updated_at) || (
-                  <EmptyValue>No disponible</EmptyValue>
-                )}
-              </DateValue>
-            </DateRow>
-          </DatesTable>
-        </InfoSection>
+          <NotesSection>
+            <InfoLabel>Notas</InfoLabel>
+            <NotesTextarea
+              value={user.notas || ""}
+              placeholder="No hay notas guardadas..."
+              readOnly
+            />
+          </NotesSection>
 
-        <NotesSection>
-          <InfoLabel>Notas</InfoLabel>
-          <NotesTextarea
-            value={user.notas || ""}
-            placeholder="No hay notas guardadas..."
-            readOnly
-          />
-        </NotesSection>
-
-        <ActionsSection>
-          <EditButton onClick={handleChangePassword}>
-            <Lock size={18} />
-            Cambiar contraseña
-          </EditButton>
-        </ActionsSection>
+          <ActionsSection>
+            <EditButton onClick={handleChangePassword}>
+              <Lock size={18} />
+              Cambiar contraseña
+            </EditButton>
+          </ActionsSection>
+        </Content>
       </AccountCard>
 
       <PermissionDeniedModal
