@@ -10,10 +10,10 @@ export interface UpdatePermissionPayload {
 export async function updatePermissionByRole(
   token: string,
   id_rol: number,
-  id_recurso: number,
+  id_permiso: number,
   payload: UpdatePermissionPayload
 ): Promise<void> {
-  const url = `http://localhost/kingourmet-api/api/permisos/${id_rol}/rol/${id_recurso}`;
+  const url = `http://localhost/kingourmet-api/api/permisos/${id_permiso}/rol/${id_rol}`;
 
   const response = await fetch(url, {
     method: "PUT",

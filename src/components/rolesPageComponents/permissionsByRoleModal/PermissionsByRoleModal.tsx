@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getPermissionsByRole } from "../../../services/permissions/getPermissionsByRol";
 import type { PermissionByRole } from "../../../services/permissions/getPermissionsByRol";
+import { updatePermissionByRole } from "../../../services/permissions/updatePermissionByRole";
 import { getRecursos } from "../../../services/recursos/getRecursos";
 import { permissionValueToLabel } from "../../../utils/permissionUtils";
 import {
@@ -16,8 +17,6 @@ import {
   PermissionSwitchInput,
   PermissionSwitchTrack,
   PermissionSwitchThumb,
-  Footer,
-  SaveButton,
 } from "./PermissionsByRoleModal.styles";
 
 interface PermissionsByRoleModalProps {
@@ -88,17 +87,16 @@ function PermissionsByRoleModal({
     };
   }, [open, roleId]);
 
-  function updateDraft(permissionId: number, field: "crear" | "leer" | "actualizar" | "eliminar") {
+  function handleSwitchChange(p: PermissionByRole, field: "crear" | "leer" | "actualizar" | "eliminar") {
+    const newVal = p[field] === 1 ? 0 : 1;
+    const payload = { crear: p.crear, leer: p.leer, actualizar: p.actualizar, eliminar: p.eliminar, [field]: newVal };
     setDraftPermissions((prev) =>
-      prev.map((p) =>
-        p.id === permissionId ? { ...p, [field]: p[field] === 1 ? 0 : 1 } : p
-      )
+      prev.map((perm) => (perm.id === p.id ? { ...perm, [field]: newVal } : perm))
     );
-  }
-
-  function handleSave() {
-    // Placeholder: cuando exista el endpoint, aquí se enviará draftPermissions
-    console.log("Guardar permisos (payload para futuro endpoint):", draftPermissions);
+    const token = sessionStorage.getItem("token");
+    if (token && roleId != null) {
+      updatePermissionByRole(token, roleId, p.id, payload).catch(() => {});
+    }
   }
 
   if (!open) return null;
@@ -141,7 +139,7 @@ function PermissionsByRoleModal({
                         <PermissionSwitchWrapper>
                           <PermissionSwitchInput
                             checked={p.leer === 1}
-                            onChange={() => updateDraft(p.id, "leer")}
+                            onChange={() => handleSwitchChange(p, "leer")}
                             aria-label={permissionValueToLabel(p.leer)}
                           />
                           <PermissionSwitchTrack $checked={p.leer === 1}>
@@ -155,7 +153,7 @@ function PermissionsByRoleModal({
                         <PermissionSwitchWrapper>
                           <PermissionSwitchInput
                             checked={p.actualizar === 1}
-                            onChange={() => updateDraft(p.id, "actualizar")}
+                            onChange={() => handleSwitchChange(p, "actualizar")}
                             aria-label={permissionValueToLabel(p.actualizar)}
                           />
                           <PermissionSwitchTrack $checked={p.actualizar === 1}>
@@ -169,7 +167,7 @@ function PermissionsByRoleModal({
                         <PermissionSwitchWrapper>
                           <PermissionSwitchInput
                             checked={p.crear === 1}
-                            onChange={() => updateDraft(p.id, "crear")}
+                            onChange={() => handleSwitchChange(p, "crear")}
                             aria-label={permissionValueToLabel(p.crear)}
                           />
                           <PermissionSwitchTrack $checked={p.crear === 1}>
@@ -183,7 +181,7 @@ function PermissionsByRoleModal({
                         <PermissionSwitchWrapper>
                           <PermissionSwitchInput
                             checked={p.eliminar === 1}
-                            onChange={() => updateDraft(p.id, "eliminar")}
+                            onChange={() => handleSwitchChange(p, "eliminar")}
                             aria-label={permissionValueToLabel(p.eliminar)}
                           />
                           <PermissionSwitchTrack $checked={p.eliminar === 1}>
@@ -198,13 +196,6 @@ function PermissionsByRoleModal({
             </Table>
           )}
         </Body>
-        {!loading && !error && draftPermissions.length > 0 && (
-          <Footer>
-            <SaveButton type="button" onClick={handleSave}>
-              Guardar cambios
-            </SaveButton>
-          </Footer>
-        )}
       </Card>
     </Overlay>
   );
