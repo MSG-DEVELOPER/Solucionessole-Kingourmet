@@ -15,20 +15,14 @@ export interface Festivo {
   updated_at: string;
 }
 
-export async function getFestivos(
-  token: string,
-  establecimientoId: number | null
-): Promise<Festivo[]> {
-  const res = await fetch(
-    `http://localhost/kingourmet-api/api/festivos/establecimiento/${establecimientoId}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-      },
-    }
-  );
+export async function getFestivos(token: string): Promise<Festivo[]> {
+  const res = await fetch("http://localhost/kingourmet-api/api/festivos", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   if (res.status !== 200) {
     throw new Error("Error al obtener los festivos");

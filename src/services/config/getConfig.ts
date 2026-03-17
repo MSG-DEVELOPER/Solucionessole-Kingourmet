@@ -5,8 +5,8 @@ export interface ConfigResponse {
     data?: Record<string, unknown>;
   }
   
-  export async function getConfig(token: string, establecimientoId: number | null): Promise<ConfigResponse> {
-    const res = await fetch(`http://localhost/kingourmet-api/api/configuracion/${establecimientoId}`, {
+  export async function getConfig(token: string): Promise<ConfigResponse> {
+    const res = await fetch(`http://localhost/kingourmet-api/api/configuracion`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -9,13 +9,12 @@ import { resolveConfigValueType } from "../../../../utils/resolveConfigValueType
 export async function handleSaveConfigEdit(
   key: string,
   newValue: string,
-  establecimientoId: number,
   dispatch: AppDispatch
 ): Promise<void> {
-  const endpoint = "kingourmet-api/api/configuracion";
-  const url = `http://localhost/${endpoint}/${establecimientoId}/${key}`;
+  const url = "http://localhost/kingourmet-api/api/configuracion";
   
   const payload = {
+    clave: key,
     valor: newValue,
     tipo: resolveConfigValueType(key),
   };
@@ -28,7 +27,7 @@ export async function handleSaveConfigEdit(
       throw new Error("Token no encontrado");
     }
     
-    const configResponse = await getConfig(token, establecimientoId);
+    const configResponse = await getConfig(token);
     if (configResponse.data) {
       dispatch(setConfig(configResponse.data));
     }

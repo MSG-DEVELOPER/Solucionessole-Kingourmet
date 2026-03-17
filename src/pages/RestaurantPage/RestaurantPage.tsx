@@ -110,10 +110,7 @@ function RestaurantPage() {
     async function loadFestivos() {
       try {
         console.log("📡 GET Festivos - Iniciando...");
-        const festivos = await getFestivos(
-          token as string,
-          establecimientoId
-        );
+        const festivos = await getFestivos(token as string);
         console.log("📡 GET Festivos - Respuesta completa:", festivos);
     
         if (festivos) {

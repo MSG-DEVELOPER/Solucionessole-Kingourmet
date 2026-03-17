@@ -29,7 +29,7 @@ export async function handleAddFestivo(
     await postFestivo(token, payload);
 
     // Refrescar los datos desde el backend
-    const festivos = await getFestivos(token, establecimientoId);
+    const festivos = await getFestivos(token);
     console.log("🔍 Festivos recibidos del backend después de crear:", festivos);
     console.log("🔍 Festivo creado (fechas enviadas):", values.fecha_inicio, values.fecha_fin);
     dispatch(setFestivos(festivos));

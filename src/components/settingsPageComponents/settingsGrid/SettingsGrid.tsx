@@ -340,7 +340,7 @@ function SettingsGrid() {
 
   function resolveRowActions(row: Record<string, unknown>) { //lo que pones aqui es el menu de acciones que se muestra en la fila clickada
 
-    if (selectedSetting === "Festivos" ) {
+    if (selectedSetting === "Festivos" || selectedSetting === "Alérgenos" || selectedSetting === "Horarios") {
       return [
         {
           label: "Eliminar",
@@ -355,6 +355,10 @@ function SettingsGrid() {
 
     if (selectedSetting === "Clientes") {
       return [
+        {
+          label: "Eliminar",
+          onClick: () => handleDeleteRow(row),
+        },
         {
           label: "Editar",
           onClick: () => handleEditClienteRow(row),
@@ -454,8 +458,7 @@ function SettingsGrid() {
 
     switch (selectedSetting) {
       case "Ajustes Generales":
-        if (!establecimientoId) return;
-        return handleSaveConfigEdit(key, newValue, establecimientoId, dispatch);
+        return handleSaveConfigEdit(key, newValue, dispatch);
       
       case "Establecimiento":
         if (!establecimientoId) return;

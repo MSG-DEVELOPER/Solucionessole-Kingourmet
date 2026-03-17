@@ -18,7 +18,7 @@ export async function updateConfig(url: string, payload: UpdateConfigPayload): P
 
   try {
     const response = await fetch(url, {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`,
