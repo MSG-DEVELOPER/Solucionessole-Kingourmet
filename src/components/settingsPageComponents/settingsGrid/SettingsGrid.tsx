@@ -387,6 +387,10 @@ function SettingsGrid() {
     if (selectedSetting === "Salas") {
       return [
         {
+          label: "Eliminar",
+          onClick: () => handleDeleteRow(row),
+        },
+        {
           label: "Editar",
           onClick: () => handleEditSalaRow(row),
         },
