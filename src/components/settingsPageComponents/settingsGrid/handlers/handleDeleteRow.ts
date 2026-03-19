@@ -16,6 +16,9 @@ import { setClientes } from "../../../../redux/slices/clientes/clientesSlice";
 import { deleteSala } from "../../../../services/salas/deleteSala";
 import { getSalas } from "../../../../services/salas/getSalas";
 import { setSalas } from "../../../../redux/slices/salas/salasSlice";
+import { deletePlantilla } from "../../../../services/plantilla/deletePlantilla";
+import { getPlantilla } from "../../../../services/plantilla/getPlantilla";
+import { setPlantilla } from "../../../../redux/slices/plantilla/plantillaSlice";
 
 export async function handleDeleteRow(
   row: Record<string, unknown>,
@@ -69,6 +72,13 @@ export async function handleDeleteRow(
         const salas = await getSalas(token);
         dispatch(setSalas(salas));
         toast.success("Sala eliminada correctamente");
+        break;
+      }
+      case "Plantilla": {
+        await deletePlantilla(token, itemId);
+        const usuarios = await getPlantilla(token);
+        dispatch(setPlantilla(usuarios));
+        toast.success("Usuario eliminado correctamente");
         break;
       }
       default:

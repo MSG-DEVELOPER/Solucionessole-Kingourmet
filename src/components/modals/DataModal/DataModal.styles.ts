@@ -337,6 +337,8 @@ export const FilterIcon = styled.div`
   background: ${({ theme }) => theme.colors.surface};
   color: ${({ theme }) => theme.colors.gray600};
   transition: ${({ theme }) => theme.transitions.fast};
+
+  display: none;
   
   &:hover {
     background: ${({ theme }) => theme.colors.blue100};

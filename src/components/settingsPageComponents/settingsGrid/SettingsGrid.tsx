@@ -20,6 +20,7 @@ import { clientesToTableData } from "../../../utils/clientesAdapter";
 import { horariosToTableData } from "../../../utils/horariosAdapter";
 import { mesasToTableData } from "../../../utils/mesasAdapter";
 import { salasToTableData } from "../../../utils/salasAdapter";
+import { plantillaToTableData } from "../../../utils/plantillaAdapter";
 import { handleSaveHorarioEdit } from "./handlers/handleSaveHorarioEdit";
 import { handleSaveConfigEdit } from "./handlers/handleSaveConfigEdit";
 import { handleSaveEstablishmentEdit } from "./handlers/handleSaveEstablishmentEdit";
@@ -31,11 +32,13 @@ import { handleAddCliente } from "./handlers/handleAddCliente";
 import { handleAddMesa } from "./handlers/handleAddMesa";
 import { handleAddSala } from "./handlers/handleAddSala";
 import { handleAddHorario } from "./handlers/handleAddHorario";
+import { handleAddPlantilla } from "./handlers/handleAddPlantilla";
 import { handleSaveClienteEdit } from "./handlers/handleSaveClienteEdit";
 import { handleSaveMesaEdit } from "./handlers/handleSaveMesaEdit";
 import { handleSaveSalaEdit } from "./handlers/handleSaveSalaEdit";
 import { addSchemas } from "../../../utils/addRowSchemas";
 import type { AddField } from "../../modals/DataModal/addRowModal/AddRowModal";
+import { getRoles } from "../../../services/roles/getRoles";
 
 function generateTimeOptions(): { label: string; value: string }[] {
   const options: { label: string; value: string }[] = [];
@@ -79,6 +82,7 @@ function SettingsGrid() {
   const horarios = useSelector((state: RootState) => state.horarios.data);
   const mesas = useSelector((state: RootState) => state.mesas.data);
   const salas = useSelector((state: RootState) => state.salas.data);
+  const plantilla = useSelector((state: RootState) => state.plantilla.data);
   // establecimientoId desde redux para cuando entras a Ajustes generales y tienes que enviar el establecimientoId por URl
   const establecimientoId = useSelector(
     (state: RootState) => state.auth.establecimientoId
@@ -118,6 +122,9 @@ function SettingsGrid() {
     } else if (selectedSetting === "Salas") {
       if (!salas || salas.length === 0) return [];
       return salasToTableData(salas, horarios);
+    } else if (selectedSetting === "Plantilla") {
+      if (!plantilla || plantilla.length === 0) return [];
+      return plantillaToTableData(plantilla);
     }
 
    return mockData[selectedSetting] ?? [];
@@ -346,6 +353,15 @@ function SettingsGrid() {
 
   function resolveRowActions(row: Record<string, unknown>) { //lo que pones aqui es el menu de acciones que se muestra en la fila clickada
 
+    if (selectedSetting === "Plantilla") {
+      return [
+        {
+          label: "Eliminar",
+          onClick: () => handleDeleteRow(row),
+        },
+      ];
+    }
+
     if (selectedSetting === "Festivos" || selectedSetting === "Alérgenos" || selectedSetting === "Horarios") {
       return [
         {
@@ -411,7 +427,7 @@ function SettingsGrid() {
     ];
   }
 
-  function handleAddRow() {//para añadir una nueva fila en tablas que tengan el boton de añadir
+  async function handleAddRow() {//para añadir una nueva fila en tablas que tengan el boton de añadir
     if (!selectedSetting) return;
 
     if (selectedSetting === "Festivos") {
@@ -475,6 +491,38 @@ function SettingsGrid() {
         },
       ]);
       setAddModalOpen(true);
+    } else if (selectedSetting === "Plantilla") {
+      const token = sessionStorage.getItem("token");
+      if (!token) {
+        toast.error("No hay sesión");
+        return;
+      }
+
+      try {
+        const roles = await getRoles(token);
+        const roleOptions =
+          Array.isArray(roles)
+            ? roles.map((r) => ({
+                label: r.nombre,
+                value: r.id.toString(),
+              }))
+            : [];
+
+        setAddFields(
+          addSchemas.Plantilla.map((f) => {
+            if (f.key !== "id_rol") return f;
+            return {
+              ...f,
+              label: "Rol",
+              type: "select",
+              options: roleOptions,
+            };
+          })
+        );
+        setAddModalOpen(true);
+      } catch (e) {
+        toast.error("Error al cargar los roles");
+      }
     }
   }
 
@@ -524,7 +572,7 @@ function SettingsGrid() {
         data={resolveData()} //datos de la tabla a renderizar
         showSearchBar
         showFilterIcon
-        onAdd={selectedSetting === "Festivos" || selectedSetting === "Alérgenos" || selectedSetting === "Clientes" || selectedSetting === "Mesas" || selectedSetting === "Salas" || selectedSetting === "Horarios" ? handleAddRow : undefined}
+        onAdd={selectedSetting === "Festivos" || selectedSetting === "Alérgenos" || selectedSetting === "Clientes" || selectedSetting === "Mesas" || selectedSetting === "Salas" || selectedSetting === "Horarios" || selectedSetting === "Plantilla" ? handleAddRow : undefined}
         rowActions={resolveRowActions} //actions para la fila clickada
       />
       {/* Modal de añadir nueva fila, este se puede reutilizar para cualquier tabla que tenga el boton de añadir*/}
@@ -558,6 +606,9 @@ function SettingsGrid() {
               setAddModalOpen(false);
             } else if (selectedSetting === "Horarios") {
               await handleAddHorario(values, dispatch);
+              setAddModalOpen(false);
+            } else if (selectedSetting === "Plantilla") {
+              await handleAddPlantilla(values, dispatch);
               setAddModalOpen(false);
             } else {
               toast.error("Tipo de ajuste no soportado para añadir");

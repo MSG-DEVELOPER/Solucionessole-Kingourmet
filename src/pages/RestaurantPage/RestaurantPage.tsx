@@ -11,6 +11,7 @@ import { getClientes } from "../../services/clientes/getClientes";
 import { getHorarios } from "../../services/horarios/getHorarios";
 import { getMesas } from "../../services/mesas/getMesas";
 import { getSalas } from "../../services/salas/getSalas";
+import { getPlantilla } from "../../services/plantilla/getPlantilla";
 import type { RootState } from "../../redux/store";
 import { setConfig } from "../../redux/slices/config/configSlice";
 import { setEstablishment } from "../../redux/slices/establishment/establishmentSlice";
@@ -20,6 +21,7 @@ import { setClientes } from "../../redux/slices/clientes/clientesSlice";
 import { setHorarios } from "../../redux/slices/horarios/horariosSlice";
 import { setMesas } from "../../redux/slices/mesas/mesasSlice";
 import { setSalas } from "../../redux/slices/salas/salasSlice";
+import { setPlantilla } from "../../redux/slices/plantilla/plantillaSlice";
 
 import {
   RestaurantPageContainer,
@@ -46,6 +48,7 @@ function RestaurantPage() {
   const horarios = useSelector((state: RootState) => state.horarios.data);
   const mesas = useSelector((state: RootState) => state.mesas.data);
   const salas = useSelector((state: RootState) => state.salas.data);
+  const plantilla = useSelector((state: RootState) => state.plantilla.data);
 
   // 🔍 Console log provisional para verificar estado de Redux
   useEffect(() => {
@@ -58,6 +61,7 @@ function RestaurantPage() {
     console.log("  - Horarios:", horarios);
     console.log("  - Mesas:", mesas);
     console.log("  - Salas:", salas);
+    console.log("  - Plantilla:", plantilla);
   }, [config, establishment, festivos, alergenos, clientes, horarios, mesas, salas]);
 
   useEffect(() => {
@@ -209,6 +213,22 @@ function RestaurantPage() {
       }
     }
 
+    async function loadPlantilla() {
+      try {
+        console.log("📡 GET Plantilla - Iniciando...");
+        const usuarios = await getPlantilla(token as string);
+        console.log("📡 GET Plantilla - Respuesta completa:", usuarios);
+        if (usuarios) {
+          dispatch(setPlantilla(usuarios));
+          console.log("✅ Plantilla guardada en Redux:", usuarios);
+        } else {
+          console.warn("⚠️ GET Plantilla - No hay data en la respuesta");
+        }
+      } catch (error) {
+        console.error("❌ GET Plantilla - Error:", error);
+      }
+    }
+
     loadConfig();
     loadEstablishment();
     loadFestivos();
@@ -217,6 +237,7 @@ function RestaurantPage() {
     loadHorarios();
     loadMesas();
     loadSalas();
+    loadPlantilla();
   }, [dispatch, config, establecimientoId]);
 
   return (
