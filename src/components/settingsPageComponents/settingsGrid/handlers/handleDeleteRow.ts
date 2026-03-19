@@ -20,7 +20,6 @@ import { setSalas } from "../../../../redux/slices/salas/salasSlice";
 export async function handleDeleteRow(
   row: Record<string, unknown>,
   selectedSetting: string,
-  establecimientoId: number,
   dispatch: AppDispatch
 ): Promise<void> {
   // Extraer el ID desde row._key

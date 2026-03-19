@@ -71,7 +71,7 @@ function RestaurantPage() {
     async function loadConfig() {
       try {
         console.log("📡 GET Config - Iniciando...");
-        const res = await getConfig(token as string, establecimientoId);
+        const res = await getConfig(token as string);
         console.log("📡 GET Config - Respuesta completa:", res);
         if (res.data) {
           dispatch(setConfig(res.data));

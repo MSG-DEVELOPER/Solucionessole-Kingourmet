@@ -117,7 +117,7 @@ function SettingsGrid() {
       return mesasToTableData(mesas);
     } else if (selectedSetting === "Salas") {
       if (!salas || salas.length === 0) return [];
-      return salasToTableData(salas);
+      return salasToTableData(salas, horarios);
     }
 
    return mockData[selectedSetting] ?? [];
@@ -284,6 +284,11 @@ function SettingsGrid() {
   function handleEditSalaRow(row: Record<string, unknown>) {
     const rowId = row._key as string;
 
+    const horarioOptions = (horarios ?? []).map((h) => ({
+      label: h.nombre,
+      value: h.id.toString(),
+    }));
+
     const fields: EditField[] = [
       {
         key: "nombre",
@@ -320,10 +325,11 @@ function SettingsGrid() {
       },
       {
         key: "id_horario",
-        label: "Horario (id)",
-        type: "text",
-        value: row.Horario as string,
+        label: "Horario",
+        type: "select",
+        value: (row._HorarioId as string) ?? (row.Horario as string),
         required: true,
+        options: horarioOptions,
       },
     ];
 
@@ -334,8 +340,8 @@ function SettingsGrid() {
 
   async function handleDeleteRow(row: Record<string, unknown>) {
     //pàra eliminar una fila en tablas que tengan la accion eliminar
-    if (!selectedSetting || !establecimientoId) return;
-    await handleDeleteRowHandler(row, selectedSetting, establecimientoId, dispatch);
+    if (!selectedSetting) return;
+    await handleDeleteRowHandler(row, selectedSetting, dispatch);
   }
 
   function resolveRowActions(row: Record<string, unknown>) { //lo que pones aqui es el menu de acciones que se muestra en la fila clickada
@@ -421,7 +427,22 @@ function SettingsGrid() {
       setAddFields(addSchemas.Mesas);
       setAddModalOpen(true);
     } else if (selectedSetting === "Salas") {
-      setAddFields(addSchemas.Salas);
+      const horarioOptions = (horarios ?? []).map((h) => ({
+        label: h.nombre,
+        value: h.id.toString(),
+      }));
+
+      setAddFields(
+        addSchemas.Salas.map((f) => {
+          if (f.key !== "id_horario") return f;
+          return {
+            ...f,
+            label: "Horario",
+            type: "select",
+            options: horarioOptions,
+          };
+        })
+      );
       setAddModalOpen(true);
     } else if (selectedSetting === "Horarios") {
       const timeOptions = generateTimeOptions();
