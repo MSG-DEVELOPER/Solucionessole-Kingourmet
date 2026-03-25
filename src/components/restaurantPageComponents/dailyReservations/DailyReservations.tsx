@@ -1,11 +1,16 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
-import { getReservations } from "../../../services/reservations/getReservations";
+import {
+  getReservations,
+  parseReservationEstado,
+  type Reservation,
+} from "../../../services/reservations/getReservations";
 import { createReservation, type CreateReservationPayload } from "../../../services/reservations/postReservation";
-import { Users, Clock, Plus, Search, Calendar } from "lucide-react";
+import { Users, Clock, Plus, Search, Calendar, Info } from "lucide-react";
 import tableIcon from "../../../assets/icons/tableMin.svg";
 import type { RootState } from "../../../redux/store";
+import type { Cliente } from "../../../services/clientes/getClientes";
 import {
   Container,
   TitleRow,
@@ -21,9 +26,13 @@ import {
   AddButton,
   ReservationCard,
   NameRow,
+  ReservationNameGroup,
+  NameInfoButton,
   ReservationName,
   ReservationInfoRow,
   ReservationInfo,
+  NotesText,
+  ReservationCodeBadge,
   ReservationStatus,
   StatusChip,
   LoadingWrapper,
@@ -32,27 +41,28 @@ import {
 } from "./DailyReservations.styles";
 import Spinner from "../../spinner/Spinner";
 import AddReservationModal from "../../modals/AddReservationModal/AddReservationModal";
-
-// Adaptamos el tipo a los campos que usa tu API
-interface ReservationFromApi {
-  nombre_cliente: string;
-  hora: string;
-  comensales: number;
-  sala_id: number;       // lo usaremos como "mesa"
-  estado: string;
-  // (el resto de campos existen pero no los necesitamos ahora)
-}
+import MoreInfoClientReservation from "../../modals/MoreInfoClientReservation/MoreInfoClientReservation";
+import MoreInfoReservation from "../../modals/MoreInfoReservation/MoreInfoReservation";
 
 export default function DailyReservations() {
-  const [arrayReservations, setArrayReservations] = useState<ReservationFromApi[]>([]);
+  const [arrayReservations, setArrayReservations] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [moreInfoOpen, setMoreInfoOpen] = useState(false);
+  const [moreInfoCliente, setMoreInfoCliente] = useState<Cliente | null>(null);
+  const [moreReservationOpen, setMoreReservationOpen] = useState(false);
+  const [moreReservationId, setMoreReservationId] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const establecimientoId = useSelector(
     (state: RootState) => state.auth.user?.id_establecimiento ?? 1
   );
-  
+  const clientes = useSelector((state: RootState) => state.clientes.data);
+  const clienteById = useMemo(
+    () => new Map(clientes.map((c) => [c.id, c])),
+    [clientes]
+  );
+
   // Estado para la fecha seleccionada (inicialmente hoy)
   const [selectedDate, setSelectedDate] = useState<string>(() => {
     const today = new Date();
@@ -60,6 +70,34 @@ export default function DailyReservations() {
   });
 
   const formatHour = (hora?: string) => (hora ? hora.slice(0, 5) : "");
+
+  const resolveDisplayName = useCallback(
+    (res: Reservation) => {
+      const fromApi = res.nombre_cliente?.trim();
+      if (fromApi) return fromApi;
+
+      if (res.id_cliente == null) return "—";
+
+      const c = clienteById.get(res.id_cliente);
+      if (!c) return "—";
+
+      return `${c.nombre} ${c.apellidos}`.trim();
+    },
+    [clienteById]
+  );
+
+  const resolveNotas = (res: Reservation) =>
+    res.notas && res.notas.trim() ? res.notas : "-";
+
+  function handleClientInfoClick(res: Reservation) {
+    if (res.id_cliente == null) {
+      alert("Sin cliente asociado a esta reserva.");
+      return;
+    }
+    const c = clienteById.get(res.id_cliente);
+    setMoreInfoCliente(c ?? null);
+    setMoreInfoOpen(true);
+  }
 
   // Obtener fecha en formato DD/MM/YYYY, con día separado para estilo
   const getDateParts = (dateString: string) => {
@@ -95,15 +133,20 @@ export default function DailyReservations() {
     const query = searchQuery.toLowerCase();
     return arrayReservations.filter((res) => {
       const horaFormateada = formatHour(res.hora);
+      const estadoNombre =
+        parseReservationEstado(res.estado)?.estado_nombre ?? res.estado;
+      const nombre = resolveDisplayName(res);
       return (
-        res.nombre_cliente.toLowerCase().includes(query) ||
+        nombre.toLowerCase().includes(query) ||
         horaFormateada.includes(query) ||
         res.comensales.toString().includes(query) ||
-        res.sala_id.toString().includes(query) ||
-        res.estado.toLowerCase().includes(query)
+        res.id_sala.toString().includes(query) ||
+        estadoNombre.toLowerCase().includes(query) ||
+        res.codigo_reserva.toLowerCase().includes(query) ||
+        res.pago.toLowerCase().includes(query)
       );
     });
-  }, [arrayReservations, searchQuery]);
+  }, [arrayReservations, searchQuery, resolveDisplayName]);
 
   const handleCreateReservation = async (payload: CreateReservationPayload) => {
     setLoading(true);
@@ -177,13 +220,21 @@ export default function DailyReservations() {
       {!loading && !error && filteredReservations.map((res, index) => (
         <ReservationCard key={index}>
           <NameRow>
-            <ReservationName>
-              {res.nombre_cliente}
-            </ReservationName>
+            <ReservationNameGroup>
+              <ReservationName>{resolveDisplayName(res)}</ReservationName>
+              <NameInfoButton
+                type="button"
+                title="Información del cliente"
+                aria-label="Información del cliente"
+                onClick={() => handleClientInfoClick(res)}
+              >
+                <Info size={18} strokeWidth={2} aria-hidden />
+              </NameInfoButton>
+            </ReservationNameGroup>
 
             <ReservationStatus>
               <StatusChip $estado={res.estado as "confirmada" | "Pendiente"}>
-                {res.estado}
+                {parseReservationEstado(res.estado)?.estado_nombre ?? "Pendiente"}
               </StatusChip>
             </ReservationStatus>
           </NameRow>
@@ -198,7 +249,28 @@ export default function DailyReservations() {
             </ReservationInfo>
 
             <ReservationInfo>
-              <TableIcon src={tableIcon} alt="Mesa" /> {res.sala_id}
+              <TableIcon src={tableIcon} alt="Pago" /> {res.pago}
+            </ReservationInfo>
+
+            <ReservationInfo>
+              <NotesText>{resolveNotas(res)}</NotesText>
+            </ReservationInfo>
+
+            <ReservationInfo>
+              <ReservationCodeBadge>
+                {res.codigo_reserva}
+                <NameInfoButton
+                  type="button"
+                  title="Información de la reserva"
+                  aria-label="Información de la reserva"
+                  onClick={() => {
+                    setMoreReservationId(res.id);
+                    setMoreReservationOpen(true);
+                  }}
+                >
+                  <Info size={18} strokeWidth={2} aria-hidden />
+                </NameInfoButton>
+              </ReservationCodeBadge>
             </ReservationInfo>
           </ReservationInfoRow>
         </ReservationCard>
@@ -209,6 +281,24 @@ export default function DailyReservations() {
         onClose={() => setShowAddModal(false)}
         onSubmit={handleCreateReservation}
         establecimientoId={establecimientoId}
+      />
+
+      <MoreInfoClientReservation
+        open={moreInfoOpen}
+        onClose={() => {
+          setMoreInfoOpen(false);
+          setMoreInfoCliente(null);
+        }}
+        cliente={moreInfoCliente}
+      />
+
+      <MoreInfoReservation
+        open={moreReservationOpen}
+        onClose={() => {
+          setMoreReservationOpen(false);
+          setMoreReservationId(null);
+        }}
+        reservationId={moreReservationId}
       />
     </Container>
   );

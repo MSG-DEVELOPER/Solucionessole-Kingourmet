@@ -320,6 +320,46 @@ export const ReservationName = styled.h3`
   }
 `;
 
+export const ReservationNameGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${theme.spacing.xs};
+  min-width: 0;
+  flex: 1;
+`;
+
+/** Mismo hover que CalendarIcon (selector de fecha en la cabecera). */
+export const NameInfoButton = styled.button`
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: ${theme.colors.gray500};
+  cursor: pointer;
+  transition: ${theme.transitions.fast};
+  padding: ${theme.spacing.xs};
+  border-radius: ${theme.borderRadius.md};
+  border: none;
+  background: transparent;
+  font: inherit;
+
+  &:hover {
+    color: ${theme.colors.blue500};
+    background: ${theme.colors.blue100};
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px ${theme.colors.blue100};
+  }
+
+  svg {
+    pointer-events: none;
+    flex-shrink: 0;
+  }
+`;
+
 export const NameRow = styled.div`
   display: flex;
   align-items: center;
@@ -397,6 +437,25 @@ export const ReservationInfo = styled.div`
   @media (max-width: 480px) {
     font-size: 0.8rem;
   }
+`;
+
+export const NotesText = styled.span`
+  font-style: italic;
+  color: ${theme.colors.gray600};
+`;
+
+export const ReservationCodeBadge = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: ${theme.spacing.xs};
+  padding: ${theme.spacing.xs} ${theme.spacing.sm};
+  border-radius: ${theme.borderRadius.md};
+  background: ${theme.colors.orange100};
+  border: 1px solid ${theme.colors.gray200};
+  color: ${theme.colors.black200};
+  font-family: titulo;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 `;
 
 export const TableIcon = styled.img`
