@@ -152,6 +152,19 @@ export const Select = styled.select`
   }
 `;
 
+/** Select de cliente: placeholder en cursiva y tono suave al mostrar la opción por defecto */
+export const ClientSelect = styled(Select)`
+  option[value=""] {
+    font-style: italic;
+    color: ${({ theme }) => theme.colors.gray500};
+  }
+
+  &.placeholder-active {
+    color: ${({ theme }) => theme.colors.gray500};
+    font-style: italic;
+  }
+`;
+
 export const TextArea = styled.textarea`
   padding: 0.75rem ${({ theme }) => theme.spacing.md};
   border-radius: ${({ theme }) => theme.borderRadius.lg};

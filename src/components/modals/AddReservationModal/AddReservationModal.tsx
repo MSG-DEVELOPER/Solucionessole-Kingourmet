@@ -1,5 +1,7 @@
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
+import type { RootState } from "../../../redux/store";
 import {
   Overlay,
   ModalCard,
@@ -10,6 +12,7 @@ import {
   Label,
   Input,
   Select,
+  ClientSelect,
   TextArea,
   Actions,
   SecondaryButton,
@@ -28,9 +31,7 @@ interface AddReservationModalProps {
 }
 
 type ReservationFormData = {
-  nombre: string;
-  telefono: string;
-  email: string;
+  id_cliente: string;
   fecha: string;
   hora: string;
   minuto: string;
@@ -40,16 +41,17 @@ type ReservationFormData = {
 };
 
 function AddReservationModal({ open, onClose, onSubmit, establecimientoId }: AddReservationModalProps) {
+  const clientes = useSelector((state: RootState) => state.clientes.data);
+
   const {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<ReservationFormData>({
     defaultValues: {
-      nombre: "",
-      telefono: "",
-      email: "",
+      id_cliente: "",
       fecha: "",
       hora: "",
       minuto: "",
@@ -58,6 +60,8 @@ function AddReservationModal({ open, onClose, onSubmit, establecimientoId }: Add
       notas: "",
     },
   });
+
+  const idClienteValue = watch("id_cliente");
 
   useEffect(() => {
     if (!open) return;
@@ -69,10 +73,17 @@ function AddReservationModal({ open, onClose, onSubmit, establecimientoId }: Add
   }, [open]);
 
   useEffect(() => {
-    if (open) {
-      reset();
-    }
-  }, [open, reset]);
+    if (!open) return;
+    reset({
+      id_cliente: "",
+      fecha: "",
+      hora: "",
+      minuto: "",
+      comensales: "",
+      estado: "Pendiente",
+      notas: "",
+    });
+  }, [open, reset, clientes]);
 
   // Generar opciones de horas (0-23)
   const hourOptions = Array.from({ length: 24 }, (_, i) => ({
@@ -96,9 +107,7 @@ function AddReservationModal({ open, onClose, onSubmit, establecimientoId }: Add
       id_establecimiento: establecimientoId,
       sala_id: 1,
       horario_id: 1,
-      nombre_cliente: data.nombre,
-      telefono_cliente: data.telefono,
-      email_cliente: data.email || null,
+      id_cliente: Number(data.id_cliente),
       comensales: Number(data.comensales),
       fecha: data.fecha,
       hora: `${horaCompleta}:00`,
@@ -121,47 +130,35 @@ function AddReservationModal({ open, onClose, onSubmit, establecimientoId }: Add
 
         <Body>
           <Form id="reservation-form" onSubmit={handleSubmit(onSubmitForm)}>
-            <Field>
-              <Label htmlFor="nombre">Nombre *</Label>
-              <Input
-                id="nombre"
-                placeholder="Nombre del cliente"
-                {...register("nombre", {
-                  required: "El nombre es obligatorio",
-                })}
-              />
-              {errors.nombre && (
-                <ErrorMessage>{errors.nombre.message}</ErrorMessage>
-              )}
-            </Field>
-
-            <Field>
-              <Label htmlFor="telefono">Teléfono *</Label>
-              <Input
-                id="telefono"
-                type="tel"
-                placeholder="Teléfono del cliente"
-                {...register("telefono", {
-                  required: "El teléfono es obligatorio",
-                })}
-              />
-              {errors.telefono && (
-                <ErrorMessage>{errors.telefono.message}</ErrorMessage>
-              )}
-            </Field>
-
-            <Field>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="Email del cliente"
-                {...register("email")}
-              />
-              {errors.email && (
-                <ErrorMessage>{errors.email.message}</ErrorMessage>
-              )}
-            </Field>
+            {clientes.length === 0 ? (
+              <Field>
+                <Label>Cliente</Label>
+                <p style={{ margin: 0, fontSize: "0.9rem", color: "#64748b" }}>
+                  No hay clientes cargados.
+                </p>
+              </Field>
+            ) : (
+              <Field>
+                <Label htmlFor="id_cliente">Cliente *</Label>
+                <ClientSelect
+                  id="id_cliente"
+                  className={!idClienteValue ? "placeholder-active" : undefined}
+                  {...register("id_cliente", {
+                    required: "Selecciona un cliente",
+                  })}
+                >
+                  <option value="">Selecciona cliente</option>
+                  {clientes.map((c) => (
+                    <option key={c.id} value={String(c.id)}>
+                      {`${c.nombre} ${c.apellidos}`.trim()}
+                    </option>
+                  ))}
+                </ClientSelect>
+                {errors.id_cliente && (
+                  <ErrorMessage>{errors.id_cliente.message}</ErrorMessage>
+                )}
+              </Field>
+            )}
 
             <Field className="date-field">
               <Label htmlFor="fecha">Fecha *</Label>
@@ -259,7 +256,7 @@ function AddReservationModal({ open, onClose, onSubmit, establecimientoId }: Add
           <PrimaryButton
             type="submit"
             form="reservation-form"
-            disabled={isSubmitting}
+            disabled={isSubmitting || clientes.length === 0}
           >
             {isSubmitting ? "Guardando..." : "Aceptar"}
           </PrimaryButton>

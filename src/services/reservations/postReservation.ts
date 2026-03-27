@@ -39,20 +39,22 @@ export interface CreateReservationPayload {
   id_establecimiento: number;
   sala_id: number;
   horario_id: number;
-  nombre_cliente: string;
-  telefono_cliente: string;
-  email_cliente: string | null;
+  id_cliente: number;
   comensales: number;
   fecha: string; // YYYY-MM-DD
-  hora: string;  // HH:mm:ss
+  hora: string; // HH:mm:ss
   notas: string;
 }
 
-export async function createReservation(payload: CreateReservationPayload): Promise<Reservation> {
+export async function createReservation(
+  token: string,
+  payload: CreateReservationPayload
+): Promise<Reservation> {
   const res = await fetch("http://localhost/kingourmet-api/api/reservas", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(payload),
   });

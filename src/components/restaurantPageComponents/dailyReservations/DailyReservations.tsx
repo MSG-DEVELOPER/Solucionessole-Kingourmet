@@ -149,10 +149,15 @@ export default function DailyReservations() {
   }, [arrayReservations, searchQuery, resolveDisplayName]);
 
   const handleCreateReservation = async (payload: CreateReservationPayload) => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      toast.error("No hay sesión");
+      return;
+    }
     setLoading(true);
     setError(null);
     try {
-      await createReservation(payload);
+      await createReservation(token, payload);
       await loadReservations();
       toast.success("Reserva creada");
     } catch {
@@ -257,19 +262,15 @@ export default function DailyReservations() {
             </ReservationInfo>
 
             <ReservationInfo>
-              <ReservationCodeBadge>
+              <ReservationCodeBadge
+                title="Información de la reserva"
+                aria-label="Información de la reserva"
+                onClick={() => {
+                  setMoreReservationId(res.id);
+                  setMoreReservationOpen(true);
+                }}
+              >
                 {res.codigo_reserva}
-                <NameInfoButton
-                  type="button"
-                  title="Información de la reserva"
-                  aria-label="Información de la reserva"
-                  onClick={() => {
-                    setMoreReservationId(res.id);
-                    setMoreReservationOpen(true);
-                  }}
-                >
-                  <Info size={18} strokeWidth={2} aria-hidden />
-                </NameInfoButton>
               </ReservationCodeBadge>
             </ReservationInfo>
           </ReservationInfoRow>

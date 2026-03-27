@@ -444,10 +444,9 @@ export const NotesText = styled.span`
   color: ${theme.colors.gray600};
 `;
 
-export const ReservationCodeBadge = styled.div`
+export const ReservationCodeBadge = styled.button`
   display: inline-flex;
   align-items: center;
-  gap: ${theme.spacing.xs};
   padding: ${theme.spacing.xs} ${theme.spacing.sm};
   border-radius: ${theme.borderRadius.md};
   background: ${theme.colors.orange100};
@@ -456,6 +455,18 @@ export const ReservationCodeBadge = styled.div`
   font-family: titulo;
   font-weight: 600;
   letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: ${theme.transitions.fast};
+
+  &:hover {
+    color: ${theme.colors.blue500};
+    background: ${theme.colors.blue100};
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px ${theme.colors.blue100};
+  }
 `;
 
 export const TableIcon = styled.img`
